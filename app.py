@@ -34,7 +34,7 @@ def index():
 # Rota de login
 @app.route('/login')
 def login():
-    redirect_uri = url_for("authorize", _external=True)
+    redirect_uri = url_for("authorize", _external=True, _scheme='https')
     return google.authorize_redirect(redirect_uri)
 
 # Rota de callback do Google
