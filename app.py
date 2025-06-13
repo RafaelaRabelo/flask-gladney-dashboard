@@ -39,16 +39,23 @@ def login():
 # ✅ Callback do Google
 @app.route('/authorize')
 def authorize():
-    token = google.authorize_access_token()
-    resp = google.get('userinfo')
-    user_info = resp.json()
-    session["user"] = {
-        "name": user_info["name"],
-        "email": user_info["email"],
-        "picture": user_info["picture"],
-        "login_time": datetime.now().isoformat()
-    }
-    return redirect(url_for("index"))
+    try:
+        token = google.authorize_access_token()
+        resp = google.get('userinfo')
+        user_info = resp.json()
+
+        session["user"] = {
+            "name": user_info.get("name"),
+            "email": user_info.get("email"),
+            "picture": user_info.get("picture"),
+            "login_time": datetime.now().isoformat()
+        }
+        return redirect(url_for("index"))
+
+    except Exception as e:
+        # Exibe erro no terminal/log do Cloud Run
+        return f"Erro durante autenticação: {str(e)}", 500
+
 
 # 🔓 Logout
 @app.route('/logout')
