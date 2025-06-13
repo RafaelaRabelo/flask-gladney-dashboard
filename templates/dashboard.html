@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gladney Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid #008542;
+        }
+        .header img {
+            height: 50px;
+            margin-left: auto;
+        }
+        .user-info {
+            padding: 20px;
+            background-color: white;
+        }
+        iframe {
+            width: 100%;
+            height: 850px;
+            border: none;
+            margin-top: 10px;
+        }
+        .menu {
+            display: flex;
+            gap: 20px;
+            padding: 10px 20px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #008542;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Gladney Dashboard Tool</h2>
+        <img src="{{ user.picture }}" alt="Profile Picture">
+    </div>
+    <div class="user-info">
+        <p><strong>{{ user.name }}</strong> | {{ user.email }}</p>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="menu">
+        <a href="#mother">Expectant Mother Dashboard</a>
+        <a href="#business">Gladney Business Performance</a>
+    </div>
+    <div id="mother">
+        <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
+    </div>
+    <div id="business">
+        <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
+    </div>
+</body>
+</html>
