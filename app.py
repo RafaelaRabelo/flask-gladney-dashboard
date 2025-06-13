@@ -42,7 +42,7 @@ def login():
 def authorize():
     try:
         token = google.authorize_access_token()
-        resp = google.get('userinfo')
+        resp = google.get('https://openidconnect.googleapis.com/v1/userinfo')
         user_info = resp.json()
 
         session["user"] = {
