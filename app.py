@@ -4,13 +4,12 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from datetime import datetime
 
-# Carregar variáveis de ambiente
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
-# Configurar OAuth2 com Google
+# Configurar OAuth com Google
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
@@ -23,7 +22,7 @@ google = oauth.register(
     authorize_params={'access_type': 'offline', 'prompt': 'consent'}
 )
 
-# Rota principal
+# Página principal
 @app.route('/')
 def index():
     user = session.get("user")
@@ -31,13 +30,13 @@ def index():
         return redirect(url_for("login"))
     return render_template("dashboard.html", user=user)
 
-# Rota de login
+# 🔑 Início do login
 @app.route('/login')
 def login():
-    redirect_uri = url_for("login", _external=True, _scheme="https")
+    redirect_uri = url_for("authorize", _external=True, _scheme="https")
     return google.authorize_redirect(redirect_uri)
 
-# Rota de callback do Google
+# ✅ Callback do Google
 @app.route('/authorize')
 def authorize():
     token = google.authorize_access_token()
@@ -51,13 +50,13 @@ def authorize():
     }
     return redirect(url_for("index"))
 
-# Rota de logout
+# 🔓 Logout
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# Rodar o app (Cloud Run exige host='0.0.0.0' e porta $PORT)
+# Executar app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
