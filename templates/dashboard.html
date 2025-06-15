@@ -1,105 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Gladney Dashboard</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f4f3ef;
-        }
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 220px;
-            background-color: #008542;
-            color: white;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            padding: 12px 20px;
-            text-decoration: none;
-            color: white;
-            display: block;
-            font-weight: bold;
-        }
-        .sidebar a:hover {
-            background-color: #006f35;
-        }
-        .main-content {
-            margin-left: 240px;
-            padding: 20px;
-        }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        button {
-            margin: 5px;
-            padding: 10px 20px;
-            background-color: #00a651;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #008542;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Gladney Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-    <div class="sidebar">
-        <a href="#mother" onclick="logClick('Expectant Mother Dashboard')">Expectant Mother Dashboard</a>
-        <a href="#business" onclick="logClick('Business Dashboard')">Business Dashboard</a>
-        <a href="#filtros" onclick="logClick('Filtros')">Filtros de Teste</a>
-        <a href="#upstart" onclick="logClick('Sobre a UpStart')">Sobre a UpStart</a>
-        <a href="/logout">Logout</a>
+  <!-- Top Navbar -->
+  <header class="bg-green-700 text-white p-4 flex justify-between items-center shadow">
+    <div class="flex items-center">
+      <img src="{{ user.picture }}" alt="Profile Picture" class="h-10 w-10 rounded-full mr-3">
+      <div>
+        <p class="font-semibold">{{ user.name }}</p>
+        <p class="text-sm">{{ user.email }}</p>
+      </div>
     </div>
+    <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</a>
+  </header>
 
-    <div class="main-content">
-        <div id="mother" class="section">
-            <h2>Expectant Mother Dashboard</h2>
-            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
-        </div>
+  <!-- Sidebar Menu -->
+  <div class="flex">
+    <aside class="w-64 bg-white shadow h-screen sticky top-0">
+      <nav class="flex flex-col p-4 space-y-2">
+        <a href="#mother" onclick="trackClick('Mother Dashboard')" class="py-2 px-3 rounded hover:bg-green-100 text-green-700 font-medium">Expectant Mother Dashboard</a>
+        <a href="#business" onclick="trackClick('Business Dashboard')" class="py-2 px-3 rounded hover:bg-green-100 text-green-700 font-medium">Business Performance</a>
+        <a href="#logs" onclick="trackClick('Logs View')" class="py-2 px-3 rounded hover:bg-green-100 text-green-700 font-medium">Access Logs</a>
+        <a href="#about" onclick="trackClick('About')" class="py-2 px-3 rounded hover:bg-green-100 text-green-700 font-medium">About</a>
+      </nav>
+    </aside>
 
-        <div id="business" class="section">
-            <h2>Gladney Business Performance</h2>
-            <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
-        </div>
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto space-y-8">
+      
+      <section id="mother">
+        <h2 class="text-xl font-bold text-green-700 mb-2">Expectant Mother Dashboard</h2>
+        <iframe class="w-full h-[600px] rounded shadow" src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
+      </section>
 
-        <div id="filtros" class="section">
-            <h2>Filtros de Teste</h2>
-            <button onclick="logClick('Filtro: Janeiro')">Janeiro</button>
-            <button onclick="logClick('Filtro: Fevereiro')">Fevereiro</button>
-            <button onclick="logClick('Filtro: Março')">Março</button>
-        </div>
+      <section id="business">
+        <h2 class="text-xl font-bold text-green-700 mb-2">Business Performance</h2>
+        <iframe class="w-full h-[600px] rounded shadow" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
+      </section>
 
-        <div id="upstart" class="section">
-            <h2>Sobre a UpStart 13</h2>
-            <p>A UpStart 13 é uma empresa especializada em soluções de tecnologia, desenvolvimento ágil e transformação digital.</p>
-        </div>
-    </div>
+      <section id="logs">
+        <h2 class="text-xl font-bold text-green-700 mb-2">Access Logs</h2>
+        <p>The full access logs are available in the Google Sheets.</p>
+      </section>
 
-    <script>
-        function logClick(actionName) {
-            fetch('/track_action', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({action: actionName})
-            });
-        }
-    </script>
+      <section id="about">
+        <h2 class="text-xl font-bold text-green-700 mb-2">About</h2>
+        <p>Developed by <strong>Upstart13</strong> • 2025 🚀</p>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function trackClick(action) {
+      fetch('/track_action', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: action})
+      });
+    }
+  </script>
 
 </body>
 </html>
