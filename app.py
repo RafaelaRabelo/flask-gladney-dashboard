@@ -7,6 +7,7 @@ from datetime import datetime
 import gspread
 import google.auth
 from google.auth.transport.requests import Request
+from google.oauth2.service_account import Credentials
 
 load_dotenv()
 
