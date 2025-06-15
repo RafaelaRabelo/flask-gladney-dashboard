@@ -35,12 +35,12 @@ def log_access(email, rota):
 
 # 📤 Função para exportar CSV para Google Sheets (usando ADC, sem precisar de JSON)
 def export_logs_to_sheets():
-    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"  # Seu ID da planilha
+    SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"
+    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-    # Autenticar com as credenciais padrão do ambiente (Service Account do Cloud Run)
-    creds, _ = google.auth.default(scopes=SCOPES)
-    client = gspread.authorize(creds)
+    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    client = gspread.authorize(creds)   # <-- Só isso, sem 'auth=app.auth'
 
     sheet = client.open_by_key(SPREADSHEET_ID).sheet1
     sheet.clear()
@@ -50,7 +50,7 @@ def export_logs_to_sheets():
         for line in f:
             row = line.strip().split(",")
             sheet.append_row(row)
-
+            
 # Página principal
 @app.route('/')
 def index():
