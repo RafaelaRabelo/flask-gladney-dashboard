@@ -1,0 +1,108 @@
+:root {
+    --accent: #008542; /* Verde Gladney */
+    --bg-light: #f5f5f5;
+    --text-light: #333;
+    --bg-dark: #1e1e1e;
+    --text-dark: #eaeaea;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.light-mode {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+
+.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: var(--accent);
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.sidebar nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 12px 0;
+    transition: background 0.3s;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.topbar {
+    margin-left: 220px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.dark-mode .topbar {
+    background-color: #2c2c2c;
+    border-bottom: 1px solid #444;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+main.content {
+    margin-left: 220px;
+    padding: 30px;
+}
+
+.dashboard-frame iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #006c36;
+}
