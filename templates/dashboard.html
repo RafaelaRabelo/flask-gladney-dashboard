@@ -55,11 +55,11 @@
     </div>
     <div class="user-info">
         <p><strong>{{ user.name }}</strong> | {{ user.email }}</p>
-        <a href="/logout">Logout</a>
+        <a href="/logout" onclick="trackAction('Clicou no Logout')">Logout</a>
     </div>
     <div class="menu">
-        <a href="#mother">Expectant Mother Dashboard</a>
-        <a href="#business">Gladney Business Performance</a>
+        <a href="#mother" onclick="trackAction('Clicou no botão Mother Dashboard')">Expectant Mother Dashboard</a>
+        <a href="#business" onclick="trackAction('Clicou no botão Business Dashboard')">Gladney Business Performance</a>
     </div>
     <div id="mother">
         <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
@@ -67,5 +67,15 @@
     <div id="business">
         <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
     </div>
+
+    <script>
+    function trackAction(action) {
+        fetch('/track_action', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: action })
+        });
+    }
+    </script>
 </body>
 </html>
