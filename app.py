@@ -104,7 +104,7 @@ def authorize():
         ALLOWED_DOMAIN = "@upstart13.com"
 
         if not (user_email.endswith(ALLOWED_DOMAIN) or user_email in ALLOWED_EMAILS):
-            return f"❌ Acesso não autorizado para {user_email}.", 403
+            return render_template("unauthorized.html", email=user_email), 403
 
         # ====== Login e Session ======
         session["session_id"] = str(uuid.uuid4())
