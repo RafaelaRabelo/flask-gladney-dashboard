@@ -3,3 +3,5 @@ authlib
 python-dotenv
 gunicorn
 requests
+gspread
+google-auth
