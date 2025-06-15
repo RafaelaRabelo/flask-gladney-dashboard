@@ -18,23 +18,56 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--light-gray);
             color: var(--dark-gray);
+            display: flex;
         }
 
-        .header {
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
             background-color: var(--white);
-            border-bottom: 3px solid var(--primary-green);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-right: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        /* Header */
+        .header {
+            margin-left: 220px;
+            background-color: var(--white);
+            border-bottom: 2px solid var(--primary-green);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            width: calc(100% - 220px);
+            top: 0;
+            z-index: 10;
         }
 
-        .header .user-info {
+        .user-info {
             display: flex;
             align-items: center;
         }
 
-        .profile-pic {
+        .user-info img {
             height: 40px;
             width: 40px;
             border-radius: 50%;
@@ -47,40 +80,25 @@
             padding: 0.5rem 1rem;
             border-radius: 6px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         .logout-btn:hover {
             background-color: #006C34;
         }
 
-        .menu {
-            display: flex;
-            gap: 1rem;
-            padding: 0.8rem 2rem;
+        /* Content */
+        .content {
+            margin-left: 220px;
+            margin-top: 80px;
+            padding: 2rem;
+        }
+
+        .card {
             background-color: var(--white);
-            border-bottom: 1px solid #ddd;
-        }
-
-        .menu a {
-            text-decoration: none;
-            color: var(--dark-gray);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: 0.2s;
-            font-weight: 600;
-        }
-
-        .menu a:hover {
-            background-color: var(--light-green);
-            color: var(--primary-green);
-        }
-
-        .content section {
-            background-color: var(--white);
-            margin: 1.5rem 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
             padding: 1rem;
         }
 
@@ -91,19 +109,25 @@
             border-radius: 6px;
         }
 
-        footer {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.85rem;
-            color: #666;
+        h2 {
+            color: var(--primary-green);
         }
     </style>
 </head>
 <body>
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="#mother" onclick="trackClick('Mother Dashboard')">Mother Dashboard</a>
+        <a href="#business" onclick="trackClick('Business Dashboard')">Business Performance</a>
+        <a href="#logs" onclick="trackClick('Access Logs')">Access Logs</a>
+        <a href="#about" onclick="trackClick('About')">About</a>
+    </aside>
+
+    <!-- Header -->
     <header class="header">
         <div class="user-info">
-            <img src="{{ user.picture }}" alt="Profile Picture" class="profile-pic">
+            <img src="{{ user.picture }}" alt="User">
             <div>
                 <strong>{{ user.name }}</strong><br>
                 <small>{{ user.email }}</small>
@@ -112,38 +136,28 @@
         <a href="/logout" class="logout-btn">Logout</a>
     </header>
 
-    <nav class="menu">
-        <a href="#mother" onclick="trackClick('Mother Dashboard')">Expectant Mother Dashboard</a>
-        <a href="#business" onclick="trackClick('Business Dashboard')">Business Performance</a>
-        <a href="#logs" onclick="trackClick('User Logs')">Access Logs</a>
-        <a href="#about" onclick="trackClick('About')">About</a>
-    </nav>
-
+    <!-- Main Content -->
     <main class="content">
-        <section id="mother">
-            <h2 style="color: var(--primary-green);">Expectant Mother Dashboard</h2>
+        <section id="mother" class="card">
+            <h2>Expectant Mother Dashboard</h2>
             <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
         </section>
 
-        <section id="business">
-            <h2 style="color: var(--primary-green);">Business Performance</h2>
+        <section id="business" class="card">
+            <h2>Business Performance</h2>
             <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
         </section>
 
-        <section id="logs">
-            <h2 style="color: var(--primary-green);">Access Logs</h2>
-            <p>The full user access logs are available in the linked Google Sheet.</p>
+        <section id="logs" class="card">
+            <h2>Access Logs</h2>
+            <p>The full user logs are stored in the linked Google Sheets.</p>
         </section>
 
-        <section id="about">
-            <h2 style="color: var(--primary-green);">About</h2>
+        <section id="about" class="card">
+            <h2>About</h2>
             <p>This dashboard tool was proudly developed by <strong>Upstart13</strong> • 2025 🚀</p>
         </section>
     </main>
-
-    <footer>
-        Powered by Upstart13 • All rights reserved © 2025
-    </footer>
 
     <script>
         function trackClick(action) {
