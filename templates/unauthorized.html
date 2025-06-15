@@ -2,60 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Access Denied</title>
+    <title>Unauthorized Access</title>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f5f7fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             margin: 0;
         }
-
-        h1 {
-            color: #2f3e46;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .container {
+            text-align: center;
+            max-width: 600px;
         }
-
         img {
             max-width: 300px;
-            height: auto;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+        p {
+            color: #555;
+            font-size: 18px;
             margin-bottom: 20px;
         }
-
-        p {
-            color: #495057;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .button {
-            background-color: #354f52;  /* Azul-escuro puxado para cinza, igual ao mascote */
+        .btn {
+            padding: 12px 25px;
+            background-color: #008542;
             color: white;
-            padding: 12px 30px;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            font-size: 16px;
         }
-
-        .button:hover {
-            background-color: #2c3f41;
+        .btn:hover {
+            background-color: #006c34;
         }
     </style>
 </head>
 <body>
-    <h1>Access Denied</h1>
-    <img src="{{ url_for('static', filename='access_denied_mascot.png') }}" alt="Access Denied Mascot">
-    <p>Sorry, you do not have permission to access this page.</p>
-    <a href="/" class="button">Go back</a>
+    <div class="container">
+        <img src="{{ url_for('static', filename='unauthorized.png') }}" alt="Access Denied">
+        <h1>Oops! Access Denied 😕</h1>
+        <p>It looks like you don't have permission to view this page.<br>
+        If you believe this is a mistake, please contact the Upstart13 administrator.</p>
+        <a href="/" class="btn">Back to Home</a>
+    </div>
 </body>
 </html>
