@@ -2,53 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso não autorizado</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-        h1 {
-            color: #d9534f;
-        }
-        p {
-            color: #555;
-        }
-        .icon {
-            font-size: 80px;
-            color: #d9534f;
-        }
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #008542;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #006f3c;
-        }
-    </style>
+    <title>Acesso Não Autorizado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <div class="icon">🚫</div>
-        <h1>Acesso Negado</h1>
-        <p>O e-mail <strong>{{ email }}</strong> não tem permissão para acessar esta plataforma.</p>
-        <p>Se você acha que isso é um erro, entre em contato com o administrador.</p>
-        <a class="button" href="/">Voltar para página inicial</a>
+        <img src="https://cdn-icons-png.flaticon.com/512/753/753345.png" alt="Unauthorized" class="illustration">
+        <h1>❌ Acesso Negado</h1>
+        <p>O e-mail <strong>{{ email }}</strong> não tem permissão para acessar esta aplicação.</p>
+        <a class="button" href="/">Voltar para a página inicial</a>
     </div>
 </body>
 </html>
