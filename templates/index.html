@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bem-vindo à Gladney Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #008542;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #008542;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #006f35;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo à Gladney Dashboard</h1>
+        <p>Gerencie e visualize seus dados com segurança.</p>
+        <button onclick="logAndGo()">Iniciar</button>
+    </div>
+
+    <script>
+        function logAndGo() {
+            fetch('/track_action', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: "Clicou em Iniciar"})
+            }).then(() => {
+                window.location.href = "/login";
+            });
+        }
+    </script>
+</body>
+</html>
