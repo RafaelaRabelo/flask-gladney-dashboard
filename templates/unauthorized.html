@@ -3,67 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Access Denied</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f4f6f8;
+            font-family: 'Poppins', sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            color: #333;
         }
-        .container {
-            text-align: center;
-            background: #fff;
+
+        .card {
+            background: #ffffff;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
         }
-        h1 {
+
+        .card img {
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .title {
             color: #d9534f;
             font-size: 28px;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
-        p {
+
+        .message {
+            color: #555;
+            font-size: 16px;
             margin-bottom: 30px;
         }
-        img.error-image {
-            max-width: 250px;
-            margin-bottom: 20px;
-        }
-        a.button {
-            display: inline-block;
-            padding: 12px 24px;
+
+        .button {
             background-color: #d9534f;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
         }
-        a.button:hover {
+
+        .button:hover {
             background-color: #c9302c;
+            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.5);
         }
-        .small-text {
-            font-size: 12px;
-            color: #888;
+
+        .footer {
             margin-top: 20px;
+            color: #aaa;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="{{ url_for('static', filename='access_denied.png') }}" alt="Access Denied" class="error-image">
-        <h1>Access Denied</h1>
-        <p>Sorry, you do not have permission to access this page.</p>
+    <div class="card">
+        <img src="{{ url_for('static', filename='access_denied_mascot.png') }}" alt="Access Denied">
+        <div class="title">Access Denied</div>
+        <div class="message">Sorry, you do not have permission to access this page.</div>
         <a href="/" class="button">Go Back to Home</a>
-        <div class="small-text">© 2025 Upstart Analytics</div>
+        <div class="footer">© 2025 Upstart Analytics</div>
     </div>
 </body>
 </html>
