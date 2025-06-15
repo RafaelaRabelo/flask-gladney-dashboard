@@ -2,250 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gladney Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        :root {
-            --primary-green: #008542;
-            --light-green: #E6F4EE;
-            --dark-gray: #333333;
-            --light-gray: #F5F5F5;
-            --white: #FFFFFF;
-            --background: var(--light-gray);
-            --text-color: var(--dark-gray);
-            --card-bg: var(--white);
-        }
-
-        body.dark-mode {
-            --background: #121212;
-            --text-color: #f0f0f0;
-            --card-bg: #1e1e1e;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.4s, color 0.4s;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 220px;
-            background-color: var(--card-bg);
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            border-right: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-            padding-top: 1rem;
-            transition: width 0.3s, background-color 0.4s;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
-            transition: background-color 0.2s, color 0.2s;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--light-green);
-            color: var(--primary-green);
-        }
-
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: var(--primary-green);
-            font-size: 1.2rem;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        /* Header */
-        .header {
-            margin-left: 220px;
-            background-color: var(--card-bg);
-            border-bottom: 2px solid var(--primary-green);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: calc(100% - 220px);
-            top: 0;
-            z-index: 10;
-            transition: margin-left 0.3s, width 0.3s, background-color 0.4s;
-        }
-
-        .header.collapsed {
-            margin-left: 60px;
-            width: calc(100% - 60px);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-info img {
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .logout-btn, .dark-toggle {
-            background-color: var(--primary-green);
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        .logout-btn:hover, .dark-toggle:hover {
-            background-color: #006C34;
-        }
-
-        /* Content */
-        .content {
-            margin-left: 220px;
-            margin-top: 80px;
-            padding: 2rem;
-            transition: margin-left 0.3s;
-        }
-
-        .content.collapsed {
-            margin-left: 60px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            padding: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.6s forwards;
-        }
-
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 6px;
-        }
-
-        h2 {
-            color: var(--primary-green);
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 60px;
-            }
-            .header, .content {
-                margin-left: 60px;
-                width: calc(100% - 60px);
-            }
-        }
-    </style>
+    <title>Gladney Dashboard - Mother Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="light-mode">
 
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-        <a href="#mother" onclick="trackClick('Mother Dashboard')"><i class="fas fa-user"></i> <span class="link-text">Mother Dashboard</span></a>
-        <a href="#business" onclick="trackClick('Business Dashboard')"><i class="fas fa-chart-line"></i> <span class="link-text">Business Performance</span></a>
-        <a href="#logs" onclick="trackClick('Access Logs')"><i class="fas fa-database"></i> <span class="link-text">Access Logs</span></a>
-        <a href="#about" onclick="trackClick('About')"><i class="fas fa-info-circle"></i> <span class="link-text">About</span></a>
+    <aside class="sidebar">
+        <div class="logo">Gladney Tool</div>
+        <nav>
+            <a href="/dashboard/mother" class="active"><i class="fas fa-baby"></i> Mother Dashboard</a>
+            <a href="/dashboard/business"><i class="fas fa-chart-line"></i> Business Performance</a>
+            <a href="/dashboard/logs"><i class="fas fa-database"></i> Access Logs</a>
+            <a href="/dashboard/about"><i class="fas fa-info-circle"></i> About</a>
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
     </aside>
 
-    <!-- Header -->
-    <header class="header" id="header">
+    <!-- Topbar -->
+    <header class="topbar">
         <div class="user-info">
-            <img src="{{ user.picture }}" alt="User">
+            <img src="{{ user.picture }}" alt="Profile Picture">
             <div>
                 <strong>{{ user.name }}</strong><br>
                 <small>{{ user.email }}</small>
             </div>
         </div>
-        <div>
-            <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-            <a href="/logout" class="logout-btn">Logout</a>
-        </div>
+        <button onclick="toggleDarkMode()">🌗 Toggle Dark Mode</button>
     </header>
 
-    <!-- Content -->
-    <main class="content" id="content">
-        <section id="mother" class="card">
-            <h2>Expectant Mother Dashboard</h2>
-            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
-        </section>
-
-        <section id="business" class="card">
-            <h2>Business Performance</h2>
-            <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
-        </section>
-
-        <section id="logs" class="card">
-            <h2>Access Logs</h2>
-            <p>All user actions are logged to Google Sheets.</p>
-        </section>
-
-        <section id="about" class="card">
-            <h2>About</h2>
-            <p>Dashboard by <strong>Upstart13</strong> • 2025 🚀</p>
-        </section>
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Expectant Mother Dashboard</h1>
+        <div class="dashboard-frame">
+            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd" frameborder="0" allowfullscreen></iframe>
+        </div>
     </main>
 
     <script>
-        function trackClick(action) {
-            fetch('/track_action', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({action: action})
-            });
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('header').classList.toggle('collapsed');
-            document.getElementById('content').classList.toggle('collapsed');
-        }
-
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
         }
     </script>
-
 </body>
 </html>
