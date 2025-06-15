@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Gladney Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
             --primary-green: #008542;
@@ -11,35 +13,55 @@
             --dark-gray: #333333;
             --light-gray: #F5F5F5;
             --white: #FFFFFF;
+            --background: var(--light-gray);
+            --text-color: var(--dark-gray);
+            --card-bg: var(--white);
+        }
+
+        body.dark-mode {
+            --background: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
+            background-color: var(--background);
+            color: var(--text-color);
             display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s, color 0.4s;
         }
 
         /* Sidebar */
         .sidebar {
             width: 220px;
-            background-color: var(--white);
+            background-color: var(--card-bg);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
             border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
             padding-top: 1rem;
+            transition: width 0.3s, background-color 0.4s;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
         }
 
         .sidebar a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 0.75rem 1rem;
             text-decoration: none;
-            color: var(--dark-gray);
+            color: var(--text-color);
             font-weight: 600;
-            transition: 0.2s;
+            transition: background-color 0.2s, color 0.2s;
         }
 
         .sidebar a:hover {
@@ -47,10 +69,19 @@
             color: var(--primary-green);
         }
 
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
         /* Header */
         .header {
             margin-left: 220px;
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-bottom: 2px solid var(--primary-green);
             padding: 1rem 2rem;
             display: flex;
@@ -60,6 +91,12 @@
             width: calc(100% - 220px);
             top: 0;
             z-index: 10;
+            transition: margin-left 0.3s, width 0.3s, background-color 0.4s;
+        }
+
+        .header.collapsed {
+            margin-left: 60px;
+            width: calc(100% - 60px);
         }
 
         .user-info {
@@ -74,16 +111,18 @@
             margin-right: 10px;
         }
 
-        .logout-btn {
+        .logout-btn, .dark-toggle {
             background-color: var(--primary-green);
             color: var(--white);
             padding: 0.5rem 1rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
+            margin-left: 10px;
+            cursor: pointer;
         }
 
-        .logout-btn:hover {
+        .logout-btn:hover, .dark-toggle:hover {
             background-color: #006C34;
         }
 
@@ -92,14 +131,22 @@
             margin-left: 220px;
             margin-top: 80px;
             padding: 2rem;
+            transition: margin-left 0.3s;
+        }
+
+        .content.collapsed {
+            margin-left: 60px;
         }
 
         .card {
-            background-color: var(--white);
+            background-color: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
             padding: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
         }
 
         iframe {
@@ -112,20 +159,38 @@
         h2 {
             color: var(--primary-green);
         }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            .header, .content {
+                margin-left: 60px;
+                width: calc(100% - 60px);
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-        <a href="#mother" onclick="trackClick('Mother Dashboard')">Mother Dashboard</a>
-        <a href="#business" onclick="trackClick('Business Dashboard')">Business Performance</a>
-        <a href="#logs" onclick="trackClick('Access Logs')">Access Logs</a>
-        <a href="#about" onclick="trackClick('About')">About</a>
+    <aside class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <a href="#mother" onclick="trackClick('Mother Dashboard')"><i class="fas fa-user"></i> <span class="link-text">Mother Dashboard</span></a>
+        <a href="#business" onclick="trackClick('Business Dashboard')"><i class="fas fa-chart-line"></i> <span class="link-text">Business Performance</span></a>
+        <a href="#logs" onclick="trackClick('Access Logs')"><i class="fas fa-database"></i> <span class="link-text">Access Logs</span></a>
+        <a href="#about" onclick="trackClick('About')"><i class="fas fa-info-circle"></i> <span class="link-text">About</span></a>
     </aside>
 
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="user-info">
             <img src="{{ user.picture }}" alt="User">
             <div>
@@ -133,11 +198,14 @@
                 <small>{{ user.email }}</small>
             </div>
         </div>
-        <a href="/logout" class="logout-btn">Logout</a>
+        <div>
+            <button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="content">
+    <!-- Content -->
+    <main class="content" id="content">
         <section id="mother" class="card">
             <h2>Expectant Mother Dashboard</h2>
             <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
@@ -150,12 +218,12 @@
 
         <section id="logs" class="card">
             <h2>Access Logs</h2>
-            <p>The full user logs are stored in the linked Google Sheets.</p>
+            <p>All user actions are logged to Google Sheets.</p>
         </section>
 
         <section id="about" class="card">
             <h2>About</h2>
-            <p>This dashboard tool was proudly developed by <strong>Upstart13</strong> • 2025 🚀</p>
+            <p>Dashboard by <strong>Upstart13</strong> • 2025 🚀</p>
         </section>
     </main>
 
@@ -166,6 +234,16 @@
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({action: action})
             });
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('header').classList.toggle('collapsed');
+            document.getElementById('content').classList.toggle('collapsed');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
         }
     </script>
 
