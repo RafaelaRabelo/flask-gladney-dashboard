@@ -34,8 +34,8 @@ def log_access(email, rota):
 
 # 📤 Função para exportar CSV para Google Sheets
 def export_logs_to_sheets():
-    SERVICE_ACCOUNT_FILE = "service_account.json"
-    SPREADSHEET_ID = "SEU_SPREADSHEET_ID_AQUI"  # Troque pelo ID real da planilha
+    SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"  # Nome real do seu JSON
+    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"  # Seu ID real da planilha
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
     creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
