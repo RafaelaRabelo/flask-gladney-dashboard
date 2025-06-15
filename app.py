@@ -13,25 +13,32 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
-# --------- Função para pegar as credenciais do Google (via variável de ambiente) ---------
+# ✅ Lista de e-mails permitidos (controle de acesso)
+ALLOWED_USERS = [
+    "seu_email@gmail.com",
+    "email2@empresa.com",
+    "email3@empresa.com"
+]
+
+# --------- Função para pegar credenciais do Google (Service Account via env) ---------
 def get_google_credentials():
     credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
     if not credentials_json:
-        raise Exception("❌ Variável GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
+        raise Exception("❌ Variável de ambiente GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
     info = json.loads(credentials_json)
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
     return Credentials.from_service_account_info(info, scopes=scopes)
 
-# --------- Função para logar acesso no CSV e no Google Sheets ---------
+# --------- Função de log ---------
 def log_access(email, rota, extra_action=None):
     timestamp = datetime.now().isoformat()
 
-    # Log local (opcional)
+    # Salvar no CSV local
     with open("access_log.csv", "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, email, rota, extra_action or ""])
 
-    # Log no Google Sheets
+    # Salvar direto no Google Sheets
     try:
         SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
         creds = get_google_credentials()
@@ -41,7 +48,7 @@ def log_access(email, rota, extra_action=None):
     except Exception as e:
         print(f"❌ Erro ao salvar no Sheets: {e}")
 
-# --------- OAuth2 Google Login ---------
+# --------- Configurar OAuth2 Google ---------
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
@@ -77,14 +84,22 @@ def authorize():
         resp = google.get('https://openidconnect.googleapis.com/v1/userinfo')
         user_info = resp.json()
 
+        user_email = user_info.get("email")
+
+        # ✅ Bloqueio de e-mails não autorizados
+        if user_email not in ALLOWED_USERS:
+            print(f"❌ Acesso bloqueado para: {user_email}")
+            return f"❌ Acesso não autorizado para {user_email}.", 403
+
+        # ✅ Login permitido
         session["user"] = {
             "name": user_info.get("name"),
-            "email": user_info.get("email"),
+            "email": user_email,
             "picture": user_info.get("picture"),
             "login_time": datetime.now().isoformat()
         }
 
-        log_access(user_info.get("email"), "/authorize")
+        log_access(user_email, "/authorize")
         return redirect(url_for("index"))
 
     except Exception as e:
@@ -98,7 +113,6 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# --------- Rota para capturar os cliques nos botões ---------
 @app.route('/track_action', methods=['POST'])
 def track_action():
     try:
