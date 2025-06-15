@@ -5,7 +5,8 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from datetime import datetime
 import gspread
-from google.oauth2.service_account import Credentials
+import google.auth
+from google.auth.transport.requests import Request
 
 load_dotenv()
 
@@ -32,13 +33,13 @@ def log_access(email, rota):
         writer = csv.writer(f)
         writer.writerow([datetime.now().isoformat(), email, rota])
 
-# 📤 Função para exportar CSV para Google Sheets
+# 📤 Função para exportar CSV para Google Sheets (usando ADC, sem precisar de JSON)
 def export_logs_to_sheets():
-    SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"  # Nome real do seu JSON
-    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"  # Seu ID real da planilha
+    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"  # Seu ID da planilha
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    # Autenticar com as credenciais padrão do ambiente (Service Account do Cloud Run)
+    creds, _ = google.auth.default(scopes=SCOPES)
     client = gspread.authorize(creds)
 
     sheet = client.open_by_key(SPREADSHEET_ID).sheet1
