@@ -5,8 +5,6 @@ from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from datetime import datetime
 import gspread
-import google.auth
-from google.auth.transport.requests import Request
 from google.oauth2.service_account import Credentials
 
 load_dotenv()
@@ -28,30 +26,31 @@ google = oauth.register(
     }
 )
 
-# 📌 Função para registrar acessos em CSV
+# Função: Loga acesso tanto no CSV quanto no Google Sheets
 def log_access(email, rota):
+    timestamp = datetime.now().isoformat()
+
+    # Log no CSV local (opcional, útil para backup)
     with open("access_log.csv", "a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([datetime.now().isoformat(), email, rota])
+        writer.writerow([timestamp, email, rota])
 
-# 📤 Função para exportar CSV para Google Sheets (usando ADC, sem precisar de JSON)
-def export_logs_to_sheets():
-    SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"
-    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
-    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # Log direto no Google Sheets
+    try:
+        SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"  # Nome real do seu JSON
+        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"    # ID da sua planilha
+        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    client = gspread.authorize(creds)   # <-- Só isso, sem 'auth=app.auth'
+        creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        client = gspread.authorize(creds)
+        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
 
-    sheet = client.open_by_key(SPREADSHEET_ID).sheet1
-    sheet.clear()
-    sheet.append_row(["Timestamp", "Email", "Rota"])
+        # Adiciona uma linha nova no final da planilha
+        sheet.append_row([timestamp, email, rota])
 
-    with open("access_log.csv", "r") as f:
-        for line in f:
-            row = line.strip().split(",")
-            sheet.append_row(row)
-            
+    except Exception as e:
+        print(f"Erro ao gravar no Google Sheets: {e}")
+
 # Página principal
 @app.route('/')
 def index():
@@ -62,13 +61,13 @@ def index():
     log_access(user["email"], "/")
     return render_template("dashboard.html", user=user)
 
-# 🔑 Início do login
+# Login Google
 @app.route('/login')
 def login():
     redirect_uri = url_for("authorize", _external=True, _scheme="https")
     return google.authorize_redirect(redirect_uri)
 
-# ✅ Callback do Google
+# Callback do Google OAuth
 @app.route('/authorize')
 def authorize():
     try:
@@ -89,7 +88,7 @@ def authorize():
     except Exception as e:
         return f"Erro durante autenticação: {str(e)}", 500
 
-# 🔓 Logout
+# Logout
 @app.route('/logout')
 def logout():
     user = session.get("user")
@@ -97,15 +96,6 @@ def logout():
         log_access(user["email"], "/logout")
     session.clear()
     return redirect(url_for("index"))
-
-# 📤 Exportar logs para o Google Sheets
-@app.route('/export_logs')
-def export_logs():
-    try:
-        export_logs_to_sheets()
-        return "✅ Exportado com sucesso para o Google Sheets!"
-    except Exception as e:
-        return f"❌ Erro ao exportar: {e}", 500
 
 # Rodar o app
 if __name__ == "__main__":
