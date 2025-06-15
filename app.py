@@ -13,18 +13,20 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
-# ✅ Lista de e-mails permitidos (controle de acesso)
+# ✅ Lista de e-mails permitidos
 ALLOWED_USERS = [
-    "seu_email@gmail.com",
-    "email2@empresa.com",
-    "email3@empresa.com"
+    "rafaelabernardesrabelo@gmail.com",
+    "email2@empresa.com"
 ]
+
+# ✅ Domínio permitido
+ALLOWED_DOMAIN = "@upstart13.com"
 
 # --------- Função para pegar credenciais do Google (Service Account via env) ---------
 def get_google_credentials():
     credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
     if not credentials_json:
-        raise Exception("❌ Variável de ambiente GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
+        raise Exception("❌ Variável GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
     info = json.loads(credentials_json)
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
     return Credentials.from_service_account_info(info, scopes=scopes)
@@ -33,12 +35,12 @@ def get_google_credentials():
 def log_access(email, rota, extra_action=None):
     timestamp = datetime.now().isoformat()
 
-    # Salvar no CSV local
+    # Log local (opcional)
     with open("access_log.csv", "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, email, rota, extra_action or ""])
 
-    # Salvar direto no Google Sheets
+    # Log no Google Sheets
     try:
         SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
         creds = get_google_credentials()
@@ -86,12 +88,11 @@ def authorize():
 
         user_email = user_info.get("email")
 
-        # ✅ Bloqueio de e-mails não autorizados
-        if user_email not in ALLOWED_USERS:
+        # ✅ Controle híbrido: e-mail específico ou domínio permitido
+        if user_email not in ALLOWED_USERS and not user_email.endswith(ALLOWED_DOMAIN):
             print(f"❌ Acesso bloqueado para: {user_email}")
             return f"❌ Acesso não autorizado para {user_email}.", 403
 
-        # ✅ Login permitido
         session["user"] = {
             "name": user_info.get("name"),
             "email": user_email,
