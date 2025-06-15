@@ -1,6 +1,10 @@
 # Usar imagem oficial leve do Python
 FROM python:3.11-slim
 
+# Variável de ambiente para não gerar bytecode .pyc
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 # Definir diretório de trabalho
 WORKDIR /app
 
