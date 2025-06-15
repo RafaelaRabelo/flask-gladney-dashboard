@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-from flask import Flask, session, redirect, url_for, request, render_template
+from flask import Flask, session, redirect, url_for, request, render_template, jsonify
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from datetime import datetime
@@ -13,16 +13,35 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
-# ------------------ Função para pegar as credenciais via ENV ------------------
+# --------- Função para pegar as credenciais do Google (via variável de ambiente) ---------
 def get_google_credentials():
     credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
     if not credentials_json:
-        raise Exception("❌ Variável de ambiente GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
+        raise Exception("❌ Variável GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
     info = json.loads(credentials_json)
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
     return Credentials.from_service_account_info(info, scopes=scopes)
 
-# ------------------ Configurar OAuth com Google ------------------
+# --------- Função para logar acesso no CSV e no Google Sheets ---------
+def log_access(email, rota, extra_action=None):
+    timestamp = datetime.now().isoformat()
+
+    # Log local (opcional)
+    with open("access_log.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([timestamp, email, rota, extra_action or ""])
+
+    # Log no Google Sheets
+    try:
+        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
+        creds = get_google_credentials()
+        client = gspread.authorize(creds)
+        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+        sheet.append_row([timestamp, email, rota, extra_action or ""])
+    except Exception as e:
+        print(f"❌ Erro ao salvar no Sheets: {e}")
+
+# --------- OAuth2 Google Login ---------
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
@@ -36,35 +55,13 @@ google = oauth.register(
     }
 )
 
-# ------------------ Função para registrar acessos ------------------
-def log_access(email, rota):
-    timestamp = datetime.now().isoformat()
-
-    # (Opcional) Log local no CSV
-    with open("access_log.csv", "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([timestamp, email, rota])
-
-# ------------------ Exportar logs para Google Sheets ------------------
-    # Log direto no Google Sheets
-    try:
-        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
-        creds = get_google_credentials()
-        client = gspread.authorize(creds)
-        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
-        sheet.append_row([timestamp, email, rota])
-    except Exception as e:
-        print(f"❌ Erro ao salvar no Sheets: {e}")
-
-
-# ------------------ Rotas Flask ------------------
+# --------- Rotas ---------
 
 @app.route('/')
 def index():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
-
     log_access(user["email"], "/")
     return render_template("dashboard.html", user=user)
 
@@ -101,7 +98,24 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# ------------------ Rodar o App ------------------
+# --------- Rota para capturar os cliques nos botões ---------
+@app.route('/track_action', methods=['POST'])
+def track_action():
+    try:
+        user = session.get("user")
+        if not user:
+            return jsonify({"status": "unauthorized"}), 401
+
+        data = request.get_json()
+        action = data.get("action", "Ação desconhecida")
+        log_access(user["email"], "/track_action", extra_action=action)
+        return jsonify({"status": "ok"})
+
+    except Exception as e:
+        print(f"❌ Erro ao registrar ação: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+# --------- Rodar o App ---------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
