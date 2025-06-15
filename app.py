@@ -99,10 +99,14 @@ def authorize():
         user_info = resp.json()
         user_email = user_info.get("email")
 
-        # Permissão simples (ajuste depois se quiser)
-        if not user_email.endswith("@upstart13.com"):
+        # ====== Controle de permissão ======
+        ALLOWED_EMAILS = ["rafaelabernardesrabelo@gmail.com"]
+        ALLOWED_DOMAIN = "@upstart13.com"
+
+        if not (user_email.endswith(ALLOWED_DOMAIN) or user_email in ALLOWED_EMAILS):
             return f"❌ Acesso não autorizado para {user_email}.", 403
 
+        # ====== Login e Session ======
         session["session_id"] = str(uuid.uuid4())
         session["user"] = {
             "name": user_info.get("name"),
