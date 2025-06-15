@@ -5,77 +5,101 @@
     <title>Gladney Dashboard</title>
     <style>
         body {
-            font-family: sans-serif;
-            background-color: #f5f5f5;
             margin: 0;
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f4f3ef;
         }
-        .header {
-            background-color: white;
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 220px;
+            background-color: #008542;
+            color: white;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            font-weight: bold;
+        }
+        .sidebar a:hover {
+            background-color: #006f35;
+        }
+        .main-content {
+            margin-left: 240px;
             padding: 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 3px solid #008542;
-        }
-        .header h2 {
-            color: #008542;
-            margin: 0;
-        }
-        .header img {
-            height: 50px;
-            margin-left: auto;
-        }
-        .user-info {
-            padding: 20px;
-            background-color: white;
         }
         iframe {
             width: 100%;
-            height: 850px;
+            height: 600px;
             border: none;
-            margin-top: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        .menu {
-            display: flex;
-            gap: 20px;
+        .section {
+            margin-bottom: 40px;
+        }
+        button {
+            margin: 5px;
             padding: 10px 20px;
-            background: #fff;
-            border-bottom: 1px solid #ddd;
+            background-color: #00a651;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
-        .menu a {
-            text-decoration: none;
-            font-weight: bold;
-            color: #008542;
+        button:hover {
+            background-color: #008542;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>Gladney Dashboard Tool</h2>
-        <img src="{{ user.picture }}" alt="Profile Picture">
+
+    <div class="sidebar">
+        <a href="#mother" onclick="logClick('Expectant Mother Dashboard')">Expectant Mother Dashboard</a>
+        <a href="#business" onclick="logClick('Business Dashboard')">Business Dashboard</a>
+        <a href="#filtros" onclick="logClick('Filtros')">Filtros de Teste</a>
+        <a href="#upstart" onclick="logClick('Sobre a UpStart')">Sobre a UpStart</a>
+        <a href="/logout">Logout</a>
     </div>
-    <div class="user-info">
-        <p><strong>{{ user.name }}</strong> | {{ user.email }}</p>
-        <a href="/logout" onclick="trackAction('Clicou no Logout')">Logout</a>
-    </div>
-    <div class="menu">
-        <a href="#mother" onclick="trackAction('Clicou no botão Mother Dashboard')">Expectant Mother Dashboard</a>
-        <a href="#business" onclick="trackAction('Clicou no botão Business Dashboard')">Gladney Business Performance</a>
-    </div>
-    <div id="mother">
-        <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
-    </div>
-    <div id="business">
-        <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
+
+    <div class="main-content">
+        <div id="mother" class="section">
+            <h2>Expectant Mother Dashboard</h2>
+            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd"></iframe>
+        </div>
+
+        <div id="business" class="section">
+            <h2>Gladney Business Performance</h2>
+            <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd"></iframe>
+        </div>
+
+        <div id="filtros" class="section">
+            <h2>Filtros de Teste</h2>
+            <button onclick="logClick('Filtro: Janeiro')">Janeiro</button>
+            <button onclick="logClick('Filtro: Fevereiro')">Fevereiro</button>
+            <button onclick="logClick('Filtro: Março')">Março</button>
+        </div>
+
+        <div id="upstart" class="section">
+            <h2>Sobre a UpStart 13</h2>
+            <p>A UpStart 13 é uma empresa especializada em soluções de tecnologia, desenvolvimento ágil e transformação digital.</p>
+        </div>
     </div>
 
     <script>
-    function trackAction(action) {
-        fetch('/track_action', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: action })
-        });
-    }
+        function logClick(actionName) {
+            fetch('/track_action', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: actionName})
+            });
+        }
     </script>
+
 </body>
 </html>
