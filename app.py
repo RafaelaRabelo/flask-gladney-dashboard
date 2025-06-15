@@ -101,14 +101,6 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-@app.route('/export_logs')
-def export_logs():
-    try:
-        export_logs_to_sheets()
-        return "✅ Exportado com sucesso para o Google Sheets!"
-    except Exception as e:
-        return f"❌ Erro ao exportar: {e}", 500
-
 # ------------------ Rodar o App ------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
