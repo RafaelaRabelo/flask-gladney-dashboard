@@ -2,58 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bem-vindo à Gladney Dashboard</title>
+    <title>Welcome | Gladney Dashboard</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        body, html {
             margin: 0;
-            background-color: #f0f4f8;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
-        .container {
+
+        /* 🎥 Vídeo de fundo */
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* 🎨 Container central */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 40px 60px;
             text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        h1 {
-            color: #008542;
+
+        .content h1 {
+            color: #2f6634;
+            margin-bottom: 10px;
         }
-        button {
-            padding: 12px 30px;
-            font-size: 16px;
-            background-color: #008542;
+
+        .content p {
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* ✅ Botão */
+        .start-btn {
+            margin-top: 20px;
+            background-color: #4e8f59;
             color: white;
             border: none;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
         }
-        button:hover {
-            background-color: #006f35;
+
+        .start-btn:hover {
+            background-color: #3d7548;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bem-vindo à Gladney Dashboard</h1>
-        <p>Gerencie e visualize seus dados com segurança.</p>
-        <button onclick="logAndGo()">Iniciar</button>
+
+    <!-- 🎥 Vídeo de fundo -->
+    <video autoplay muted loop id="background-video">
+        <source src="{{ url_for('static', filename='fundo.mp4') }}" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- 🖥️ Conteúdo -->
+    <div class="content">
+        <h1>Welcome to Gladney Dashboard</h1>
+        <p>Manage and visualize your data securely and efficiently.</p>
+        <form action="{{ url_for('login') }}">
+            <button class="start-btn">Start</button>
+        </form>
     </div>
 
-    <script>
-        function logAndGo() {
-            fetch('/track_action', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({action: "Clicou em Iniciar"})
-            }).then(() => {
-                window.location.href = "/login";
-            });
-        }
-    </script>
 </body>
 </html>
