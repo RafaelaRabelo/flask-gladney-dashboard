@@ -2,15 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso Não Autorizado</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Access Denied</title>
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        img {
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #008542;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #006733;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://cdn-icons-png.flaticon.com/512/753/753345.png" alt="Unauthorized" class="illustration">
-        <h1>❌ Acesso Negado</h1>
-        <p>O e-mail <strong>{{ email }}</strong> não tem permissão para acessar esta aplicação.</p>
-        <a class="button" href="/">Voltar para a página inicial</a>
-    </div>
+    <h1>Access Denied</h1>
+    <img src="{{ url_for('static', filename='access_denied_mascot.png') }}" alt="Mascot Sad">
+    <p>Sorry, you don't have permission to access this page.</p>
+    <a href="{{ url_for('landing_page') }}" class="button">Go back</a>
 </body>
 </html>
