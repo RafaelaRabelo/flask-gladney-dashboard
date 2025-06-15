@@ -1,5 +1,6 @@
 import os
 import csv
+import json
 from flask import Flask, session, redirect, url_for, request, render_template
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
@@ -12,7 +13,16 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
-# Configurar OAuth com Google
+# ------------------ Função para pegar as credenciais via ENV ------------------
+def get_google_credentials():
+    credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    if not credentials_json:
+        raise Exception("❌ Variável de ambiente GOOGLE_APPLICATION_CREDENTIALS_JSON não encontrada.")
+    info = json.loads(credentials_json)
+    scopes = ['https://www.googleapis.com/auth/spreadsheets']
+    return Credentials.from_service_account_info(info, scopes=scopes)
+
+# ------------------ Configurar OAuth com Google ------------------
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
@@ -26,32 +36,29 @@ google = oauth.register(
     }
 )
 
-# Função: Loga acesso tanto no CSV quanto no Google Sheets
+# ------------------ Função para registrar acessos ------------------
 def log_access(email, rota):
-    timestamp = datetime.now().isoformat()
-
-    # Log no CSV local (opcional, útil para backup)
     with open("access_log.csv", "a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([timestamp, email, rota])
+        writer.writerow([datetime.now().isoformat(), email, rota])
 
-    # Log direto no Google Sheets
-    try:
-        SERVICE_ACCOUNT_FILE = "streamlit-auth-462617-dadfd3f80f52.json"  # Nome real do seu JSON
-        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"    # ID da sua planilha
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+# ------------------ Exportar logs para Google Sheets ------------------
+def export_logs_to_sheets():
+    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
+    creds = get_google_credentials()
+    client = gspread.authorize(creds)
 
-        creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        client = gspread.authorize(creds)
-        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+    sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+    sheet.clear()
+    sheet.append_row(["Timestamp", "Email", "Rota"])
 
-        # Adiciona uma linha nova no final da planilha
-        sheet.append_row([timestamp, email, rota])
+    with open("access_log.csv", "r") as f:
+        for line in f:
+            row = line.strip().split(",")
+            sheet.append_row(row)
 
-    except Exception as e:
-        print(f"Erro ao gravar no Google Sheets: {e}")
+# ------------------ Rotas Flask ------------------
 
-# Página principal
 @app.route('/')
 def index():
     user = session.get("user")
@@ -61,13 +68,11 @@ def index():
     log_access(user["email"], "/")
     return render_template("dashboard.html", user=user)
 
-# Login Google
 @app.route('/login')
 def login():
     redirect_uri = url_for("authorize", _external=True, _scheme="https")
     return google.authorize_redirect(redirect_uri)
 
-# Callback do Google OAuth
 @app.route('/authorize')
 def authorize():
     try:
@@ -86,9 +91,8 @@ def authorize():
         return redirect(url_for("index"))
 
     except Exception as e:
-        return f"Erro durante autenticação: {str(e)}", 500
+        return f"❌ Erro durante autenticação: {str(e)}", 500
 
-# Logout
 @app.route('/logout')
 def logout():
     user = session.get("user")
@@ -97,7 +101,15 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-# Rodar o app
+@app.route('/export_logs')
+def export_logs():
+    try:
+        export_logs_to_sheets()
+        return "✅ Exportado com sucesso para o Google Sheets!"
+    except Exception as e:
+        return f"❌ Erro ao exportar: {e}", 500
+
+# ------------------ Rodar o App ------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
