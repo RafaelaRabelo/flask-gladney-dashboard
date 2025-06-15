@@ -38,19 +38,14 @@ google = oauth.register(
 
 # ------------------ Função para registrar acessos ------------------
 def log_access(email, rota):
-    with open("access_log.csv", "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([datetime.now().isoformat(), email, rota])
-
-# ------------------ Exportar logs para Google Sheets ------------------
-def log_access(email, rota):
     timestamp = datetime.now().isoformat()
 
-    # (Opcional) Log local no CSV para backup
+    # (Opcional) Log local no CSV
     with open("access_log.csv", "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, email, rota])
 
+# ------------------ Exportar logs para Google Sheets ------------------
     # Log direto no Google Sheets
     try:
         SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
