@@ -2,79 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Access Denied</title>
+    <title>Access Denied - Upstart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #f4f6f8;
-            font-family: 'Poppins', sans-serif;
+            background-color: #f7f8fa;
+            font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
         .card {
-            background: #ffffff;
+            background-color: white;
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             text-align: center;
-            max-width: 480px;
-            width: 90%;
+            max-width: 400px;
         }
-
         .card img {
             max-width: 220px;
+            height: auto;
             margin-bottom: 20px;
         }
-
-        .title {
+        h1 {
             color: #d9534f;
-            font-size: 30px;
-            font-weight: 700;
+            font-size: 26px;
             margin-bottom: 10px;
         }
-
-        .message {
+        p {
             color: #555;
             font-size: 16px;
             margin-bottom: 30px;
         }
-
-        .button {
+        .btn {
             background-color: #d9534f;
-            color: #fff;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
+            color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            font-size: 15px;
-            transition: 0.2s;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
         }
-
-        .button:hover {
+        .btn:hover {
             background-color: #c9302c;
-            box-shadow: 0 4px 12px rgba(217, 83, 79, 0.5);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
-
-        .footer {
+        footer {
             margin-top: 20px;
-            color: #aaa;
             font-size: 12px;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <img src="{{ url_for('static', filename='access_denied_mascot.png') }}" alt="Access Denied">
-        <div class="title">Access Denied</div>
-        <div class="message">Sorry, you do not have permission to access this page.</div>
-        <a href="/" class="button">Go Back to Home</a>
-        <div class="footer">© 2025 Upstart Analytics</div>
+        <img src="{{ url_for('static', filename='access_denied_mascot_1.png') }}" alt="Access Denied Mascot">
+        <h1>Access Denied</h1>
+        <p>Sorry, you do not have permission to access this page.</p>
+        <a href="{{ url_for('landing_page') }}" class="btn">Go Back to Home</a>
+        <footer>© 2025 Upstart Analytics</footer>
     </div>
+
 </body>
 </html>
