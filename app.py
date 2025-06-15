@@ -43,19 +43,24 @@ def log_access(email, rota):
         writer.writerow([datetime.now().isoformat(), email, rota])
 
 # ------------------ Exportar logs para Google Sheets ------------------
-def export_logs_to_sheets():
-    SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
-    creds = get_google_credentials()
-    client = gspread.authorize(creds)
+def log_access(email, rota):
+    timestamp = datetime.now().isoformat()
 
-    sheet = client.open_by_key(SPREADSHEET_ID).sheet1
-    sheet.clear()
-    sheet.append_row(["Timestamp", "Email", "Rota"])
+    # (Opcional) Log local no CSV para backup
+    with open("access_log.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([timestamp, email, rota])
 
-    with open("access_log.csv", "r") as f:
-        for line in f:
-            row = line.strip().split(",")
-            sheet.append_row(row)
+    # Log direto no Google Sheets
+    try:
+        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
+        creds = get_google_credentials()
+        client = gspread.authorize(creds)
+        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+        sheet.append_row([timestamp, email, rota])
+    except Exception as e:
+        print(f"❌ Erro ao salvar no Sheets: {e}")
+
 
 # ------------------ Rotas Flask ------------------
 
