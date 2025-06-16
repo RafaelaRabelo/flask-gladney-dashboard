@@ -1,86 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-    <meta charset="UTF-8">
-    <title>Gladney Dashboard Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body.dark {
-            background-color: #121212;
-            color: white;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-all">
-
-<div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-[#006341] text-white flex flex-col sticky top-0 h-screen">
-        <div class="p-6 text-2xl font-bold">Gladney Tool</div>
-        <nav class="flex-1 overflow-y-auto">
-            <ul class="space-y-2 px-4">
-                <li><a href="/" class="block py-2 px-3 rounded hover:bg-[#004d30]">Dashboard</a></li>
-                <li><a href="/analytics" class="block py-2 px-3 rounded hover:bg-[#004d30]">Analytics</a></li>
-                <li><a href="/marketing" class="block py-2 px-3 rounded hover:bg-[#004d30]">Marketing</a></li>
-                <li><a href="/crm" class="block py-2 px-3 rounded hover:bg-[#004d30]">CRM</a></li>
-                <li><a href="/calendar" class="block py-2 px-3 rounded hover:bg-[#004d30]">Calendar</a></li>
-                <li><a href="/profile" class="block py-2 px-3 rounded hover:bg-[#004d30]">Profile</a></li>
-                <li><a href="/logs" class="block py-2 px-3 rounded hover:bg-[#004d30]">Access Logs</a></li>
-                <li><a href="/about" class="block py-2 px-3 rounded hover:bg-[#004d30]">About</a></li>
-            </ul>
-        </nav>
-        <div class="p-4">
-            <a href="/logout" class="text-sm text-gray-200 hover:underline">Logout</a>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
-        <!-- Topbar -->
-        <header class="flex items-center justify-between p-4 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Gladney Dashboard</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Main Dashboard Overview</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <!-- Dark Mode Toggle -->
-                <button onclick="toggleDarkMode()" class="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-700 dark:text-gray-200 transition">
-                    ☀️ / 🌙
-                </button>
-                <!-- Profile -->
-                <div class="flex items-center gap-2">
-                    <img src="{{ user.picture }}" alt="Profile Picture" class="w-8 h-8 rounded-full">
-                    <span class="text-sm">{{ user.name }}</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Dashboard Content -->
-        <main class="p-6 space-y-10">
-            <section>
-                <h2 class="text-xl font-semibold mb-2">Expectant Mother Dashboard</h2>
-                <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd" class="w-full h-[500px] rounded shadow"></iframe>
-            </section>
-
-            <section>
-                <h2 class="text-xl font-semibold mb-2">Business Performance Dashboard</h2>
-                <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" class="w-full h-[500px] rounded shadow"></iframe>
-            </section>
-        </main>
-    </div>
-</div>
-
-<script>
-function toggleDarkMode() {
-    document.body.classList.toggle('dark');
-    document.documentElement.classList.toggle('dark');
-}
-</script>
-
-</body>
-</html>
-=======
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -88,7 +5,7 @@ function toggleDarkMode() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/logo/logo-2.svg" type="image/x-icon" />
-    <title>Expectant Mother - Gladney Center</title>
+    <title>Links - Gladney Center</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -116,6 +33,7 @@ function toggleDarkMode() {
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
+              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_1"
               aria-controls="ddmenu_1"
@@ -131,9 +49,9 @@ function toggleDarkMode() {
               </span>
               <span class="text">Dashboard</span>
             </a>
-            <ul id="ddmenu_1" class="collapse show dropdown-nav">
+            <ul id="ddmenu_1" class="collapse dropdown-nav">
               <li>
-                <a href="dashboard.html" class="active"> Expectant Mother </a>
+                <a href="dashboard.html"> Expectant Mother </a>
               </li>
               <li>
                 <a href="business.html"> Gladney Business Performance </a>
@@ -147,7 +65,6 @@ function toggleDarkMode() {
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
-              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_4"
               aria-controls="ddmenu_4"
@@ -168,9 +85,9 @@ function toggleDarkMode() {
               </span>
               <span class="text">Links</span>
             </a>
-            <ul id="ddmenu_4" class="collapse dropdown-nav">
+            <ul id="ddmenu_4" class="collapse show dropdown-nav">
               <li>
-                <a href="alerts.html"> Consolidated </a>
+                <a href="alerts.html" class="active"> Consolidated </a>
               </li>
             </ul>
           </li>
@@ -277,25 +194,72 @@ function toggleDarkMode() {
           <!-- ========== title-wrapper start ========== -->
           <div class="title-wrapper pt-30">
             <div class="row align-items-center">
-              <div class="col-md-6">
-                <div class="title">
-                  <h4>Expectant Mother</h4>
-                </div>
-              </div>
+
               <!-- end col -->
             </div>
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
-
-          <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
-            <iframe src="https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_o746l61ysd"
-              frameborder="0"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-              allowfullscreen
-              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-            </iframe>
-          </div>
+          <!-- ========== alerts-wrapper start ========== -->
+          <div class="alerts-wrapper">
+            <div class="card-style mb-40">
+              <h5 class="text-medium mb-30">Consolidated Links</h5>
+              <p class="text-sm mb-10 mt-20">
+                This page serves as a centralized repository of key links, 
+                providing streamlined access to multiple data sources used by the Gladney team. 
+                It was created to facilitate navigation across different platforms and dashboards, 
+                ensuring that all users can easily locate and consult essential performance metrics and reports.
+              </p>
+              <p class="text-sm mb-10">
+                The consolidated resources include:
+              </p>
+              <!-- Dashboards -->
+              <p class="text-sm mb-10 mt-20"><strong>Dashboards</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Expectant Mother Dashboard: 
+                  <a href="https://lookerstudio.google.com/s/jIx9tqJgFWY" target="_blank">https://lookerstudio.google.com/s/jIx9tqJgFWY</a>
+                </li>
+                <li class="mb-10">
+                  Gladney Business Performance Dashboard: 
+                  <a href="https://lookerstudio.google.com/s/pmlk4brfM3k" target="_blank">https://lookerstudio.google.com/s/pmlk4brfM3k</a>
+                </li>
+                <li class="mb-10">
+                  Page Traffic Monitor Dashboard:  
+                  <a href="https://lookerstudio.google.com/s/oMqvwF4RgSs" target="_blank">https://lookerstudio.google.com/s/oMqvwF4RgSs</a>
+                </li>
+              </ul>
+              <!-- Google Sheets -->
+              <p class="text-sm mb-10 mt-20"><strong>Google Sheets</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Target Metrics: 
+                  <a href="https://gladneycenter.sharepoint.com/:x:/s/Leadership/EUHMJytEZmNOgUM9mRyGJJgBKVrRst5QUfMF6cAmxsUvJg?e=Ye2X7Q" target="_blank">Access here</a>
+                </li>
+              </ul>
+              <!-- Reports -->
+              <p class="text-sm mb-10 mt-20"><strong>Reports</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Quality Check – New Beginnings: 
+                  <a href="assets/pdfs/Quality Check - New Beginnings.pdf" target="_blank" download>Download PDF</a>
+                </li>
+                <li class="mb-10">
+                  Quality Check – Adoptive Parents: 
+                  <a href="assets/pdfs/Quality Check- Adoptive Parents.pdf" target="_blank" download>Download PDF</a>
+                </li>
+              </ul>
+              <!-- Informer -->
+              <p class="text-sm mb-10 mt-20"><strong>Informer</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Gladney Informer Portal: 
+                  <a href="https://informer.gladneycenter.org/informer/?locale=en_US#action=ReportRun&reportId=11829251&launch=false" target="_blank">Access here</a>
+                </li>
+              </ul>
+                  </div>
+                </div>
+              </div>
 
           <!-- End Row -->
         </div>
@@ -856,4 +820,3 @@ function toggleDarkMode() {
     </script>
   </body>
 </html>
->>>>>>> 7acb89e961ae6ca14c5ad497bda0d4b8bcd4b70a
