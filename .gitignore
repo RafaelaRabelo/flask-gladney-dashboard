@@ -1,0 +1,4 @@
+# Node build
+/frontend/.next
+/frontend/node_modules
+/frontend/out
