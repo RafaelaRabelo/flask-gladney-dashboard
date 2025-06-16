@@ -1,25 +1,20 @@
-# Usar imagem oficial leve do Python
-FROM python:3.11-slim
+# Etapa 1 - Build Frontend
+FROM node:18 AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm install
+COPY frontend ./
+RUN npm run build
 
-# Variáveis para evitar .pyc e problemas de buffer
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Etapa 2 - Backend + Copiando Frontend Build
+FROM python:3.10-slim
 
-# Definir diretório de trabalho
 WORKDIR /app
-
-# Copiar o arquivo de requirements e instalar dependências
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar o restante do projeto (app.py, templates, etc)
 COPY . .
 
-# Variável de ambiente padrão do Cloud Run
-ENV PORT=8080
+# Copia o build estático do Next para a pasta pública do Flask (exemplo)
+COPY --from=frontend-build /app/frontend/.next /app/static/next
 
-# Expor a porta
-EXPOSE 8080
+RUN pip install -r requirements.txt
 
-# Comando de start (produção usa gunicorn)
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
