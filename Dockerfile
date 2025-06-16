@@ -1,48 +1,48 @@
-# -----------------------------
-# ETAPA 1: Build do frontend (Next.js)
-# -----------------------------
-FROM node:18 AS frontend-builder
+# ============================
+# ETAPA 1: Build do Next.js Frontend
+# ============================
+FROM node:18 AS frontend-build
 
-# Diretório de trabalho para o frontend
 WORKDIR /app/frontend
 
-# Copiar os arquivos do frontend
-COPY frontend/package.json frontend/package-lock.json* ./
-COPY frontend/ ./
+# Copia apenas o frontend
+COPY ./frontend/package.json ./frontend/package-lock.json* ./frontend/
 
-# Instalar dependências e buildar o Next
+# Instala dependências do frontend
 RUN npm install
-RUN npm run build
-RUN npm run export
 
-# -----------------------------
-# ETAPA 2: Build da aplicação Flask
-# -----------------------------
+# Copia o resto dos arquivos do frontend (pages, components, styles etc)
+COPY ./frontend .
+
+# Build de produção do Next.js
+RUN npm run build && npm run export
+
+# ============================
+# ETAPA 2: Backend Flask + Servir Next.js Exportado
+# ============================
 FROM python:3.10-slim
 
-# Instalar dependências básicas do sistema
-RUN apt-get update && apt-get install -y build-essential
+# Instala dependências básicas do sistema
+RUN apt-get update && apt-get install -y build-essential && apt-get clean
 
-# Diretório de trabalho para o Flask
 WORKDIR /app
 
-# Copiar requirements e instalar dependências Python
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar todos os arquivos do projeto Flask
+# Copia o backend Flask
 COPY . .
 
-# Copiar os arquivos exportados do Next (pasta out) para o static/next/
-RUN mkdir -p static/next
-COPY --from=frontend-builder /app/frontend/out/ static/next/
+# Copia o build estático exportado do Next.js
+COPY --from=frontend-build /app/frontend/out ./static/next/
 
-# Variável de ambiente para produção
-ENV FLASK_ENV=production
-ENV PORT=8080
+# Instala as dependências Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expor porta (Cloud Run ignora, mas pode deixar)
+# Expõe a porta do Flask
 EXPOSE 8080
 
-# Comando para rodar o Flask
+# Define a variável de ambiente para o Flask
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_APP=app.py
+ENV PORT=8080
+
+# Comando de inicialização
 CMD ["python", "app.py"]
