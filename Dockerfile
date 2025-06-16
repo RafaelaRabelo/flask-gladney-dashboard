@@ -1,20 +1,31 @@
-# Etapa 1 - Build Frontend
+# Etapa 1: Build do Frontend (Next.js)
 FROM node:18 AS frontend-build
+
 WORKDIR /app/frontend
+
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
-COPY frontend ./
-RUN npm run build
 
-# Etapa 2 - Backend + Copiando Frontend Build
-FROM python:3.10-slim
+COPY frontend ./
+RUN npm run build && npm run export
+
+# Etapa 2: Backend Flask
+FROM python:3.10-slim AS backend
 
 WORKDIR /app
-COPY . .
 
-# Copia o build estático do Next para a pasta pública do Flask (exemplo)
-COPY --from=frontend-build /app/frontend/.next /app/static/next
-
+# Instalar dependências Python
+COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+# Copiar código Flask
+COPY app.py ./
+COPY templates ./templates/
+COPY static ./static/
+
+# Copiar frontend buildado para o static
+COPY --from=frontend-build /app/frontend/out /app/static/next
+
+EXPOSE 8080
+
+CMD ["python", "app.py"]
