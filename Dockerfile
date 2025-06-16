@@ -1,32 +1,25 @@
-# Etapa 1: Build do frontend (Next.js + Tailwind)
-FROM node:18 AS frontend-build
+# Usar imagem oficial leve do Python
+FROM python:3.11-slim
 
-WORKDIR /app/frontend
+# Variáveis para evitar .pyc e problemas de buffer
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-COPY frontend/package.json frontend/package-lock.json ./
-RUN npm install
-
-COPY frontend ./
-RUN npm run build
-RUN npm run export
-
-# Etapa 2: Backend Flask com frontend embutido
-FROM python:3.10-slim
-
-# Instala dependências do Python
+# Definir diretório de trabalho
 WORKDIR /app
 
-COPY requirements.txt ./
+# Copiar o arquivo de requirements e instalar dependências
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia o backend Flask
+# Copiar o restante do projeto (app.py, templates, etc)
 COPY . .
 
-# Copia o frontend gerado para dentro da pasta static
-COPY --from=frontend-build /app/frontend/out /app/static/next
+# Variável de ambiente padrão do Cloud Run
+ENV PORT=8080
 
-# Variável de ambiente obrigatória para Flask no Google Cloud
-ENV PORT 8080
+# Expor a porta
+EXPOSE 8080
 
-# Comando final para rodar Flask
-CMD ["gunicorn", "-b", ":8080", "app:app"]
+# Comando de start (produção usa gunicorn)
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
