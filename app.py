@@ -84,7 +84,7 @@ def dashboard():
     if not user:
         return redirect(url_for("login"))
     log_access(user["email"], "/dashboard")
-    return redirect("/static/next/index.html")
+    return render_template("dashboard.html", user=user)
 
 @app.route('/login')
 def login():
