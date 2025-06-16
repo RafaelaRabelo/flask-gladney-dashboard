@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Gladney Dashboard Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body.dark {
+            background-color: #121212;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-all">
+
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#006341] text-white flex flex-col sticky top-0 h-screen">
+        <div class="p-6 text-2xl font-bold">Gladney Tool</div>
+        <nav class="flex-1 overflow-y-auto">
+            <ul class="space-y-2 px-4">
+                <li><a href="/" class="block py-2 px-3 rounded hover:bg-[#004d30]">Dashboard</a></li>
+                <li><a href="/analytics" class="block py-2 px-3 rounded hover:bg-[#004d30]">Analytics</a></li>
+                <li><a href="/marketing" class="block py-2 px-3 rounded hover:bg-[#004d30]">Marketing</a></li>
+                <li><a href="/crm" class="block py-2 px-3 rounded hover:bg-[#004d30]">CRM</a></li>
+                <li><a href="/calendar" class="block py-2 px-3 rounded hover:bg-[#004d30]">Calendar</a></li>
+                <li><a href="/profile" class="block py-2 px-3 rounded hover:bg-[#004d30]">Profile</a></li>
+                <li><a href="/logs" class="block py-2 px-3 rounded hover:bg-[#004d30]">Access Logs</a></li>
+                <li><a href="/about" class="block py-2 px-3 rounded hover:bg-[#004d30]">About</a></li>
+            </ul>
+        </nav>
+        <div class="p-4">
+            <a href="/logout" class="text-sm text-gray-200 hover:underline">Logout</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Topbar -->
+        <header class="flex items-center justify-between p-4 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Gladney Dashboard</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Main Dashboard Overview</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" class="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-700 dark:text-gray-200 transition">
+                    ☀️ / 🌙
+                </button>
+                <!-- Profile -->
+                <div class="flex items-center gap-2">
+                    <img src="{{ user.picture }}" alt="Profile Picture" class="w-8 h-8 rounded-full">
+                    <span class="text-sm">{{ user.name }}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="p-6 space-y-10">
+            <section>
+                <h2 class="text-xl font-semibold mb-2">Expectant Mother Dashboard</h2>
+                <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd" class="w-full h-[500px] rounded shadow"></iframe>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold mb-2">Business Performance Dashboard</h2>
+                <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" class="w-full h-[500px] rounded shadow"></iframe>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script>
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    document.documentElement.classList.toggle('dark');
+}
+</script>
+
+</body>
+</html>
