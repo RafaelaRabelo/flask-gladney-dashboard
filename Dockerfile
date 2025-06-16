@@ -1,4 +1,4 @@
-# Etapa 1: Build do frontend (Next.js + Tailwind)
+# Etapa 1: Build do frontend (Next.js)
 FROM node:18 AS frontend-build
 
 WORKDIR /app/frontend
@@ -10,23 +10,22 @@ COPY frontend ./
 RUN npm run build
 RUN npm run export
 
-# Etapa 2: Backend Flask com frontend embutido
+# Etapa 2: Backend Flask
 FROM python:3.10-slim
 
-# Instala dependências do Python
 WORKDIR /app
 
+# Instala dependências Python
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia o backend Flask
+# Copia todo o backend Flask
 COPY . .
 
-# Copia o frontend gerado para dentro da pasta static
+# Copia o frontend exportado para o static/next
 COPY --from=frontend-build /app/frontend/out /app/static/next
 
-# Variável de ambiente obrigatória para Flask no Google Cloud
+# Variável de ambiente obrigatória para Flask no Cloud Run
 ENV PORT 8080
 
-# Comando final para rodar Flask
 CMD ["gunicorn", "-b", ":8080", "app:app"]
