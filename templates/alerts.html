@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/logo/logo-2.svg') }}" type="image/x-icon" />
-    <title>Page Traffic Monitor - Gladney Center</title>
+    <title>Links - Gladney Center - Gladney Center</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
@@ -34,6 +34,7 @@
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
+              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_1"
               aria-controls="ddmenu_1"
@@ -57,7 +58,7 @@
                 <a href="{{ url_for('business') }}"> Gladney Business Performance </a>
               </li>
               <li>
-                <a href="{{ url_for('traffic') }}" class="active"> Page Traffic Monitor </a>
+                <a href="{{ url_for('traffic') }}"> Page Traffic Monitor </a>
               </li>
             </ul>
           </li>
@@ -65,7 +66,6 @@
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
-              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_4"
               aria-controls="ddmenu_4"
@@ -93,9 +93,6 @@
             </ul>
           </li>
  
- 
- 
-
           <li class="nav-item">
             <a href="{{ url_for('notification') }}">
               <span class="icon">
@@ -194,25 +191,72 @@
           <!-- ========== title-wrapper start ========== -->
           <div class="title-wrapper pt-30">
             <div class="row align-items-center">
-              <div class="col-md-6">
-                <div class="title">
-                  <h4>Gladney Business Performance</h4>
-                </div>
-              </div>
+
               <!-- end col -->
             </div>
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
-
-          <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
-            <iframe src="https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_o746l61ysd"
-              frameborder="0"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-              allowfullscreen
-              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-            </iframe>
-          </div>
+          <!-- ========== alerts-wrapper start ========== -->
+          <div class="alerts-wrapper">
+            <div class="card-style mb-40">
+              <h5 class="text-medium mb-30">Consolidated Links</h5>
+              <p class="text-sm mb-10 mt-20">
+                This page serves as a centralized repository of key links, 
+                providing streamlined access to multiple data sources used by the Gladney team. 
+                It was created to facilitate navigation across different platforms and dashboards, 
+                ensuring that all users can easily locate and consult essential performance metrics and reports.
+              </p>
+              <p class="text-sm mb-10">
+                The consolidated resources include:
+              </p>
+              <!-- Dashboards -->
+              <p class="text-sm mb-10 mt-20"><strong>Dashboards</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Expectant Mother Dashboard: 
+                  <a href="https://lookerstudio.google.com/s/jIx9tqJgFWY" target="_blank">https://lookerstudio.google.com/s/jIx9tqJgFWY</a>
+                </li>
+                <li class="mb-10">
+                  Gladney Business Performance Dashboard: 
+                  <a href="https://lookerstudio.google.com/s/pmlk4brfM3k" target="_blank">https://lookerstudio.google.com/s/pmlk4brfM3k</a>
+                </li>
+                <li class="mb-10">
+                  Page Traffic Monitor Dashboard:  
+                  <a href="https://lookerstudio.google.com/s/oMqvwF4RgSs" target="_blank">https://lookerstudio.google.com/s/oMqvwF4RgSs</a>
+                </li>
+              </ul>
+              <!-- Google Sheets -->
+              <p class="text-sm mb-10 mt-20"><strong>Google Sheets</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Target Metrics: 
+                  <a href="https://gladneycenter.sharepoint.com/:x:/s/Leadership/EUHMJytEZmNOgUM9mRyGJJgBKVrRst5QUfMF6cAmxsUvJg?e=Ye2X7Q" target="_blank">Access here</a>
+                </li>
+              </ul>
+              <!-- Reports -->
+              <p class="text-sm mb-10 mt-20"><strong>Reports</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Quality Check – New Beginnings: 
+                  <a href="assets/pdfs/Quality Check - New Beginnings.pdf" target="_blank" download>Download PDF</a>
+                </li>
+                <li class="mb-10">
+                  Quality Check – Adoptive Parents: 
+                  <a href="assets/pdfs/Quality Check- Adoptive Parents.pdf" target="_blank" download>Download PDF</a>
+                </li>
+              </ul>
+              <!-- Informer -->
+              <p class="text-sm mb-10 mt-20"><strong>Informer</strong></p>
+              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
+                <li class="mb-10">
+                  Gladney Informer Portal: 
+                  <a href="https://informer.gladneycenter.org/informer/?locale=en_US#action=ReportRun&reportId=11829251&launch=false" target="_blank">Access here</a>
+                </li>
+              </ul>
+                  </div>
+                </div>
+              </div>
 
           <!-- End Row -->
         </div>
@@ -221,7 +265,7 @@
       <!-- ========== section end ========== -->
 
 
-      PAREI AQUI
+
 
       <!-- ========== footer end =========== -->
     </main>
