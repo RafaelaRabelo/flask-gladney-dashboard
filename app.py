@@ -8,12 +8,19 @@ from dotenv import load_dotenv
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
+from datetime import timedelta
+
 
 load_dotenv()
 
 app = Flask(__name__)
+app.permanent_session_lifetime = timedelta(minutes=30)  # 30 minutos de inatividade
 app.secret_key = os.getenv("SECRET_KEY", "dev_key")
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    
 # ====== Função: Credenciais do Google Sheets ======
 def get_google_credentials():
     credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
@@ -140,6 +147,7 @@ def authorize():
             return render_template("unauthorized.html", user=user_info), 403 
 
         # ====== Login e Session ======
+        session.permanent = True  # ⬅️ ESSA LINHA DEFINE A SESSÃO COMO PERMANENTE (para controlar expiração)
         session["session_id"] = str(uuid.uuid4())
         session["user"] = {
             "name": user_info.get("name"),
@@ -147,7 +155,7 @@ def authorize():
             "picture": user_info.get("picture"),
             "login_time": datetime.now().isoformat()
         }
-
+        
         log_access(user_email, "/authorize")
         return redirect(url_for("dashboard"))
 
