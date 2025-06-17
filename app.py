@@ -86,6 +86,38 @@ def dashboard():
     log_access(user["email"], "/dashboard")
     return render_template("dashboard.html", user=user)
 
+@app.route('/business')
+def business():
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+    log_access(user["email"], "/business")
+    return render_template("business.html", user=user)
+
+@app.route('/alerts')
+def alerts():
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+    log_access(user["email"], "/alerts")
+    return render_template("alerts.html", user=user)
+
+@app.route('/notification')
+def notification():
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+    log_access(user["email"], "/notification")
+    return render_template("notification.html", user=user)
+
+@app.route('/traffic')
+def traffic():
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+    log_access(user["email"], "/traffic")
+    return render_template("traffic.html", user=user)
+
 @app.route('/login')
 def login():
     redirect_uri = url_for("authorize", _external=True, _scheme="https")
@@ -106,7 +138,6 @@ def authorize():
         if not (user_email.endswith(ALLOWED_DOMAIN) or user_email in ALLOWED_EMAILS):
             log_access(user_email, "/unauthorized", extra_action="Unauthorized Access Attempt")
             return render_template("unauthorized.html", user=user_info), 403 
-
 
         # ====== Login e Session ======
         session["session_id"] = str(uuid.uuid4())
