@@ -166,7 +166,7 @@
                     <div class="profile-info">
                       <div class="info">
                         <div class="image">
-                          <img src="assets/images/profile/profile-image.png" alt="" />
+                          <img src="{{ url_for('static', filename='assets/images/profile/profile-image.png') }}" alt="" />
                         </div>
                         <div>
                           <h6 class="fw-500">Adam Joe</h6>
@@ -268,15 +268,15 @@
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"
-    src="{{ url_for('static', filename='assets/js/Chart.min.js') }}"
-    src="{{ url_for('static', filename='assets/js/dynamic-pie-chart.js') }}"
-   	src="{{ url_for('static', filename='assets/js/moment.min.js') }}"
-    src="{{ url_for('static', filename='assets/js/fullcalendar.js') }}"
-    src="{{ url_for('static', filename='assets/js/jvectormap.min.js') }}"
-    src="{{ url_for('static', filename='assets/js/world-merc.js') }}"
-    src="{{ url_for('static', filename='assets/js/polyfill.js') }}"
-    src="{{ url_for('static', filename='assets/js/main.js') }}"
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/dynamic-pie-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/fullcalendar.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jvectormap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/world-merc.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/polyfill.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
     <script>
       // ======== jvectormap activation
