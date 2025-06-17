@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <style>
+    body.sidebar-collapsed .sidebar-nav-wrapper {
+      width: 60px;
+      overflow: hidden;
+    }
+    
+    body.sidebar-collapsed .sidebar-nav-wrapper .text,
+    body.sidebar-collapsed .sidebar-nav-wrapper ul li a span.text {
+      display: none;
+    }
+    
+    body.sidebar-collapsed .sidebar-nav-wrapper .navbar-logo img {
+      max-width: 35px;
+      height: auto;
+    }
+    </style>
 
   </head>
   <body>
@@ -133,11 +149,14 @@
           <div class="row">
             <div class="col-lg-5 col-md-5 col-6">
               <div class="header-left d-flex align-items-center">
-                <div class="menu-toggle-btn mr-15">
-                  <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                    <i class="lni lni-chevron-left me-2"></i> Menu
-                  </button>
-                </div>
+              <div class="navbar-logo d-flex align-items-center justify-content-between" style="padding: 10px 15px;">
+                <a href="{{ url_for('dashboard') }}">
+                  <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="height: 35px; max-width: 150px;">
+                </a>
+                <button id="sidebar-toggle" class="btn btn-link p-0 ms-2" style="font-size: 20px;">
+                  <i id="sidebar-icon" class="lni lni-chevron-left"></i>
+                </button>
+              </div>
               </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
@@ -767,6 +786,17 @@
         },
       });
         // =========== chart four end
+    </script>
+    <script>
+    document.getElementById('sidebar-toggle').addEventListener('click', function() {
+      document.body.classList.toggle('sidebar-collapsed');
+      const icon = document.getElementById('sidebar-icon');
+      if (document.body.classList.contains('sidebar-collapsed')) {
+        icon.className = 'lni lni-menu';  // ícone de hamburguer
+      } else {
+        icon.className = 'lni lni-chevron-left';  // seta para voltar
+      }
+    });
     </script>
   </body>
 </html>
