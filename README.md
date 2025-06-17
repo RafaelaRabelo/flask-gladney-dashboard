@@ -1,5 +1,5 @@
 
-# 📊 Gladney Dashboard Access Tracker
+# 📊 Dashboard Access Tracker
 
 Aplicação web em Flask com autenticação Google OAuth2, controle de acesso por domínio ou e-mail, rastreamento de ações de usuários e exportação de logs para Google Sheets.
 
