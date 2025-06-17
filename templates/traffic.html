@@ -167,19 +167,21 @@
                 <div class="profile-box ml-15">
                   <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="profile-info">
-                      <div class="info">
-                        <div class="image">
-                          <img src="{{ url_for('static', filename='assets/images/profile/profile-image.png') }}" alt="" />
-                        </div>
-                        <div>
-                          <h6 class="fw-500">Adam Joe</h6>
-                          <p>Admin</p>
-                        </div>
+                    <div class="profile-info d-flex align-items-center">
+                      <div class="image">
+                        <img src="{{ user.picture }}" alt="Profile Image" style="border-radius: 50%; width: 40px; height: 40px;" />
+                      </div>
+                      <div class="ms-2">
+                        <h6 class="fw-500 mb-0">{{ user.name }}</h6>
+                        <p class="mb-0" style="font-size: 12px;">{{ user.email }}</p>
                       </div>
                     </div>
                   </button>
+                  <ul class="dropdown-menu" aria-labelledby="profile">
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                  </ul>
                 </div>
+
                 <!-- profile end -->
               </div>
             </div>
