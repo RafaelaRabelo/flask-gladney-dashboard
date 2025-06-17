@@ -154,7 +154,7 @@
                   <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="height: 35px; max-width: 150px;">
                 </a>
                 <button id="sidebar-toggle" class="btn btn-link p-0 ms-2" style="font-size: 20px;">
-                  <i id="sidebar-icon" class="lni lni-chevron-left"></i>
+                 <img id="sidebar-icon" src="{{ url_for('static', filename='assets/images/icons/hamburguer.png') }}" alt="Menu Icon" style="width: 20px; height: 20px;">
                 </button>
               </div>
               </div>
@@ -792,9 +792,9 @@
       document.body.classList.toggle('sidebar-collapsed');
       const icon = document.getElementById('sidebar-icon');
       if (document.body.classList.contains('sidebar-collapsed')) {
-        icon.className = 'lni lni-menu';  // ícone de hamburguer
+        icon.src = "{{ url_for('static', filename='assets/images/icons/hamburguer.png') }}";  // Ícone de menu
       } else {
-        icon.className = 'lni lni-chevron-left';  // seta para voltar
+        icon.src = "{{ url_for('static', filename='assets/images/icons/chevron-left.png') }}";  // Ícone de voltar (você pode criar outro PNG pra isso)
       }
     });
     </script>
