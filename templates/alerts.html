@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/logo/logo-2.svg" type="image/x-icon" />
-    <title>Links - Gladney Center</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/logo/logo-2.svg') }}" type="image/x-icon" />
+    <title>Page Traffic Monitor - Gladney Center</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css" rel="stylesheet" type="text/css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -23,8 +24,8 @@
     <!-- ======== sidebar-nav start =========== -->
     <aside class="sidebar-nav-wrapper" style="display: flex; flex-direction: column; height: 100vh;">
       <div class="navbar-logo">
-        <a href="dashboard.html">
-          <img src="assets/images/logo/logo.svg" alt="logo" style="width: 220px; height: auto;" />
+        <a href="{{ url_for('dashboard') }}">
+          <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="width: 220px; height: auto;" />
           <br></br>
         </a>
       </div>
@@ -33,7 +34,6 @@
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
-              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_1"
               aria-controls="ddmenu_1"
@@ -49,15 +49,15 @@
               </span>
               <span class="text">Dashboard</span>
             </a>
-            <ul id="ddmenu_1" class="collapse dropdown-nav">
+            <ul id="ddmenu_1" class="collapse show dropdown-nav">
               <li>
-                <a href="dashboard.html"> Expectant Mother </a>
+                <a href="{{ url_for('dashboard') }}"> Expectant Mother </a>
               </li>
               <li>
-                <a href="business.html"> Gladney Business Performance </a>
+                <a href="{{ url_for('business') }}"> Gladney Business Performance </a>
               </li>
               <li>
-                <a href="traffic.html"> Page Traffic Monitor </a>
+                <a href="{{ url_for('traffic') }}" class="active"> Page Traffic Monitor </a>
               </li>
             </ul>
           </li>
@@ -65,6 +65,7 @@
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
+              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_4"
               aria-controls="ddmenu_4"
@@ -85,9 +86,9 @@
               </span>
               <span class="text">Links</span>
             </a>
-            <ul id="ddmenu_4" class="collapse show dropdown-nav">
+            <ul id="ddmenu_4" class="collapse dropdown-nav">
               <li>
-                <a href="alerts.html" class="active"> Consolidated </a>
+                <a href="{{ url_for('alerts') }}"> Consolidated </a>
               </li>
             </ul>
           </li>
@@ -96,7 +97,7 @@
  
 
           <li class="nav-item">
-            <a href="notification.html">
+            <a href="{{ url_for('notification') }}">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -116,7 +117,7 @@
       </nav>
       <div class="promo-box" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; padding: 10px 25px;">
         <div class="text-center">
-          <img class="mx-auto" src="./assets/images/logo/logo-icon-big.jpeg" alt="Logo" style="width: 40px; height: auto;" />
+          <img class="mx-auto" src="{{ url_for('static', filename='assets/images/logo/logo-icon-big.jpeg') }}" alt="Logo" style="width: 40px; height: auto;" />
           <div>
           <small style="font-size: 10px;">Powered by UpStart13</small>
           </div>
@@ -124,7 +125,6 @@
     </aside>
     <div class="overlay"></div>
     <!-- ======== sidebar-nav end =========== -->
-
     <!-- ======== main-wrapper start =========== -->
     <main class="main-wrapper">
       <!-- ========== header start ========== -->
@@ -170,7 +170,7 @@
                     <div class="profile-info">
                       <div class="info">
                         <div class="image">
-                          <img src="assets/images/profile/profile-image.png" alt="" />
+                          <img src="{{ url_for('static', filename='assets/images/profile/profile-image.png') }}" alt="" />
                         </div>
                         <div>
                           <h6 class="fw-500">Adam Joe</h6>
@@ -194,72 +194,25 @@
           <!-- ========== title-wrapper start ========== -->
           <div class="title-wrapper pt-30">
             <div class="row align-items-center">
-
+              <div class="col-md-6">
+                <div class="title">
+                  <h4>Gladney Business Performance</h4>
+                </div>
+              </div>
               <!-- end col -->
             </div>
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
-          <!-- ========== alerts-wrapper start ========== -->
-          <div class="alerts-wrapper">
-            <div class="card-style mb-40">
-              <h5 class="text-medium mb-30">Consolidated Links</h5>
-              <p class="text-sm mb-10 mt-20">
-                This page serves as a centralized repository of key links, 
-                providing streamlined access to multiple data sources used by the Gladney team. 
-                It was created to facilitate navigation across different platforms and dashboards, 
-                ensuring that all users can easily locate and consult essential performance metrics and reports.
-              </p>
-              <p class="text-sm mb-10">
-                The consolidated resources include:
-              </p>
-              <!-- Dashboards -->
-              <p class="text-sm mb-10 mt-20"><strong>Dashboards</strong></p>
-              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
-                <li class="mb-10">
-                  Expectant Mother Dashboard: 
-                  <a href="https://lookerstudio.google.com/s/jIx9tqJgFWY" target="_blank">https://lookerstudio.google.com/s/jIx9tqJgFWY</a>
-                </li>
-                <li class="mb-10">
-                  Gladney Business Performance Dashboard: 
-                  <a href="https://lookerstudio.google.com/s/pmlk4brfM3k" target="_blank">https://lookerstudio.google.com/s/pmlk4brfM3k</a>
-                </li>
-                <li class="mb-10">
-                  Page Traffic Monitor Dashboard:  
-                  <a href="https://lookerstudio.google.com/s/oMqvwF4RgSs" target="_blank">https://lookerstudio.google.com/s/oMqvwF4RgSs</a>
-                </li>
-              </ul>
-              <!-- Google Sheets -->
-              <p class="text-sm mb-10 mt-20"><strong>Google Sheets</strong></p>
-              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
-                <li class="mb-10">
-                  Target Metrics: 
-                  <a href="https://gladneycenter.sharepoint.com/:x:/s/Leadership/EUHMJytEZmNOgUM9mRyGJJgBKVrRst5QUfMF6cAmxsUvJg?e=Ye2X7Q" target="_blank">Access here</a>
-                </li>
-              </ul>
-              <!-- Reports -->
-              <p class="text-sm mb-10 mt-20"><strong>Reports</strong></p>
-              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
-                <li class="mb-10">
-                  Quality Check – New Beginnings: 
-                  <a href="assets/pdfs/Quality Check - New Beginnings.pdf" target="_blank" download>Download PDF</a>
-                </li>
-                <li class="mb-10">
-                  Quality Check – Adoptive Parents: 
-                  <a href="assets/pdfs/Quality Check- Adoptive Parents.pdf" target="_blank" download>Download PDF</a>
-                </li>
-              </ul>
-              <!-- Informer -->
-              <p class="text-sm mb-10 mt-20"><strong>Informer</strong></p>
-              <ul class="text-sm" style="padding-left: 20px; list-style-type: disc;">
-                <li class="mb-10">
-                  Gladney Informer Portal: 
-                  <a href="https://informer.gladneycenter.org/informer/?locale=en_US#action=ReportRun&reportId=11829251&launch=false" target="_blank">Access here</a>
-                </li>
-              </ul>
-                  </div>
-                </div>
-              </div>
+
+          <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
+            <iframe src="https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_o746l61ysd"
+              frameborder="0"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+              allowfullscreen
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+          </div>
 
           <!-- End Row -->
         </div>
@@ -268,20 +221,22 @@
       <!-- ========== section end ========== -->
 
 
+      PAREI AQUI
+
       <!-- ========== footer end =========== -->
     </main>
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/dynamic-pie-chart.js"></script>
-    <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/fullcalendar.js"></script>
-    <script src="assets/js/jvectormap.min.js"></script>
-    <script src="assets/js/world-merc.js"></script>
-    <script src="assets/js/polyfill.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/dynamic-pie-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/fullcalendar.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jvectormap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/world-merc.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/polyfill.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
     <script>
       // ======== jvectormap activation
