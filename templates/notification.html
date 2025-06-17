@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/logo/logo-2.svg" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/logo/logo-2.svg') }}" type="image/x-icon" />
     <title>Notifications - Gladney Center</title>
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
@@ -22,8 +22,8 @@
     <!-- ======== sidebar-nav start =========== -->
     <aside class="sidebar-nav-wrapper" style="display: flex; flex-direction: column; height: 100vh;">
       <div class="navbar-logo">
-        <a href="dashboard.html">
-          <img src="assets/images/logo/logo.svg" alt="logo" style="width: 220px; height: auto;" />
+        <a href="{{ url_for('dashboard') }}">
+          <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="width: 220px; height: auto;" />
           <br></br>
         </a>
       </div>
@@ -50,13 +50,13 @@
             </a>
             <ul id="ddmenu_1" class="collapse dropdown-nav">
               <li>
-                <a href="dashboard.html"> Expectant Mother </a>
+                <a href="{{ url_for('dashboard') }}"> Expectant Mother </a>
               </li>
               <li>
-                <a href="business.html"> Gladney Business Performance </a>
+                <a href="{{ url_for('business') }}"> Gladney Business Performance </a>
               </li>
               <li>
-                <a href="traffic.html"> Page Traffic Monitor </a>
+                <a href="{{ url_for('traffic') }}"> Page Traffic Monitor </a>
               </li>
             </ul>
           </li>
@@ -87,7 +87,7 @@
             </a>
             <ul id="ddmenu_4" class="collapse dropdown-nav">
               <li>
-                <a href="alerts.html" > Consolidated </a>
+                <a href="{{ url_for('alerts') }}" > Consolidated </a>
               </li>
             </ul>
           </li>
@@ -96,7 +96,7 @@
  
 
           <li class="nav-item">
-            <a href="notification.html" class="active">
+            <a href="{{ url_for('notification') }}" class="active">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.8333 2.50008C10.8333 2.03984 10.4602 1.66675 9.99999 1.66675C9.53975 1.66675 9.16666 2.03984 9.16666 2.50008C9.16666 2.96032 9.53975 3.33341 9.99999 3.33341C10.4602 3.33341 10.8333 2.96032 10.8333 2.50008Z" />
@@ -112,7 +112,7 @@
       </nav>
       <div class="promo-box" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; padding: 10px 25px;">
         <div class="text-center">
-          <img class="mx-auto" src="./assets/images/logo/logo-icon-big.jpeg" alt="Logo" style="width: 40px; height: auto;" />
+          <img class="mx-auto" src="{{ url_for('static', filename='assets/images/logo/logo-icon-big.jpeg') }}" alt="Logo" style="width: 40px; height: auto;" />
           <div>
           <small style="font-size: 10px;">Powered by UpStart13</small>
           </div>
@@ -245,7 +245,7 @@
             <body>
               <div class="no-notification-wrapper">
                 <div class="icon-area">
-                  <img src="assets/images/no-notification.png" alt="No Notifications" />
+                  <img src="{{ url_for('static', filename='assets/images/no-notification.png') }}" alt="No Notifications" />
                 </div>
                 <h3 class="title">No Notifications</h3>
                 <p class="subtitle">You're all caught up!</p>
@@ -268,15 +268,15 @@
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/dynamic-pie-chart.js"></script>
-    <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/fullcalendar.js"></script>
-    <script src="assets/js/jvectormap.min.js"></script>
-    <script src="assets/js/world-merc.js"></script>
-    <script src="assets/js/polyfill.js"></script>
-    <script src="assets/js/main.js"></script>
+    src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"
+    src="{{ url_for('static', filename='assets/js/Chart.min.js') }}"
+    src="{{ url_for('static', filename='assets/js/dynamic-pie-chart.js') }}"
+   	src="{{ url_for('static', filename='assets/js/moment.min.js') }}"
+    src="{{ url_for('static', filename='assets/js/fullcalendar.js') }}"
+    src="{{ url_for('static', filename='assets/js/jvectormap.min.js') }}"
+    src="{{ url_for('static', filename='assets/js/world-merc.js') }}"
+    src="{{ url_for('static', filename='assets/js/polyfill.js') }}"
+    src="{{ url_for('static', filename='assets/js/main.js') }}"
 
     <script>
       // ======== jvectormap activation
