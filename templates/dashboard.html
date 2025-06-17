@@ -1,100 +1,17 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-    <meta charset="UTF-8">
-    <title>Gladney Dashboard Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body.dark {
-            background-color: #121212;
-            color: white;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 dark:bg-gray-900 transition-all">
-
-<div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-[#006341] text-white flex flex-col sticky top-0 h-screen">
-        <div class="p-6 text-2xl font-bold">Gladney Tool</div>
-        <nav class="flex-1 overflow-y-auto">
-            <ul class="space-y-2 px-4">
-                <li><a href="/" class="block py-2 px-3 rounded hover:bg-[#004d30]">Dashboard</a></li>
-                <li><a href="/analytics" class="block py-2 px-3 rounded hover:bg-[#004d30]">Analytics</a></li>
-                <li><a href="/marketing" class="block py-2 px-3 rounded hover:bg-[#004d30]">Marketing</a></li>
-                <li><a href="/crm" class="block py-2 px-3 rounded hover:bg-[#004d30]">CRM</a></li>
-                <li><a href="/calendar" class="block py-2 px-3 rounded hover:bg-[#004d30]">Calendar</a></li>
-                <li><a href="/profile" class="block py-2 px-3 rounded hover:bg-[#004d30]">Profile</a></li>
-                <li><a href="/logs" class="block py-2 px-3 rounded hover:bg-[#004d30]">Access Logs</a></li>
-                <li><a href="/about" class="block py-2 px-3 rounded hover:bg-[#004d30]">About</a></li>
-            </ul>
-        </nav>
-        <div class="p-4">
-            <a href="/logout" class="text-sm text-gray-200 hover:underline">Logout</a>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
-        <!-- Topbar -->
-        <header class="flex items-center justify-between p-4 border-b dark:border-gray-700 bg-white dark:bg-gray-800">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Gladney Dashboard</h1>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Main Dashboard Overview</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <!-- Dark Mode Toggle -->
-                <button onclick="toggleDarkMode()" class="rounded-full bg-gray-200 p-2 text-gray-800 dark:bg-gray-700 dark:text-gray-200 transition">
-                    ☀️ / 🌙
-                </button>
-                <!-- Profile -->
-                <div class="flex items-center gap-2">
-                    <img src="{{ user.picture }}" alt="Profile Picture" class="w-8 h-8 rounded-full">
-                    <span class="text-sm">{{ user.name }}</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Dashboard Content -->
-        <main class="p-6 space-y-10">
-            <section>
-                <h2 class="text-xl font-semibold mb-2">Expectant Mother Dashboard</h2>
-                <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_iv91iy4nsd" class="w-full h-[500px] rounded shadow"></iframe>
-            </section>
-
-            <section>
-                <h2 class="text-xl font-semibold mb-2">Business Performance Dashboard</h2>
-                <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" class="w-full h-[500px] rounded shadow"></iframe>
-            </section>
-        </main>
-    </div>
-</div>
-
-<script>
-function toggleDarkMode() {
-    document.body.classList.toggle('dark');
-    document.documentElement.classList.toggle('dark');
-}
-</script>
-
-</body>
-</html>
-=======
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/logo/logo-2.svg') }}" type="image/x-icon" />
-    <title>Expectant Mother - Gladney Center</title>
+    <link rel="shortcut icon" href="assets/images/logo/logo-2.svg" type="image/x-icon" />
+    <title>Gladney Business Performance - Gladney Center</title>
 
     <!-- ========== All CSS files linkup ========= -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -107,7 +24,7 @@ function toggleDarkMode() {
     <aside class="sidebar-nav-wrapper" style="display: flex; flex-direction: column; height: 100vh;">
       <div class="navbar-logo">
         <a href="dashboard.html">
-          <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="width: 220px; height: auto;" />
+          <img src="assets/images/logo/logo.svg" alt="logo" style="width: 220px; height: auto;" />
           <br></br>
         </a>
       </div>
@@ -133,10 +50,10 @@ function toggleDarkMode() {
             </a>
             <ul id="ddmenu_1" class="collapse show dropdown-nav">
               <li>
-                <a href="dashboard.html" class="active"> Expectant Mother </a>
+                <a href="dashboard.html"> Expectant Mother </a>
               </li>
               <li>
-                <a href="business.html"> Gladney Business Performance </a>
+                <a href="business.html" class="active"> Gladney Business Performance </a>
               </li>
               <li>
                 <a href="traffic.html"> Page Traffic Monitor </a>
@@ -199,7 +116,7 @@ function toggleDarkMode() {
       </nav>
       <div class="promo-box" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; padding: 10px 25px;">
         <div class="text-center">
-          <img class="mx-auto" src="{{ url_for('static', filename='assets/images/logo/logo-icon-big.jpeg') }}" alt="Logo" style="width: 40px; height: auto;" />
+          <img class="mx-auto" src="./assets/images/logo/logo-icon-big.jpeg" alt="Logo" style="width: 40px; height: auto;" />
           <div>
           <small style="font-size: 10px;">Powered by UpStart13</small>
           </div>
@@ -279,7 +196,7 @@ function toggleDarkMode() {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h4>Expectant Mother</h4>
+                  <h4>Gladney Business Performance</h4>
                 </div>
               </div>
               <!-- end col -->
@@ -289,7 +206,7 @@ function toggleDarkMode() {
           <!-- ========== title-wrapper end ========== -->
 
           <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
-            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_zntyhmqisd"
+            <iframe src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd"
               frameborder="0"
               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
               allowfullscreen
@@ -309,16 +226,15 @@ function toggleDarkMode() {
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/Chart.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/dynamic-pie-chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/moment.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/fullcalendar.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/jvectormap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/world-merc.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/polyfill.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
-
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <script>
       // ======== jvectormap activation
@@ -857,4 +773,3 @@ function toggleDarkMode() {
     </script>
   </body>
 </html>
->>>>>>> 7acb89e961ae6ca14c5ad497bda0d4b8bcd4b70a
