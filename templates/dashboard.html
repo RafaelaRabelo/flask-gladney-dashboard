@@ -190,18 +190,39 @@
 
       <!-- ========== section start ========== -->
       {% if iframe_url %}
-          <div class="menu" style="margin-bottom: 20px;">
-              <a href="{{ url_for('expectant_dashboard', tab='overview') }}" class="{% if active_tab == 'overview' %}active{% endif %}">Overview</a>
-              <a href="{{ url_for('expectant_dashboard', tab='recent-perspective') }}" class="{% if active_tab == 'recent-perspective' %}active{% endif %}">Recent Perspective</a>
-              <a href="{{ url_for('expectant_dashboard', tab='google-ads-performance') }}" class="{% if active_tab == 'google-ads-performance' %}active{% endif %}">Google Ads Performance</a>
-              <a href="{{ url_for('expectant_dashboard', tab='campaign-breakdown') }}" class="{% if active_tab == 'campaign-breakdown' %}active{% endif %}">Campaign Breakdown</a>
-              <a href="{{ url_for('expectant_dashboard', tab='funnel-comparison') }}" class="{% if active_tab == 'funnel-comparison' %}active{% endif %}">Funnel Comparison</a>
-              <a href="{{ url_for('expectant_dashboard', tab='campaign-cost') }}" class="{% if active_tab == 'campaign-cost' %}active{% endif %}">Campaign Cost</a>
-              <a href="{{ url_for('expectant_dashboard', tab='contact-vs-cost') }}" class="{% if active_tab == 'contact-vs-cost' %}active{% endif %}">Contact vs Cost</a>
-              <a href="{{ url_for('expectant_dashboard', tab='day-of-week') }}" class="{% if active_tab == 'day-of-week' %}active{% endif %}">Day of Week</a>
-              <a href="{{ url_for('expectant_dashboard', tab='campaign-ratios') }}" class="{% if active_tab == 'campaign-ratios' %}active{% endif %}">Campaign Ratios</a>
-              <a href="{{ url_for('expectant_dashboard', tab='contact-breakdown') }}" class="{% if active_tab == 'contact-breakdown' %}active{% endif %}">Contact Breakdown</a>
-          </div>
+          <ul class="nav nav-pills mb-3" style="margin-bottom: 20px;">
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'overview' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='overview') }}">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'recent-perspective' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='recent-perspective') }}">Recent Perspective</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'google-ads-performance' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='google-ads-performance') }}">Google Ads Performance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'campaign-breakdown' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-breakdown') }}">Campaign Breakdown</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'funnel-comparison' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='funnel-comparison') }}">Funnel Comparison</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'campaign-cost' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-cost') }}">Campaign Cost</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'contact-vs-cost' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='contact-vs-cost') }}">Contact vs Cost</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'day-of-week' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='day-of-week') }}">Day of Week</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'campaign-ratios' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-ratios') }}">Campaign Ratios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'contact-breakdown' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='contact-breakdown') }}">Contact Breakdown</a>
+            </li>
+        </ul>
+
       
           <iframe src="{{ iframe_url }}" width="100%" height="700px" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
       {% endif %}
