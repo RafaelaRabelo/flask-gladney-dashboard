@@ -90,8 +90,14 @@ def dashboard():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
+
+    # Exibe o iframe da aba "overview" por padrão
+    iframe_url = expectant_iframes.get('overview')
+    active_tab = 'overview'
+
     log_access(user["email"], "/dashboard")
-    return render_template("dashboard.html", user=user)
+    return render_template("dashboard.html", user=user, iframe_url=iframe_url, active_tab=active_tab)
+
 
 @app.route('/business')
 def business():
