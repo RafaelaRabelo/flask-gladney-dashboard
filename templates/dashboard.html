@@ -203,128 +203,128 @@
           </div>
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
-{% if iframe_url %}
-<style>
-.tab-wrapper {
-  position: relative;
-  width: 100%;
-  margin-bottom: 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.tab-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.tab-container::-webkit-scrollbar {
-  display: none;
-}
-
-.tab-scroll {
-  display: inline-flex;
-  list-style: none;
-  margin: 0;
-  padding: 0 40px;
-}
-
-.tab-scroll li {
-  white-space: nowrap;
-  padding: 10px 20px;
-  font-size: 14px;
-  color: #555;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-}
-
-.tab-scroll li.active {
-  color: #3F51B5;
-  font-weight: 600;
-  border-bottom: 2px solid #3F51B5;
-}
-
-.scroll-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  text-align: center;
-  line-height: 26px;
-  cursor: pointer;
-  z-index: 10;
-  color: #666;
-  font-size: 18px;
-  user-select: none;
-}
-
-.scroll-button.left { left: -16px; }
-.scroll-button.right { right: -16px; }
-</style>
-
-<div class="tab-wrapper">
-  <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
-  <div class="tab-container">
-    <ul class="tab-scroll">
-      <li id="tab-overview" onclick="changeIframe('overview')">📊 Overview</li>
-      <li id="tab-recent-perspective" onclick="changeIframe('recent-perspective')">✔️ Recent Perspective</li>
-      <li id="tab-google-ads-performance" onclick="changeIframe('google-ads-performance')">📈 Google Ads Performance</li>
-      <li id="tab-campaign-breakdown" onclick="changeIframe('campaign-breakdown')">📄 Campaign Breakdown</li>
-      <li id="tab-funnel-comparison" onclick="changeIframe('funnel-comparison')">🔢 Funnel Comparison</li>
-      <li id="tab-campaign-cost" onclick="changeIframe('campaign-cost')">📢 Campaign Costs</li>
-      <li id="tab-contact-vs-cost" onclick="changeIframe('contact-vs-cost')">💲 Contact x Cost</li>
-      <li id="tab-day-of-week" onclick="changeIframe('day-of-week')">📅 Day of the Week</li>
-    </ul>
-  </div>
-  <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
-</div>
-
-<div style="width: 100%; height: 80vh;">
-  <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-</div>
-
-<script>
-const iframeUrls = {
-  'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd',
-  'recent-perspective': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_obrfzkburd',
-  'google-ads-performance': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_oi42nj80rd',
-  'campaign-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7hlear4wsd',
-  'funnel-comparison': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_sg6j2t9wsd',
-  'campaign-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7pjh7o80rd',
-  'contact-vs-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_drggvx80rd',
-  'day-of-week': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_kybyw8icrd'
-};
-
-function changeIframe(tabName) {
-  const iframe = document.getElementById('dashboard-iframe');
-  iframe.src = iframeUrls[tabName];
-
-  // Troca o destaque da aba ativa
-  document.querySelectorAll('.tab-scroll li').forEach(li => li.classList.remove('active'));
-  document.getElementById('tab-' + tabName).classList.add('active');
-
-  // Faz um POST para o Flask registrar o clique (se quiser rastrear)
-  fetch('/track_action', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ action: 'Click Tab: ' + tabName })
-  });
-}
-
-function scrollTabs(distance) {
-  const scrollContainer = document.querySelector('.tab-container');
-  scrollContainer.scrollBy({ left: distance, behavior: 'smooth' });
-}
-</script>
-{% endif %}
+          {% if iframe_url %}
+          <style>
+          .tab-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+          }
+          
+          .tab-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          
+          .tab-container::-webkit-scrollbar {
+            display: none;
+          }
+          
+          .tab-scroll {
+            display: inline-flex;
+            list-style: none;
+            margin: 0;
+            padding: 0 40px;
+          }
+          
+          .tab-scroll li {
+            white-space: nowrap;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+          }
+          
+          .tab-scroll li.active {
+            color: #3F51B5;
+            font-weight: 600;
+            border-bottom: 2px solid #3F51B5;
+          }
+          
+          .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            line-height: 26px;
+            cursor: pointer;
+            z-index: 10;
+            color: #666;
+            font-size: 18px;
+            user-select: none;
+          }
+          
+          .scroll-button.left { left: -16px; }
+          .scroll-button.right { right: -16px; }
+          </style>
+          
+          <div class="tab-wrapper">
+            <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
+            <div class="tab-container">
+              <ul class="tab-scroll">
+                <li id="tab-overview" onclick="changeIframe('overview')">📊 Overview</li>
+                <li id="tab-recent-perspective" onclick="changeIframe('recent-perspective')">✔️ Recent Perspective</li>
+                <li id="tab-google-ads-performance" onclick="changeIframe('google-ads-performance')">📈 Google Ads Performance</li>
+                <li id="tab-campaign-breakdown" onclick="changeIframe('campaign-breakdown')">📄 Campaign Breakdown</li>
+                <li id="tab-funnel-comparison" onclick="changeIframe('funnel-comparison')">🔢 Funnel Comparison</li>
+                <li id="tab-campaign-cost" onclick="changeIframe('campaign-cost')">📢 Campaign Costs</li>
+                <li id="tab-contact-vs-cost" onclick="changeIframe('contact-vs-cost')">💲 Contact x Cost</li>
+                <li id="tab-day-of-week" onclick="changeIframe('day-of-week')">📅 Day of the Week</li>
+              </ul>
+            </div>
+            <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
+          </div>
+          
+          <div style="width: 100%; height: 80vh;">
+            <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+          </div>
+          
+          <script>
+          const iframeUrls = {
+            'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd',
+            'recent-perspective': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_obrfzkburd',
+            'google-ads-performance': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_oi42nj80rd',
+            'campaign-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7hlear4wsd',
+            'funnel-comparison': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_sg6j2t9wsd',
+            'campaign-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7pjh7o80rd',
+            'contact-vs-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_drggvx80rd',
+            'day-of-week': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_kybyw8icrd'
+          };
+          
+          function changeIframe(tabName) {
+            const iframe = document.getElementById('dashboard-iframe');
+            iframe.src = iframeUrls[tabName];
+          
+            // Troca o destaque da aba ativa
+            document.querySelectorAll('.tab-scroll li').forEach(li => li.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+          
+            // Faz um POST para o Flask registrar o clique (se quiser rastrear)
+            fetch('/track_action', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ action: 'Click Tab: ' + tabName })
+            });
+          }
+          
+          function scrollTabs(distance) {
+            const scrollContainer = document.querySelector('.tab-container');
+            scrollContainer.scrollBy({ left: distance, behavior: 'smooth' });
+          }
+          </script>
+          {% endif %}
 
 
           <!-- End Row -->
