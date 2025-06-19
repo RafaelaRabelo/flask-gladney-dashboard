@@ -213,15 +213,16 @@
           background-color: #f9f9f9;
           border-bottom: 2px solid #e0e0e0;
         }
+        
         .tab-container::before,
         .tab-container::after {
           content: "";
           position: absolute;
           top: 0;
           bottom: 0;
-          width: 30px;
+          width: 40px; /* Mesma largura do padding da tab-scroll */
           pointer-events: none;
-          z-index: 1; /* Garante que o gradiente fique acima das abas mas atrás dos botões */
+          z-index: 1;
         }
         
         .tab-container::before {
@@ -234,19 +235,15 @@
           background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
         
-        .tab-button-left,
-        .tab-button-right {
-          z-index: 2; /* Garante que os botões fiquem acima do gradiente */
-        }
-
         .tab-scroll {
           display: flex;
           overflow-x: auto;
           scrollbar-width: none; /* Firefox */
           -ms-overflow-style: none; /* IE/Edge */
-          padding-left: 0;
           list-style: none;
           margin: 0;
+          padding-left: 40px;  /* Margem interna esquerda */
+          padding-right: 40px; /* Margem interna direita */
         }
         
         .tab-scroll::-webkit-scrollbar {
@@ -292,6 +289,7 @@
           user-select: none;
           font-weight: bold;
           color: #555;
+          z-index: 2;
         }
         
         .tab-button-left {
@@ -301,6 +299,7 @@
         .tab-button-right {
           right: 0;
         }
+
         </style>
         
         <div class="tab-container">
