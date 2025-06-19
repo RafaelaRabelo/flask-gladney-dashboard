@@ -183,6 +183,32 @@ def track_action():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+
+# ====== Novo: Rotas para as abas internas do Dashboard Expectant Mother ======
+
+expectant_iframes = {
+    'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd',
+    'recent-perspective': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_obrfzkburd',
+    'google-ads-performance': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_oi42nj80rd',
+    'campaign-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7hlear4wsd',
+    'funnel-comparison': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_sg6j2t9wsd',
+    'campaign-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7pjh7o80rd',
+    'contact-vs-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_drggvx80rd',
+    'day-of-week': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_kybyw8icrd',
+    'campaign-ratios': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_adv1u280rd',
+    'contact-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_2b3vzq1wsd'
+}
+
+@app.route('/dashboard/expectant/<tab>')
+def expectant_dashboard(tab):
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+
+    iframe_url = expectant_iframes.get(tab, expectant_iframes['overview'])
+    log_access(user["email"], f"/dashboard/expectant/{tab}")
+    return render_template("dashboard.html", user=user, active_tab=tab, iframe_url=iframe_url)
+
 # ====== Run ======
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
