@@ -241,15 +241,17 @@
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
+            <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
+              {% if iframe_url %}
+                <iframe src="{{ iframe_url }}"
+                        frameborder="0"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                </iframe>
+              {% endif %}
+            </div>
 
-          <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
-            <iframe src="https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_zntyhmqisd"
-              frameborder="0"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-              allowfullscreen
-              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-            </iframe>
-          </div>
 
           <!-- End Row -->
         </div>
