@@ -206,48 +206,30 @@
       {% if iframe_url %}
 
         <style>
-        .tab-container {
+        .tab-wrapper {
           position: relative;
-          overflow: hidden;
+          width: 100%;
           margin-bottom: 20px;
+        }
+        
+        .tab-container {
+          overflow-x: auto;
+          white-space: nowrap;
+          border-bottom: 1px solid #e0e0e0;
           background-color: #f9f9f9;
-          border-bottom: 2px solid #e0e0e0;
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* IE/Edge */
         }
         
-        .tab-container::before,
-        .tab-container::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 40px; /* Mesma largura do padding da tab-scroll */
-          pointer-events: none;
-          z-index: 1;
-        }
-        
-        .tab-container::before {
-          left: 0;
-          background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
-        }
-        
-        .tab-container::after {
-          right: 0;
-          background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+        .tab-container::-webkit-scrollbar {
+          display: none; /* Chrome/Safari */
         }
         
         .tab-scroll {
-          display: flex;
-          overflow-x: auto;
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* IE/Edge */
+          display: inline-flex;
           list-style: none;
           margin: 0;
-          padding-left: 40px;  /* Margem interna esquerda */
-          padding-right: 40px; /* Margem interna direita */
-        }
-        
-        .tab-scroll::-webkit-scrollbar {
-          display: none; /* Chrome/Safari */
+          padding: 10px 0;
         }
         
         .tab-scroll li {
@@ -257,50 +239,93 @@
           color: #555;
         }
         
-        .tab-scroll li a {
-          text-decoration: none;
-          color: inherit;
-        }
-        
         .tab-scroll li.active {
           color: #3F51B5;
           font-weight: 600;
           border-bottom: 2px solid #3F51B5;
         }
         
-        .tab-scroll li:hover {
-          color: #3F51B5;
+        .tab-scroll li a {
+          text-decoration: none;
+          color: inherit;
         }
         
-        .tab-button-left,
-        .tab-button-right {
+        .scroll-button {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          background-color: white;
-          border: 1px solid #ccc;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
           border-radius: 50%;
-          width: 28px;
-          height: 28px;
+          width: 32px;
+          height: 32px;
           text-align: center;
-          line-height: 26px;
-          cursor: pointer;
+          line-height: 30px;
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          user-select: none;
-          font-weight: bold;
-          color: #555;
-          z-index: 2;
+          cursor: pointer;
+          z-index: 10;
         }
         
-        .tab-button-left {
-          left: 0;
+        .scroll-button.left {
+          left: -16px;
         }
         
-        .tab-button-right {
-          right: 0;
+        .scroll-button.right {
+          right: -16px;
         }
-
+        
+        .scroll-button:hover {
+          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
         </style>
+        
+        <div class="tab-wrapper">
+          <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
+          
+          <div class="tab-container">
+            <ul class="tab-scroll">
+              <li class="{% if active_tab == 'overview' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='overview') }}">Overview</a>
+              </li>
+              <li class="{% if active_tab == 'recent-perspective' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='recent-perspective') }}">Recent Perspective</a>
+              </li>
+              <li class="{% if active_tab == 'google-ads-performance' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='google-ads-performance') }}">Google Ads Performance</a>
+              </li>
+              <li class="{% if active_tab == 'campaign-breakdown' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-breakdown') }}">Campaign Breakdown</a>
+              </li>
+              <li class="{% if active_tab == 'funnel-comparison' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='funnel-comparison') }}">Funnel Comparison</a>
+              </li>
+              <li class="{% if active_tab == 'campaign-cost' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-cost') }}">Campaign Cost</a>
+              </li>
+              <li class="{% if active_tab == 'contact-vs-cost' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='contact-vs-cost') }}">Contact vs Cost</a>
+              </li>
+              <li class="{% if active_tab == 'day-of-week' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='day-of-week') }}">Day of Week</a>
+              </li>
+              <li class="{% if active_tab == 'campaign-ratios' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-ratios') }}">Campaign Ratios</a>
+              </li>
+              <li class="{% if active_tab == 'contact-breakdown' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='contact-breakdown') }}">Contact Breakdown</a>
+              </li>
+            </ul>
+          </div>
+        
+          <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
+        </div>
+        
+        <script>
+        function scrollTabs(distance) {
+          const scrollContainer = document.querySelector('.tab-container');
+          scrollContainer.scrollBy({ left: distance, behavior: 'smooth' });
+        }
+        </script>
         
         <div class="tab-container">
           <div class="tab-button-left" onclick="scrollTabs(-150)">‹</div>
