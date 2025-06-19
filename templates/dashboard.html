@@ -204,42 +204,114 @@
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
       {% if iframe_url %}
-          <ul class="nav nav-pills mb-3" style="margin-bottom: 20px;">
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'overview' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='overview') }}">Overview</a>
+
+        <style>
+        .custom-tab-menu {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+            padding-left: 0;
+            list-style: none;
+            overflow-x: auto;
+        }
+        
+        .custom-tab-menu li {
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+        
+        .custom-tab-menu li a {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.2s;
+        }
+        
+        .custom-tab-menu li a i {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+        
+        .custom-tab-menu li.active a {
+            color: #3F51B5;
+            font-weight: 600;
+        }
+        
+        .custom-tab-menu li.active a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #3F51B5;
+        }
+        
+        .custom-tab-menu li a:hover {
+            color: #3F51B5;
+        }
+        </style>
+        
+        <ul class="custom-tab-menu">
+            <li class="{% if active_tab == 'overview' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='overview') }}">
+                    <i class="mdi mdi-view-dashboard-outline"></i> Overview
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'recent-perspective' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='recent-perspective') }}">Recent Perspective</a>
+            <li class="{% if active_tab == 'recent-perspective' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='recent-perspective') }}">
+                    <i class="mdi mdi-check"></i> Recent Perspective
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'google-ads-performance' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='google-ads-performance') }}">Google Ads Performance</a>
+            <li class="{% if active_tab == 'google-ads-performance' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='google-ads-performance') }}">
+                    <i class="mdi mdi-chart-line"></i> Google Ads Performance
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'campaign-breakdown' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-breakdown') }}">Campaign Breakdown</a>
+            <li class="{% if active_tab == 'campaign-breakdown' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-breakdown') }}">
+                    <i class="mdi mdi-file-document-outline"></i> Campaign Breakdown
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'funnel-comparison' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='funnel-comparison') }}">Funnel Comparison</a>
+            <li class="{% if active_tab == 'funnel-comparison' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='funnel-comparison') }}">
+                    <i class="mdi mdi-chart-scatter-plot"></i> Funnel Comparison
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'campaign-cost' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-cost') }}">Campaign Cost</a>
+            <li class="{% if active_tab == 'campaign-cost' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-cost') }}">
+                    <i class="mdi mdi-currency-usd"></i> Campaign Cost
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'contact-vs-cost' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='contact-vs-cost') }}">Contact vs Cost</a>
+            <li class="{% if active_tab == 'contact-vs-cost' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='contact-vs-cost') }}">
+                    <i class="mdi mdi-account-cash"></i> Contact vs Cost
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'day-of-week' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='day-of-week') }}">Day of Week</a>
+            <li class="{% if active_tab == 'day-of-week' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='day-of-week') }}">
+                    <i class="mdi mdi-calendar-week"></i> Day of Week
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'campaign-ratios' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='campaign-ratios') }}">Campaign Ratios</a>
+            <li class="{% if active_tab == 'campaign-ratios' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='campaign-ratios') }}">
+                    <i class="mdi mdi-percent"></i> Campaign Ratios
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if active_tab == 'contact-breakdown' %}active{% endif %}" href="{{ url_for('expectant_dashboard', tab='contact-breakdown') }}">Contact Breakdown</a>
+            <li class="{% if active_tab == 'contact-breakdown' %}active{% endif %}">
+                <a href="{{ url_for('expectant_dashboard', tab='contact-breakdown') }}">
+                    <i class="mdi mdi-account-group-outline"></i> Contact Breakdown
+                </a>
             </li>
         </ul>
-
-      
-          <iframe src="{{ iframe_url }}" width="100%" height="500px" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-      {% endif %}
+        
+        <iframe src="{{ iframe_url }}" width="100%" height="500px" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        
+        {% endif %}
 
 
 
