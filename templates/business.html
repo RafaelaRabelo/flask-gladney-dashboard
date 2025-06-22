@@ -3,178 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gladney Business Performance - Gladney Center</title>
-
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+  <title>Gladney Business Performance</title>
 
   <style>
-    /* ===== Top Navbar ===== */
     .top-nav {
       display: flex;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: #fff;
       padding: 10px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    /* ===== Main Menu Horizontal ===== */
     .main-menu {
-      list-style: none;
       display: flex;
+      list-style: none;
       gap: 40px;
       margin: 0;
       padding: 0;
-      align-items: center;
     }
-
     .menu-item {
       position: relative;
       cursor: pointer;
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
-
-    .menu-item span {
-      user-select: none;
-    }
-
-    /* ===== First Level Dropdown ===== */
-    .submenu {
+    .submenu, .nested-submenu {
       display: none;
       position: absolute;
-      top: 40px;
-      left: 0;
       background: #fff;
       border: 1px solid #ddd;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      min-width: 200px;
+      min-width: 220px;
       z-index: 999;
     }
-
-    .submenu li {
+    .submenu li, .nested-submenu li {
       padding: 10px 15px;
-      white-space: nowrap;
       cursor: pointer;
+      white-space: nowrap;
     }
-
-    .submenu li:hover {
-      background-color: #f5f5f5;
+    .submenu li:hover, .nested-submenu li:hover {
+      background: #f0f0f0;
     }
-
-    /* ===== Nested (Second Level) Dropdown ===== */
-    .submenu li.position-relative:hover > .nested-submenu {
-      display: block;
-    }
-
-    .nested-submenu {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 200px;
-      background: #fff;
-      border: 1px solid #ddd;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      min-width: 200px;
-      z-index: 999;
-    }
-
-    /* Show submenu on hover */
     .menu-item:hover > .submenu {
       display: block;
     }
-
-    /* Icon Style */
+    .submenu li.position-relative:hover > .nested-submenu {
+      display: block;
+      left: 220px;
+      top: 0;
+    }
     .menu-icon {
-      width: 18px;
-      height: 18px;
-      display: inline-block;
+      width: 16px;
+      height: 16px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ========== MENU HORIZONTAL COM ÍCONES + DROPDOWN MULTINÍVEL ========== -->
-  <nav class="top-nav">
-    <ul class="main-menu">
+<nav class="top-nav">
+  <ul class="main-menu">
+    <!-- Domestic Infant -->
+    <li class="menu-item">
+      <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"></path></svg>
+      <span>Domestic Infant ▼</span>
+      <ul class="submenu">
+        <li class="position-relative">
+          Adoptive Parents
+          <ul class="nested-submenu">
+            <li onclick="loadIframe('domestic-adoptive-performance')">Performance</li>
+            <li onclick="loadIframe('domestic-adoptive-recent')">Recent Perspective</li>
+            <li onclick="loadIframe('domestic-adoptive-process')">Process Timeline</li>
+          </ul>
+        </li>
+        <li class="position-relative">
+          Birth Parents
+          <ul class="nested-submenu">
+            <li onclick="loadIframe('domestic-birth-performance')">Performance</li>
+            <li onclick="loadIframe('domestic-birth-recent')">Recent Perspective</li>
+            <li onclick="loadIframe('domestic-birth-breakdown')">Breakdown by State</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
 
-      <!-- Domestic Infant -->
-      <li class="menu-item">
-        <!-- Ícone -->
-        <svg class="menu-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M3 3v18h18"></path>
-        </svg>
-        <span>Domestic Infant ▼</span>
-        <ul class="submenu">
-          <li class="position-relative">
-            Adoptive Parents
-            <ul class="nested-submenu">
-              <li>Performance</li>
-              <li>Recent Perspective</li>
-              <li>Process Timeline</li>
-            </ul>
-          </li>
-          <li class="position-relative">
-            Birth Parents
-            <ul class="nested-submenu">
-              <li>Performance</li>
-              <li>Recent Perspective</li>
-              <li>Breakdown by State</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
+    <!-- New Beginnings -->
+    <li class="menu-item">
+      <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21C12 21 4 13.4 4 8.5C4 5.46 6.46 3 9.5 3C10.98 3 12.36 3.74 13 4.91C13.64 3.74 15.02 3 16.5 3C19.54 3 22 5.46 22 8.5C22 13.4 14 21 14 21H12Z"></path></svg>
+      <span>New Beginnings ▼</span>
+      <ul class="submenu">
+        <li onclick="loadIframe('new-adoptive-performance')">Performance</li>
+        <li onclick="loadIframe('new-adoptive-recent')">Recent Perspective</li>
+        <li onclick="loadIframe('new-adoptive-process')">Process Timeline</li>
+      </ul>
+    </li>
 
-      <!-- New Beginnings -->
-      <li class="menu-item">
-        <svg class="menu-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M12 21C12 21 4 13.4 4 8.5C4 5.46 6.46 3 9.5 3C10.98 3 12.36 3.74 13 4.91C13.64 3.74 15.02 3 16.5 3C19.54 3 22 5.46 22 8.5C22 13.4 14 21 14 21H12Z"></path>
-        </svg>
-        <span>New Beginnings ▼</span>
-        <ul class="submenu">
-          <li>Performance</li>
-          <li>Recent Perspective</li>
-          <li>Process Timeline</li>
-        </ul>
-      </li>
+    <!-- Drilldown Tables -->
+    <li class="menu-item">
+      <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Drilldown Tables ▼</span>
+      <ul class="submenu">
+        <li onclick="loadIframe('drilldown-domestic')">Domestic Infant</li>
+        <li onclick="loadIframe('drilldown-new')">New Beginnings</li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
-      <!-- Drilldown Tables -->
-      <li class="menu-item">
-        <svg class="menu-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <span>Drilldown Tables ▼</span>
-        <ul class="submenu">
-          <li>Domestic Infant</li>
-          <li>New Beginnings</li>
-        </ul>
-      </li>
+<!-- Iframe -->
+<div style="width: 100%; height: 80vh; margin-top: 20px;">
+  <iframe id="dashboard-iframe" src="" frameborder="0" style="width: 100%; height: 100%; border: none;"></iframe>
+</div>
 
-    </ul>
-  </nav>
+<script>
+  const iframeUrls = {
+    // Domestic Infant - Adoptive
+    'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
+    'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
+    'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
 
-  <!-- ========== IFRAME PARA O DASHBOARD ========== -->
-  <div style="width: 100%; height: 80vh; margin-top: 20px;">
-    <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;"></iframe>
-  </div>
+    // Domestic Infant - Birth
+    'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
+    'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
+    'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
 
-  <!-- ========== JS para troca de iframe ao clicar ========== -->
-  <script>
-    document.querySelectorAll('.submenu li, .nested-submenu li').forEach(function(item) {
-      item.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const targetPage = this.textContent.trim().replace(/\s+/g, '-').toLowerCase();
-        console.log('Click em:', targetPage);
-        document.getElementById('dashboard-iframe').src = '/iframe/' + targetPage;
-      });
-    });
-  </script>
+    // New Beginnings - Adoptive
+    'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
+    'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
+    'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
+
+    // Drilldown Tables
+    'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
+    'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
+  };
+
+  function loadIframe(key) {
+    const iframe = document.getElementById('dashboard-iframe');
+    iframe.src = iframeUrls[key];
+    console.log('Loaded:', iframeUrls[key]);
+  }
+</script>
 
 </body>
 </html>
