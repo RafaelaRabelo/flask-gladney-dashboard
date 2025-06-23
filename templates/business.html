@@ -281,9 +281,10 @@
                   <li className="dropdown-submenu">
                     <a className="dropdown-item dropdown-toggle" href="#">Birth Parents</a>
                     <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-performance')}>Performance</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-recent')}>Recent Perspective</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-breakdown')}>Breakdown by State</a></li>
+                      <ul className="dropdown-menu">
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-performance'); }}>Performance</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-recent'); }}>Recent Perspective</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-breakdown'); }}>Breakdown by State</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -295,9 +296,9 @@
                   New Beginnings
                 </button>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-performance')}>Performance</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-recent')}>Recent Perspective</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-process')}>Process Timeline</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-performance'); }}>Performance</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-recent'); }}>Recent Perspective</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-process'); }}>Process Timeline</a></li>
                 </ul>
               </div>
         
@@ -307,8 +308,8 @@
                   Drilldown Tables
                 </button>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-domestic')}>Domestic Infant</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-new')}>New Beginnings</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('drilldown-domestic'); }}>Domestic Infant</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('drilldown-new'); }}>New Beginnings</a></li>
                 </ul>
               </div>
             </div>
