@@ -302,7 +302,7 @@
           <div style="width: 100%; height: 80vh;">
             <iframe
               id="dashboard-iframe"
-              src=""
+              src="{{ iframe_url }}"
               frameborder="0"
               style="width: 100%; height: 100%; border: none;"
               allowfullscreen
@@ -342,7 +342,12 @@
             const [openDropdown, setOpenDropdown] = React.useState('');
           
             React.useEffect(() => {
-              document.getElementById('dashboard-iframe').src = iframeUrls[activeItem] || initialIframeUrl;
+              const iframeElement = document.getElementById('dashboard-iframe');
+              if (iframeUrls[activeItem]) {
+                iframeElement.src = iframeUrls[activeItem];
+              } else if (initialIframeUrl) {
+                iframeElement.src = initialIframeUrl;
+              }
             }, []);
                     
             const tabs = [
