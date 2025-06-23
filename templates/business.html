@@ -428,6 +428,7 @@
                             <a
                               key={item.key}
                               href="#"
+                              className={activeItem === item.key ? 'active-submenu-item' : ''}
                               onClick={(e) => {
                                 e.preventDefault();
                                 handleItemClick(item.key);
