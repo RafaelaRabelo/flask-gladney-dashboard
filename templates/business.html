@@ -295,15 +295,25 @@
           <!-- Novo menu Drilldown React -->
           <div id="react-tabs-menu"></div>
           
-          <!-- React CDN -->
           <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
           
-          <!-- DrilldownTabs React Component -->
           <script type="text/babel">
+          const iframeUrls = {
+            'domestic-performance': 'https://lookerstudio.google.com/embed/reporting/xxx/page1',
+            'domestic-recent': 'https://lookerstudio.google.com/embed/reporting/xxx/page2',
+            'domestic-process': 'https://lookerstudio.google.com/embed/reporting/xxx/page3',
+            'new-performance': 'https://lookerstudio.google.com/embed/reporting/xxx/page4',
+            'new-recent': 'https://lookerstudio.google.com/embed/reporting/xxx/page5',
+            'new-process': 'https://lookerstudio.google.com/embed/reporting/xxx/page6',
+            'drilldown-domestic-performance': 'https://lookerstudio.google.com/embed/reporting/xxx/page7',
+            'drilldown-domestic-recent': 'https://lookerstudio.google.com/embed/reporting/xxx/page8',
+            'drilldown-new-beginnings': 'https://lookerstudio.google.com/embed/reporting/xxx/page9',
+          };
+          
           function DrilldownTabs() {
-            const [activeTab, setActiveTab] = React.useState('');
+            const [activeItem, setActiveItem] = React.useState('');
             const [openDropdown, setOpenDropdown] = React.useState('');
           
             const tabs = [
@@ -311,18 +321,18 @@
                 key: 'domestic',
                 label: 'Domestic Infant',
                 submenu: [
-                  { key: 'performance', label: 'Performance' },
-                  { key: 'recent', label: 'Recent Perspective' },
-                  { key: 'process', label: 'Process Timeline' }
+                  { key: 'domestic-performance', label: 'Performance' },
+                  { key: 'domestic-recent', label: 'Recent Perspective' },
+                  { key: 'domestic-process', label: 'Process Timeline' }
                 ]
               },
               {
                 key: 'new',
                 label: 'New Beginnings',
                 submenu: [
-                  { key: 'performance', label: 'Performance' },
-                  { key: 'recent', label: 'Recent Perspective' },
-                  { key: 'process', label: 'Process Timeline' }
+                  { key: 'new-performance', label: 'Performance' },
+                  { key: 'new-recent', label: 'Recent Perspective' },
+                  { key: 'new-process', label: 'Process Timeline' }
                 ]
               },
               {
@@ -330,14 +340,17 @@
                 label: 'Drilldown Tables',
                 submenu: [
                   {
-                    key: 'domestic-drilldown',
-                    label: 'Domestic Infant',
+                    key: 'drilldown-domestic',
+                    label: 'Domestic Infant ▶',
                     subsubmenu: [
-                      { key: 'drill-performance', label: 'Performance' },
-                      { key: 'drill-recent', label: 'Recent Perspective' }
+                      { key: 'drilldown-domestic-performance', label: 'Performance' },
+                      { key: 'drilldown-domestic-recent', label: 'Recent Perspective' }
                     ]
                   },
-                  { key: 'new-beginnings', label: 'New Beginnings' }
+                  {
+                    key: 'drilldown-new-beginnings',
+                    label: 'New Beginnings'
+                  }
                 ]
               }
             ];
@@ -346,10 +359,16 @@
               setOpenDropdown(openDropdown === tabKey ? '' : tabKey);
             };
           
-            const handleItemClick = (tabKey, itemKey) => {
-              setActiveTab(tabKey);
+            const handleItemClick = (itemKey) => {
+              setActiveItem(itemKey);
               setOpenDropdown('');
-              document.getElementById('dashboard-iframe').src = 'https://example.com/' + tabKey + '/' + itemKey;
+              document.getElementById('dashboard-iframe').src = iframeUrls[itemKey];
+          
+              fetch('/track_action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'Click Tab: ' + itemKey })
+              });
             };
           
             return (
@@ -357,17 +376,16 @@
                 {tabs.map(tab => (
                   <div
                     key={tab.key}
-                    className={`tab-item ${activeTab === tab.key ? 'active' : ''} ${openDropdown === tab.key ? 'open' : ''}`}
+                    className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${activeItem.startsWith(tab.key) ? 'active' : ''}`}
                     onClick={() => handleTabClick(tab.key)}
                   >
                     {tab.label}
-          
                     {openDropdown === tab.key && (
                       <div className="dropdown-menu">
                         {tab.submenu.map(item => (
                           item.subsubmenu ? (
                             <div key={item.key} className="dropdown-submenu">
-                              <a href="#" onClick={(e) => e.preventDefault()}>{item.label} ▶</a>
+                              <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
                               <div className="dropdown-menu">
                                 {item.subsubmenu.map(subitem => (
                                   <a
@@ -375,7 +393,7 @@
                                     href="#"
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      handleItemClick(tab.key, subitem.key);
+                                      handleItemClick(subitem.key);
                                     }}
                                   >
                                     {subitem.label}
@@ -389,7 +407,7 @@
                               href="#"
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleItemClick(tab.key, item.key);
+                                handleItemClick(item.key);
                               }}
                             >
                               {item.label}
@@ -403,9 +421,9 @@
               </div>
             );
           }
-
-ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
-</script>
+          
+          ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+          </script>
 
       <!-- ========== section end ========== -->
 
