@@ -24,7 +24,7 @@
     <!-- ======== sidebar-nav start =========== -->
     <aside class="sidebar-nav-wrapper" style="display: flex; flex-direction: column; height: 100vh;">
       <div class="navbar-logo">
-        <a href="{{ url_for('dashboard') }}">
+        <a href="{{ url_for('expectant_mother') }}">
           <img src="{{ url_for('static', filename='assets/images/logo/logo.svg') }}" alt="logo" style="width: 220px; height: auto;" />
           <br></br>
         </a>
@@ -51,13 +51,13 @@
             </a>
             <ul id="ddmenu_1" class="collapse show dropdown-nav">
               <li>
-                <a href="{{ url_for('dashboard') }}" class="active"> Expectant Mother </a>
+                <a href="{{ url_for('expectant_mother') }}" class="active"> Expectant Mother </a>
               </li>
               <li>
-                <a href="{{ url_for('business') }}"> Gladney Business Performance </a>
+                <a href="{{ url_for('gladney_business_performance') }}"> Gladney Business Performance </a>
               </li>
               <li>
-                <a href="{{ url_for('traffic') }}"> Page Traffic Monitor </a>
+                <a href="{{ url_for('page_traffic_monitor') }}"> Page Traffic Monitor </a>
               </li>
             </ul>
           </li>
@@ -88,7 +88,7 @@
             </a>
             <ul id="ddmenu_4" class="collapse dropdown-nav">
               <li>
-                <a href="{{ url_for('alerts') }}"> Consolidated </a>
+                <a href="{{ url_for('dashboard_details') }}"> Consolidated </a>
               </li>
             </ul>
           </li>
