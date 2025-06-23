@@ -204,94 +204,120 @@
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
          <!-- Horizontal Tabs with Dropdowns -->
-          <div class="tab-wrapper">
-            <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
-            <div class="tab-container">
-              <ul class="tab-scroll">
-                <li id="tab-domestic">
-                  <span>Domestic Infant ▼</span>
-                  <div class="dropdown">
-                    <div class="has-nested">
-                      Adoptive Parents ▶
-                      <div class="nested-dropdown">
-                        <div onclick="changeIframe('domestic-adoptive-performance')">Performance</div>
-                        <div onclick="changeIframe('domestic-adoptive-recent')">Recent Perspective</div>
-                        <div onclick="changeIframe('domestic-adoptive-process')">Process Timeline</div>
-                      </div>
-                    </div>
-                    <div class="has-nested">
-                      Birth Parents ▶
-                      <div class="nested-dropdown">
-                        <div onclick="changeIframe('domestic-birth-performance')">Performance</div>
-                        <div onclick="changeIframe('domestic-birth-recent')">Recent Perspective</div>
-                        <div onclick="changeIframe('domestic-birth-breakdown')">Breakdown by State</div>
-                      </div>
+          <section class="section">
+            <div class="container-fluid">
+              <div class="title-wrapper pt-30">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <div class="title">
+                      <h4>Gladney Business Performance</h4>
                     </div>
                   </div>
-                </li>
-                <li id="tab-new">
-                  <span>New Beginnings ▼</span>
-                  <div class="dropdown">
-                    <div onclick="changeIframe('new-adoptive-performance')">Performance</div>
-                    <div onclick="changeIframe('new-adoptive-recent')">Recent Perspective</div>
-                    <div onclick="changeIframe('new-adoptive-process')">Process Timeline</div>
-                  </div>
-                </li>
-                <li id="tab-drilldown">
-                  <span>Drilldown Tables ▼</span>
-                  <div class="dropdown">
-                    <div onclick="changeIframe('drilldown-domestic')">Domestic Infant</div>
-                    <div onclick="changeIframe('drilldown-new')">New Beginnings</div>
-                  </div>
-                </li>
-              </ul>
+                </div>
+              </div>
+          
+              <!-- Novo menu React -->
+              <div id="react-tabs-menu"></div>
+          
+              <!-- Iframe que o React controla -->
+              <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 80vh; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
-          </div>
-
-          <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 80vh; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-        </div>
-      </section>
-    </main>
-
-    <script>
-      const iframeUrls = {
-        'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
-        'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
-        'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
-        'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
-        'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
-        'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
-        'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
-        'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
-        'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
-        'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
-        'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
-      };
-
-      function changeIframe(tabName) {
-        document.getElementById('dashboard-iframe').src = iframeUrls[tabName];
-        document.querySelectorAll('.tab-scroll li').forEach(li => li.classList.remove('active'));
-        document.getElementById('tab-' + tabName)?.classList.add('active');
-        fetch('/track_action', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'Click Tab: ' + tabName })
-        });
-      }
-
-      function scrollTabs(distance) {
-        document.querySelector('.tab-container').scrollBy({ left: distance, behavior: 'smooth' });
-      }
-    </script>
-    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script> 
-
-
-          <!-- End Row -->
-        </div>
-        <!-- end container -->
-      </section>
+          </section>
+          
+          <!-- React CDN -->
+          <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+          <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+          <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+          
+          <!-- React Menu Component -->
+          <script type="text/babel">
+          const iframeUrls = {
+            'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
+            'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
+            'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
+          
+            'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
+            'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
+            'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
+          
+            'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
+            'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
+            'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
+          
+            'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
+            'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
+          };
+          
+          function BusinessTabsMenu() {
+            const handleClick = (tab) => {
+              document.getElementById('dashboard-iframe').src = iframeUrls[tab];
+              fetch('/track_action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'Click Tab: ' + tab })
+              });
+            };
+          
+            return (
+              <div className="d-flex border-bottom bg-light px-3 py-2 gap-3 flex-wrap">
+          
+                {/* Domestic Infant */}
+                <div className="dropdown">
+                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Domestic Infant
+                  </button>
+                  <ul className="dropdown-menu">
+                    {/* Adoptive Parents */}
+                    <li className="dropdown-submenu">
+                      <a className="dropdown-item dropdown-toggle" href="#">Adoptive Parents</a>
+                      <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-performance')}>Performance</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-recent')}>Recent Perspective</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-process')}>Process Timeline</a></li>
+                      </ul>
+                    </li>
+          
+                    {/* Birth Parents */}
+                    <li className="dropdown-submenu">
+                      <a className="dropdown-item dropdown-toggle" href="#">Birth Parents</a>
+                      <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-performance')}>Performance</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-recent')}>Recent Perspective</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-breakdown')}>Breakdown by State</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+          
+                {/* New Beginnings */}
+                <div className="dropdown">
+                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    New Beginnings
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-performance')}>Performance</a></li>
+                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-recent')}>Recent Perspective</a></li>
+                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-process')}>Process Timeline</a></li>
+                  </ul>
+                </div>
+          
+                {/* Drilldown Tables */}
+                <div className="dropdown">
+                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Drilldown Tables
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-domestic')}>Domestic Infant</a></li>
+                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-new')}>New Beginnings</a></li>
+                  </ul>
+                </div>
+          
+              </div>
+            );
+          }
+          
+          ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<BusinessTabsMenu />);
+          </script>
       <!-- ========== section end ========== -->
 
 
