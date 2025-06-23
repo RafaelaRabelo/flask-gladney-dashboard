@@ -28,6 +28,78 @@
     .dropdown-submenu:hover > .dropdown-menu {
       display: block;
     }
+     .tabs-container {
+      display: flex;
+      gap: 30px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+    
+    .tab-item {
+      cursor: pointer;
+      font-size: 16px;
+      color: #555;
+      position: relative;
+      padding-bottom: 5px;
+    }
+    
+    .tab-item.active {
+      color: #1a47d9;
+      font-weight: bold;
+    }
+    
+    .tab-item.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #1a47d9;
+      border-radius: 2px;
+    }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background-color: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 999;
+      min-width: 200px;
+    }
+    
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+    }
+    
+    .tab-item.open > .dropdown-menu {
+      display: block;
+    }
+    
+    .dropdown-submenu {
+      position: relative;
+    }
+    
+    .dropdown-submenu > .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-left: 1px;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+      display: block;
+    }
+ 
     </style>
   </head>
   <body>
@@ -219,105 +291,122 @@
           </div>
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
-              <!-- Novo menu React -->
-              <div id="react-tabs-menu"></div>
-          
-              <!-- Iframe que o React controla -->
-              <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 80vh; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-            </div>
-          </section>
+         
+          <!-- Novo menu Drilldown React -->
+          <div id="react-tabs-menu"></div>
           
           <!-- React CDN -->
-          <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-          <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+          <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+          <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
           
-          <!-- React Menu Component -->
+          <!-- DrilldownTabs React Component -->
           <script type="text/babel">
-          const iframeUrls = {
-            'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
-            'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
-            'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
+          function DrilldownTabs() {
+            const [activeTab, setActiveTab] = React.useState('');
+            const [openDropdown, setOpenDropdown] = React.useState('');
           
-            'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
-            'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
-            'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
+            const tabs = [
+              {
+                key: 'domestic',
+                label: 'Domestic Infant',
+                submenu: [
+                  { key: 'performance', label: 'Performance' },
+                  { key: 'recent', label: 'Recent Perspective' },
+                  { key: 'process', label: 'Process Timeline' }
+                ]
+              },
+              {
+                key: 'new',
+                label: 'New Beginnings',
+                submenu: [
+                  { key: 'performance', label: 'Performance' },
+                  { key: 'recent', label: 'Recent Perspective' },
+                  { key: 'process', label: 'Process Timeline' }
+                ]
+              },
+              {
+                key: 'drilldown',
+                label: 'Drilldown Tables',
+                submenu: [
+                  {
+                    key: 'domestic-drilldown',
+                    label: 'Domestic Infant',
+                    subsubmenu: [
+                      { key: 'drill-performance', label: 'Performance' },
+                      { key: 'drill-recent', label: 'Recent Perspective' }
+                    ]
+                  },
+                  { key: 'new-beginnings', label: 'New Beginnings' }
+                ]
+              }
+            ];
           
-            'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
-            'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
-            'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
+            const handleTabClick = (tabKey) => {
+              setOpenDropdown(openDropdown === tabKey ? '' : tabKey);
+            };
           
-            'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
-            'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
-          };
+            const handleItemClick = (tabKey, itemKey) => {
+              setActiveTab(tabKey);
+              setOpenDropdown('');
+              document.getElementById('dashboard-iframe').src = 'https://example.com/' + tabKey + '/' + itemKey;
+            };
           
-          function BusinessTabsMenu() {
-          const handleClick = (tab) => {
-            document.getElementById('dashboard-iframe').src = iframeUrls[tab];
-            fetch('/track_action', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: 'Click Tab: ' + tab })
-            });
-          };
-        
-          return (
-            <div className="d-flex border-bottom bg-light px-3 py-2 gap-3 flex-wrap">
-              {/* Domestic Infant */}
-              <div className="dropdown">
-                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                  Domestic Infant
-                </button>
-                <ul className="dropdown-menu">
-                  <li className="dropdown-submenu">
-                    <a className="dropdown-item dropdown-toggle" href="#">Adoptive Parents</a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-performance'); }}>Performance</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-recent'); }}>Recent Perspective</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-process'); }}>Process Timeline</a></li>
+            return (
+              <div className="tabs-container">
+                {tabs.map(tab => (
+                  <div
+                    key={tab.key}
+                    className={`tab-item ${activeTab === tab.key ? 'active' : ''} ${openDropdown === tab.key ? 'open' : ''}`}
+                    onClick={() => handleTabClick(tab.key)}
+                  >
+                    {tab.label}
+          
+                    {openDropdown === tab.key && (
+                      <div className="dropdown-menu">
+                        {tab.submenu.map(item => (
+                          item.subsubmenu ? (
+                            <div key={item.key} className="dropdown-submenu">
+                              <a href="#" onClick={(e) => e.preventDefault()}>{item.label} ▶</a>
+                              <div className="dropdown-menu">
+                                {item.subsubmenu.map(subitem => (
+                                  <a
+                                    key={subitem.key}
+                                    href="#"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      handleItemClick(tab.key, subitem.key);
+                                    }}
+                                  >
+                                    {subitem.label}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <a
+                              key={item.key}
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleItemClick(tab.key, item.key);
+                              }}
+                            >
+                              {item.label}
+                            </a>
+                          )
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          }
 
-                    </ul>
-                  </li>
-                  <li className="dropdown-submenu">
-                    <a className="dropdown-item dropdown-toggle" href="#">Birth Parents</a>
-                    <ul className="dropdown-menu">
-                      <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-performance'); }}>Performance</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-recent'); }}>Recent Perspective</a></li>
-                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-birth-breakdown'); }}>Breakdown by State</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-        
-              {/* New Beginnings */}
-              <div className="dropdown">
-                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                  New Beginnings
-                </button>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-performance'); }}>Performance</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-recent'); }}>Recent Perspective</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('new-adoptive-process'); }}>Process Timeline</a></li>
-                </ul>
-              </div>
-        
-              {/* Drilldown Tables */}
-              <div className="dropdown">
-                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                  Drilldown Tables
-                </button>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('drilldown-domestic'); }}>Domestic Infant</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('drilldown-new'); }}>New Beginnings</a></li>
-                </ul>
-              </div>
-            </div>
-          );
-        }
-          
-          ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<BusinessTabsMenu />);
-          </script>
+ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+</script>
+
       <!-- ========== section end ========== -->
 
 
