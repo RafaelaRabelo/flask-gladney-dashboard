@@ -247,6 +247,33 @@ def business_tab(tab):
     log_access(user["email"], f"/business/{tab}")
     return render_template("business.html", user=user, iframe_url=iframe_url, active_tab=tab)
 
+@app.route('/traffic/<tab>')
+def traffic_tab(tab):
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+
+    iframe_url = traffic_iframes.get(tab)
+    if not iframe_url:
+        iframe_url = list(traffic_iframes.values())[0]  # Se o tab for inválido, carrega o primeiro como fallback
+
+    log_access(user["email"], f"/traffic/{tab}")
+    return render_template("traffic.html", user=user, iframe_url=iframe_url, active_tab=tab)
+    
+traffic_iframes = {
+    'cover-page': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_z2i9rcdktd',
+    'traffic-user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_bppth3a2sd',
+    'sessions-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_amhq0bb2sd',
+    'user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_zs34w5f2sd',
+    'google-ads-keywords': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_b5uzxjdktd',
+    'demographic-information': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_snmx9lgltd',
+    'events-top-pages': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_hdoejlb2sd',
+    'conversion-events-breakdown': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_od7jq6f2sd',
+    'conversion-performance': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_pfbpeii2sd',
+    'ai-vs-human-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_60iwvfimtd',
+    'ai-traffic-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
+}
+
 # ====== Run ======
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
