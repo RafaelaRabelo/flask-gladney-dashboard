@@ -411,11 +411,13 @@
             return (
   <div className="tabs-container">
     {tabs.map(tab => {
-      const isTabActive = tab.submenu.some(item =>
-        item.subsubmenu
-          ? item.subsubmenu.some(subitem => subitem.key === activeItem)
-          : item.key === activeItem
-      );
+      const isTabActive = tab.submenu
+        ? tab.submenu.some(item =>
+            item.subsubmenu
+              ? item.subsubmenu.some(subitem => subitem.key === activeItem)
+              : item.key === activeItem
+          )
+        : tab.key === activeItem;
 
       return (
         <div
@@ -470,7 +472,7 @@
 
 }
 
-ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+  ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
 
           </script>
 
