@@ -189,6 +189,14 @@ def dashboard_details():
     log_access(user["email"], "/dashboard_details")
     return render_template("dashboard_details.html", user=user)
 
+@app.route('/dashboard_faq')
+def dashboard_faq():
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+    log_access(user["email"], "/dashboard_faq")
+    return render_template("dashboard_faq.html", user=user)
+
 @app.route('/notification')
 def notification():
     user = session.get("user")
