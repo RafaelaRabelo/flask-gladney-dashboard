@@ -252,72 +252,68 @@
           };
           
           function BusinessTabsMenu() {
-            const handleClick = (tab) => {
-              document.getElementById('dashboard-iframe').src = iframeUrls[tab];
-              fetch('/track_action', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'Click Tab: ' + tab })
-              });
-            };
-          
-            return (
-              <div className="d-flex border-bottom bg-light px-3 py-2 gap-3 flex-wrap">
-          
-                {/* Domestic Infant */}
-                <div className="dropdown">
-                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                    Domestic Infant
-                  </button>
-                  <ul className="dropdown-menu">
-                    {/* Adoptive Parents */}
-                    <li className="dropdown-submenu">
-                      <a className="dropdown-item dropdown-toggle" href="#">Adoptive Parents</a>
-                      <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-performance')}>Performance</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-recent')}>Recent Perspective</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-adoptive-process')}>Process Timeline</a></li>
-                      </ul>
-                    </li>
-          
-                    {/* Birth Parents */}
-                    <li className="dropdown-submenu">
-                      <a className="dropdown-item dropdown-toggle" href="#">Birth Parents</a>
-                      <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-performance')}>Performance</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-recent')}>Recent Perspective</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-breakdown')}>Breakdown by State</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-          
-                {/* New Beginnings */}
-                <div className="dropdown">
-                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                    New Beginnings
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-performance')}>Performance</a></li>
-                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-recent')}>Recent Perspective</a></li>
-                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-process')}>Process Timeline</a></li>
-                  </ul>
-                </div>
-          
-                {/* Drilldown Tables */}
-                <div className="dropdown">
-                  <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                    Drilldown Tables
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-domestic')}>Domestic Infant</a></li>
-                    <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-new')}>New Beginnings</a></li>
-                  </ul>
-                </div>
-          
+          const handleClick = (tab) => {
+            document.getElementById('dashboard-iframe').src = iframeUrls[tab];
+            fetch('/track_action', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'Click Tab: ' + tab })
+            });
+          };
+        
+          return (
+            <div className="d-flex border-bottom bg-light px-3 py-2 gap-3 flex-wrap">
+              {/* Domestic Infant */}
+              <div className="dropdown">
+                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                  Domestic Infant
+                </button>
+                <ul className="dropdown-menu">
+                  <li className="dropdown-submenu">
+                    <a className="dropdown-item dropdown-toggle" href="#">Adoptive Parents</a>
+                    <ul className="dropdown-menu">
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-performance'); }}>Performance</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-recent'); }}>Recent Perspective</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); handleClick('domestic-adoptive-process'); }}>Process Timeline</a></li>
+
+                    </ul>
+                  </li>
+                  <li className="dropdown-submenu">
+                    <a className="dropdown-item dropdown-toggle" href="#">Birth Parents</a>
+                    <ul className="dropdown-menu">
+                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-performance')}>Performance</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-recent')}>Recent Perspective</a></li>
+                      <li><a className="dropdown-item" href="#" onClick={() => handleClick('domestic-birth-breakdown')}>Breakdown by State</a></li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
-            );
-          }
+        
+              {/* New Beginnings */}
+              <div className="dropdown">
+                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                  New Beginnings
+                </button>
+                <ul className="dropdown-menu">
+                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-performance')}>Performance</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-recent')}>Recent Perspective</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('new-adoptive-process')}>Process Timeline</a></li>
+                </ul>
+              </div>
+        
+              {/* Drilldown Tables */}
+              <div className="dropdown">
+                <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                  Drilldown Tables
+                </button>
+                <ul className="dropdown-menu">
+                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-domestic')}>Domestic Infant</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={() => handleClick('drilldown-new')}>New Beginnings</a></li>
+                </ul>
+              </div>
+            </div>
+          );
+        }
           
           ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<BusinessTabsMenu />);
           </script>
