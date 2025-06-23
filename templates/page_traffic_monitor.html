@@ -338,145 +338,104 @@
           };
           
           function DrilldownTabs() {
-            const [activeItem, setActiveItem] = React.useState(initialTab || 'cover-page');
-            const [openDropdown, setOpenDropdown] = React.useState('');
-          
-            React.useEffect(() => {
-              const iframeElement = document.getElementById('dashboard-iframe');
-              if (iframeUrls[activeItem]) {
-                iframeElement.src = iframeUrls[activeItem];
-              } else if (initialIframeUrl) {
-                iframeElement.src = initialIframeUrl;
-              }
-            }, []);
-                    
-            const tabs = [
-              {
-                key: 'cover',
-                label: 'Cover Page'
-              },
-              {
-                key: 'traffic-overview',
-                label: 'Traffic & User Overview'
-              },
-              {
-                key: 'traffic-analysis',
-                label: 'Traffic Analysis',
-                submenu: [
-                  { key: 'sessions-overview', label: 'Sessions Overview & Entry Pages' },
-                  { key: 'user-overview', label: 'User Overview & Entry Pages' },
-                  { key: 'google-ads-keywords', label: 'Google Ads Keywords' },
-                  { key: 'demographic-information', label: 'Demographic Information' }
-                ]
-              },
-              {
-                key: 'engagement-pages',
-                label: 'Engagement & Pages',
-                submenu: [
-                  { key: 'events-top-pages', label: 'Events & Top Pages' },
-                  { key: 'conversion-events-breakdown', label: 'Conversion Events Breakdown' }
-                ]
-              },
-              {
-                key: 'conversion-performance-section',
-                label: 'Conversion Performance'
-              },
-              {
-                key: 'ai-traffic',
-                label: 'AI Traffic Analysis',
-                submenu: [
-                  { key: 'ai-vs-human-overview', label: 'AI vs Human Traffic – Overview' },
-                  { key: 'ai-traffic-deep-dive', label: 'AI Traffic Deep Dive' }
-                ]
-              }
-            ];
+  const [activeItem, setActiveItem] = React.useState(initialTab || 'cover-page');
+  const [openDropdown, setOpenDropdown] = React.useState('');
 
-          
-            const handleTabClick = (tabKey) => {
-              setOpenDropdown(openDropdown === tabKey ? '' : tabKey);
-            };
-          
-            const handleItemClick = (itemKey) => {
-              setActiveItem(itemKey);
-              setOpenDropdown('');
-              document.getElementById('dashboard-iframe').src = iframeUrls[itemKey];
-            
-              fetch('/track_action', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'Click Tab: ' + itemKey })
-              });
-            };
-                      
-            return (
-  <div className="tabs-container">
-    {tabs.map(tab => {
-      const isTabActive = (() => {
-        if (tab.submenu) {
-          return tab.submenu.some(item => {
-            if (item.subsubmenu) {
-              return item.subsubmenu.some(subitem => subitem.key === activeItem);
-            }
-            return item.key === activeItem;
-          });
-        }
-        return tab.key === activeItem;
-      })();
+  React.useEffect(() => {
+    const iframeElement = document.getElementById('dashboard-iframe');
+    if (iframeUrls[activeItem]) {
+      iframeElement.src = iframeUrls[activeItem];
+    } else if (initialIframeUrl) {
+      iframeElement.src = initialIframeUrl;
+    }
+  }, []);
 
-      return (
-        <div
-          key={tab.key}
-          className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
-          onClick={() => handleTabClick(tab.key)}
-        >
-          {tab.label}
-          {openDropdown === tab.key && (
-            <div className="dropdown-menu">
-              {tab.submenu.map(item => (
-                item.subsubmenu ? (
-                  <div key={item.key} className="dropdown-submenu">
-                    <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
-                    <div className="dropdown-menu">
-                      {item.subsubmenu.map(subitem => (
-                        <a
-                          key={subitem.key}
-                          href="#"
-                          className={activeItem === subitem.key ? 'active-submenu-item' : ''}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleItemClick(subitem.key);
-                          }}
-                        >
-                          {subitem.label}
-                        </a>
-                      ))}
+  const handleItemClick = (itemKey) => {
+    setActiveItem(itemKey);
+    setOpenDropdown('');
+    document.getElementById('dashboard-iframe').src = iframeUrls[itemKey];
+
+    fetch('/track_action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'Click Tab: ' + itemKey })
+    });
+  };
+
+  const handleTabClick = (tabKey) => {
+    const clickedTab = tabs.find(t => t.key === tabKey);
+
+    if (clickedTab.submenu) {
+      setOpenDropdown(openDropdown === tabKey ? '' : tabKey);
+    } else {
+      handleItemClick(tabKey);
+    }
+  };
+
+  return (
+    <div className="tabs-container">
+      {tabs.map(tab => {
+        const isTabActive = (() => {
+          if (tab.submenu) {
+            return tab.submenu.some(item => item.key === activeItem || (item.subsubmenu && item.subsubmenu.some(subitem => subitem.key === activeItem)));
+          }
+          return tab.key === activeItem;
+        })();
+
+        return (
+          <div
+            key={tab.key}
+            className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
+            onClick={() => handleTabClick(tab.key)}
+          >
+            {tab.label}
+            {tab.submenu && openDropdown === tab.key && (
+              <div className="dropdown-menu">
+                {tab.submenu.map(item => (
+                  item.subsubmenu ? (
+                    <div key={item.key} className="dropdown-submenu">
+                      <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
+                      <div className="dropdown-menu">
+                        {item.subsubmenu.map(subitem => (
+                          <a
+                            key={subitem.key}
+                            href="#"
+                            className={activeItem === subitem.key ? 'active-submenu-item' : ''}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleItemClick(subitem.key);
+                            }}
+                          >
+                            {subitem.label}
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <a
-                    key={item.key}
-                    href="#"
-                    className={activeItem === item.key ? 'active-submenu-item' : ''}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleItemClick(item.key);
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                )
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    })}
-  </div>
-);
-
+                  ) : (
+                    <a
+                      key={item.key}
+                      href="#"
+                      className={activeItem === item.key ? 'active-submenu-item' : ''}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleItemClick(item.key);
+                      }}
+                    >
+                      {item.label}
+                    </a>
+                  )
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
-  ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+
 
           </script>
 
