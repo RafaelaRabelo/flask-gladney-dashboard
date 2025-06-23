@@ -12,7 +12,99 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <style>
+    /* Estilo para permitir submenu lateral nos dropdowns React */
+    .dropdown-submenu {
+      position: relative;
+    }
+    
+    .dropdown-submenu > .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -1px;
+      display: none;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+      display: block;
+    }
+     .tabs-container {
+      display: flex;
+      gap: 30px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+    
+    .tab-item {
+      cursor: pointer;
+      font-size: 16px;
+      color: #555;
+      position: relative;
+      padding-bottom: 5px;
+    }
+    
+    .tab-item.active {
+        color: #1a47d9;
+        font-weight: bold;
+      }
+    
+    .tab-item.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #1a47d9;
+      border-radius: 2px;
+    }
+    
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background-color: white;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 999;
+      min-width: 200px;
+    }
+    
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    .dropdown-menu a:hover {
+      background-color: #f0f0f0;
+    }
+    
+    .tab-item.open > .dropdown-menu {
+      display: block;
+    }
+    
+    .dropdown-submenu {
+      position: relative;
+    }
+    
+    .dropdown-submenu > .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-left: 1px;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+      display: block;
+    }
+     .active-submenu-item {
+      font-weight: bold;
+      color: #1a47d9;
+    }
 
+    </style>
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -133,11 +225,16 @@
           <div class="row">
             <div class="col-lg-5 col-md-5 col-6">
               <div class="header-left d-flex align-items-center">
-                <div class="menu-toggle-btn mr-15">
-                  <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                    <i class="lni lni-chevron-left me-2"></i> Menu
-                  </button>
-                </div>
+                <div class="header-left d-flex align-items-center">
+                  <div class="header-left d-flex align-items-center">
+                   <div class="menu-toggle-btn">
+                    <button id="menu-toggle" style="background: none; border: none; padding: 0; display: flex; align-items: center; cursor: pointer; margin-left: -20px;">
+                      <img src="{{ url_for('static', filename='assets/images/icons/svg-hamburger-icon-11.jpg') }}" alt="Menu" style="width: 30px; height: 30px; margin-right: 0px;">
+                      <span style="font-size: 16px; line-height: 1; color: #333; margin-top: -2px;">Menu</span>
+                    </button>
+                  </div>
+                  </div>
+              </div>
               </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
@@ -175,7 +272,6 @@
                     <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                   </ul>
                 </div>
-
                 <!-- profile end -->
               </div>
             </div>
@@ -183,8 +279,6 @@
         </div>
       </header>
       <!-- ========== header end ========== -->
-
-      <!-- ========== section start ========== -->
       <section class="section">
         <div class="container-fluid">
           <!-- ========== title-wrapper start ========== -->
@@ -200,20 +294,187 @@
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
+      <!-- ========== section start ========== -->
+         
+          <!-- Novo menu Drilldown React -->
+          <div id="react-tabs-menu"></div>
 
-          <div class="iframe-menu-open" style="position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden;">
-            <iframe src="https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_o746l61ysd"
+          <div style="width: 100%; height: 80vh;">
+            <iframe
+              id="dashboard-iframe"
+              src=""
               frameborder="0"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+              style="width: 100%; height: 100%; border: none;"
               allowfullscreen
-              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-            </iframe>
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            ></iframe>
           </div>
+          
+          <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+          <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+          <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+          
+          <script type="text/babel">
+          const iframeUrls = {
+            'cover-page': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_z2i9rcdktd',
+            
+            'traffic-user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_bppth3a2sd',
+            
+            'sessions-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_amhq0bb2sd',
+            'user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_zs34w5f2sd',
+            'google-ads-keywords': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_b5uzxjdktd',
+            'demographic-information': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_snmx9lgltd',
+          
+            'events-top-pages': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_hdoejlb2sd',
+            'conversion-events-breakdown': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_od7jq6f2sd',
+          
+            'conversion-performance': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_pfbpeii2sd',
+          
+            'ai-vs-human-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_60iwvfimtd',
+            'ai-traffic-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
+          };
+          
+          function DrilldownTabs() {
+            const [activeItem, setActiveItem] = React.useState('cover-page');
+            const [openDropdown, setOpenDropdown] = React.useState('');
+          
+            React.useEffect(() => {
+              handleItemClick(activeItem);
+            }, []);
+          
+            const tabs = [
+              {
+                key: 'cover',
+                label: 'Cover Page',
+                submenu: [
+                  { key: 'cover-page', label: 'Cover Page' }
+                ]
+              },
+              {
+                key: 'traffic-overview',
+                label: 'Traffic & User Overview',
+                submenu: [
+                  { key: 'traffic-user-overview', label: 'Traffic & User Overview' }
+                ]
+              },
+              {
+                key: 'traffic-analysis',
+                label: 'Traffic Analysis',
+                submenu: [
+                  { key: 'sessions-overview', label: 'Sessions Overview & Entry Pages' },
+                  { key: 'user-overview', label: 'User Overview & Entry Pages' },
+                  { key: 'google-ads-keywords', label: 'Google Ads Keywords' },
+                  { key: 'demographic-information', label: 'Demographic Information' }
+                ]
+              },
+              {
+                key: 'engagement-pages',
+                label: 'Engagement & Pages',
+                submenu: [
+                  { key: 'events-top-pages', label: 'Events & Top Pages' },
+                  { key: 'conversion-events-breakdown', label: 'Conversion Events Breakdown' }
+                ]
+              },
+              {
+                key: 'conversion-performance-section',
+                label: 'Conversion Performance',
+                submenu: [
+                  { key: 'conversion-performance', label: 'Conversion Performance' }
+                ]
+              },
+              {
+                key: 'ai-traffic',
+                label: 'AI Traffic Analysis',
+                submenu: [
+                  { key: 'ai-vs-human-overview', label: 'AI vs Human Traffic – Overview' },
+                  { key: 'ai-traffic-deep-dive', label: 'AI Traffic Deep Dive' }
+                ]
+              }
+            ];
 
-          <!-- End Row -->
+          
+            const handleTabClick = (tabKey) => {
+              setOpenDropdown(openDropdown === tabKey ? '' : tabKey);
+            };
+          
+            const handleItemClick = (itemKey) => {
+              setActiveItem(itemKey);
+              setOpenDropdown('');
+              document.getElementById('dashboard-iframe').src = iframeUrls[itemKey];
+          
+              fetch('/track_action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'Click Tab: ' + itemKey })
+              });
+            };
+          
+            return (
+  <div className="tabs-container">
+    {tabs.map(tab => {
+      const isTabActive = tab.submenu.some(item =>
+        item.subsubmenu
+          ? item.subsubmenu.some(subitem => subitem.key === activeItem)
+          : item.key === activeItem
+      );
+
+      return (
+        <div
+          key={tab.key}
+          className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
+          onClick={() => handleTabClick(tab.key)}
+        >
+          {tab.label}
+          {openDropdown === tab.key && (
+            <div className="dropdown-menu">
+              {tab.submenu.map(item => (
+                item.subsubmenu ? (
+                  <div key={item.key} className="dropdown-submenu">
+                    <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
+                    <div className="dropdown-menu">
+                      {item.subsubmenu.map(subitem => (
+                        <a
+                          key={subitem.key}
+                          href="#"
+                          className={activeItem === subitem.key ? 'active-submenu-item' : ''}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleItemClick(subitem.key);
+                          }}
+                        >
+                          {subitem.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    key={item.key}
+                    href="#"
+                    className={activeItem === item.key ? 'active-submenu-item' : ''}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleItemClick(item.key);
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                )
+              ))}
+            </div>
+          )}
         </div>
-        <!-- end container -->
-      </section>
+      );
+    })}
+  </div>
+);
+
+}
+
+ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
+
+          </script>
+
       <!-- ========== section end ========== -->
 
 
