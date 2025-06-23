@@ -37,37 +37,36 @@ def log_access(email, rota, extra_action=None):
     user_agent = request.headers.get('User-Agent') or "unknown"
     session_id = session.get("session_id", "unknown")
 
-    last_action = session.get("last_action_time")
-    if last_action:
-        time_diff = (datetime.now() - datetime.fromisoformat(last_action)).total_seconds()
-    else:
-        time_diff = 0
+    # Recupera o tempo da última ação
+    last_action_time = session.get("last_action_time")
+    last_route = session.get("last_route")
+    last_tab = session.get("last_extra_action")  # Aqui vamos usar o "Extra Action" da última aba
+
+    if last_action_time and last_tab:
+        time_diff = (datetime.now() - datetime.fromisoformat(last_action_time)).total_seconds()
+
+        # ✅ Gera o log da aba anterior (tempo gasto nela)
+        try:
+            SPREADSHEET_ID = "1PtGM-CLkru5jWytYZfDW9ay-tFDJhHiIWSBGjL32Vbk"
+            creds = get_google_credentials()
+            client = gspread.authorize(creds)
+            sheet = client.open_by_key(SPREADSHEET_ID).sheet1
+
+            if sheet.row_count == 0 or sheet.cell(1, 1).value != "Timestamp":
+                sheet.clear()
+                sheet.append_row(["Timestamp", "Email", "Rota", "Extra Action", "IP", "User-Agent", "Session ID", "Time Since Last Action (s)"])
+
+            sheet.append_row([
+                timestamp, email, last_route or "", last_tab, ip, user_agent, session_id, round(time_diff, 2)
+            ])
+
+        except Exception as e:
+            print(f"❌ Erro ao salvar no Sheets: {e}")
+
+    # Atualiza os valores na sessão para a próxima ação
     session["last_action_time"] = timestamp
-
-    # CSV Local (opcional)
-    with open("access_log.csv", "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([
-            timestamp, email, rota, extra_action or "", ip, user_agent, session_id, round(time_diff, 2)
-        ])
-
-    # Google Sheets
-    try:
-        SPREADSHEET_ID = "1kScMJP2Tx9KgGoMDYzkpYH1h4OZc0gaB-qKRCnqyoJI"
-        creds = get_google_credentials()
-        client = gspread.authorize(creds)
-        sheet = client.open_by_key(SPREADSHEET_ID).sheet1
-
-        if sheet.row_count == 0 or sheet.cell(1, 1).value != "Timestamp":
-            sheet.clear()
-            sheet.append_row(["Timestamp", "Email", "Rota", "Extra Action", "IP", "User-Agent", "Session ID", "Time Since Last Action (s)"])
-
-        sheet.append_row([
-            timestamp, email, rota, extra_action or "", ip, user_agent, session_id, round(time_diff, 2)
-        ])
-
-    except Exception as e:
-        print(f"❌ Erro ao salvar no Sheets: {e}")
+    session["last_route"] = rota
+    session["last_extra_action"] = extra_action or ""
 
 # ====== OAuth Google ======
 oauth = OAuth(app)
