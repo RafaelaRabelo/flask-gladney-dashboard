@@ -143,8 +143,14 @@ def page_traffic_monitor():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
+
+    # Define a aba default
+    default_tab = list(page_traffic_monitor_iframes.keys())[0]
+    iframe_url = page_traffic_monitor_iframes[default_tab]
+
     log_access(user["email"], "/page_traffic_monitor")
-    return render_template("page_traffic_monitor.html", user=user)
+    return render_template("page_traffic_monitor.html", user=user, iframe_url=iframe_url, active_tab=default_tab)
+
 
 @app.route('/page_traffic_monitor/<tab>')
 def page_traffic_monitor_tab(tab):
