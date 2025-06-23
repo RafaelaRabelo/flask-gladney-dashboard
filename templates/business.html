@@ -12,7 +12,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/lineicons.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
-
+    <style>
+    /* Estilo para permitir submenu lateral nos dropdowns React */
+    .dropdown-submenu {
+      position: relative;
+    }
+    
+    .dropdown-submenu > .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: -1px;
+      display: none;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+      display: block;
+    }
+    </style>
   </head>
   <body>
     <!-- ======== Preloader =========== -->
