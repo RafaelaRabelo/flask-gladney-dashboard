@@ -309,7 +309,10 @@
               sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
             ></iframe>
           </div>
-          
+          <script>
+            const initialTab = "{{ active_tab }}";
+            const initialIframeUrl = "{{ iframe_url }}";
+          </script>
           <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -335,13 +338,13 @@
           };
           
           function DrilldownTabs() {
-            const [activeItem, setActiveItem] = React.useState('cover-page');
+            const [activeItem, setActiveItem] = React.useState(initialTab || 'cover-page');
             const [openDropdown, setOpenDropdown] = React.useState('');
           
             React.useEffect(() => {
-              handleItemClick(activeItem);
+              document.getElementById('dashboard-iframe').src = iframeUrls[activeItem] || initialIframeUrl;
             }, []);
-          
+                    
             const tabs = [
               {
                 key: 'cover',
@@ -392,14 +395,14 @@
               setActiveItem(itemKey);
               setOpenDropdown('');
               document.getElementById('dashboard-iframe').src = iframeUrls[itemKey];
-          
+            
               fetch('/track_action', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'Click Tab: ' + itemKey })
               });
             };
-          
+                      
             return (
   <div className="tabs-container">
     {tabs.map(tab => {
