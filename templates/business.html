@@ -333,7 +333,9 @@
           function DrilldownTabs() {
             const [activeItem, setActiveItem] = React.useState('domestic-adoptive-performance');
             const [openDropdown, setOpenDropdown] = React.useState('');
-          
+            React.useEffect(() => {
+              handleItemClick(activeItem);
+            }, []);
             const tabs = [
               {
                 key: 'domestic',
