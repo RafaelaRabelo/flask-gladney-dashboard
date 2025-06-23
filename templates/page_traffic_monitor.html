@@ -411,13 +411,17 @@
             return (
   <div className="tabs-container">
     {tabs.map(tab => {
-      const isTabActive = tab.submenu
-        ? tab.submenu.some(item =>
-            item.subsubmenu
-              ? item.subsubmenu.some(subitem => subitem.key === activeItem)
-              : item.key === activeItem
-          )
-        : tab.key === activeItem;
+      const isTabActive = (() => {
+        if (tab.submenu) {
+          return tab.submenu.some(item => {
+            if (item.subsubmenu) {
+              return item.subsubmenu.some(subitem => subitem.key === activeItem);
+            }
+            return item.key === activeItem;
+          });
+        }
+        return tab.key === activeItem;
+      })();
 
       return (
         <div
