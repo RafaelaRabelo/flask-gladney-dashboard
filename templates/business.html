@@ -324,7 +324,7 @@
           };
           
           function DrilldownTabs() {
-            const [activeItem, setActiveItem] = React.useState('');
+            const [activeItem, setActiveItem] = React.useState('domestic-adoptive-performance');
             const [openDropdown, setOpenDropdown] = React.useState('');
           
             const tabs = [
@@ -407,6 +407,7 @@
                                   <a
                                     key={subitem.key}
                                     href="#"
+                                    className={activeItem === subitem.key ? 'active-submenu-item' : ''}
                                     onClick={(e) => {
                                       e.preventDefault();
                                       handleItemClick(subitem.key);
