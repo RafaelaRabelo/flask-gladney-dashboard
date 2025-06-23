@@ -104,8 +104,13 @@ def business():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
+
+    default_tab = list(business_iframes.keys())[0]
+    iframe_url = business_iframes[default_tab]
+
     log_access(user["email"], "/business")
-    return render_template("business.html", user=user)
+    return render_template("business.html", user=user, iframe_url=iframe_url, active_tab=default_tab)
+
 
 @app.route('/alerts')
 def alerts():
