@@ -215,6 +215,33 @@ def expectant_dashboard(tab):
     log_access(user["email"], f"/dashboard/expectant/{tab}")
     return render_template("dashboard.html", user=user, active_tab=tab, iframe_url=iframe_url)
 
+business_iframes = {
+    'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
+    'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
+    'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
+    'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
+    'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
+    'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
+    'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
+    'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
+    'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
+    'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
+    'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
+}
+
+@app.route('/business/<tab>')
+def business_tab(tab):
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+
+    iframe_url = business_iframes.get(tab)
+    if not iframe_url:
+        iframe_url = list(business_iframes.values())[0]  # Fallback para a primeira aba
+
+    log_access(user["email"], f"/business/{tab}")
+    return render_template("business.html", user=user, iframe_url=iframe_url, active_tab=tab)
+
 # ====== Run ======
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
