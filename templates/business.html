@@ -299,14 +299,16 @@
           <!-- Novo menu Drilldown React -->
           <div id="react-tabs-menu"></div>
 
-          <iframe
-            id="dashboard-iframe"
-            src=""
-            width="100%"
-            height="100%"
-            frameborder="0"
-            style="margin-top: 30px;"
-          ></iframe>
+          <div style="width: 100%; height: 80vh;">
+            <iframe
+              id="dashboard-iframe"
+              src=""
+              frameborder="0"
+              style="width: 100%; height: 100%; border: none;"
+              allowfullscreen
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            ></iframe>
+          </div>
           
           <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
           <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
