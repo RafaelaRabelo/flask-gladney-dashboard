@@ -397,57 +397,67 @@
           
             return (
               <div className="tabs-container">
-                {tabs.map(tab => (
-                  <div
-                    key={tab.key}
-                      className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
-                      onClick={() => handleTabClick(tab.key)}
+                {tabs.map(tab => {
+  const isTabActive = tab.submenu.some(item =>
+    item.subsubmenu
+      ? item.subsubmenu.some(subitem => subitem.key === activeItem)
+      : item.key === activeItem
+  );
+
+  return (
+    <div
+      key={tab.key}
+      className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
+      onClick={() => handleTabClick(tab.key)}
+    >
+      {tab.label}
+      {openDropdown === tab.key && (
+        <div className="dropdown-menu">
+          {tab.submenu.map(item => (
+            item.subsubmenu ? (
+              <div key={item.key} className="dropdown-submenu">
+                <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
+                <div className="dropdown-menu">
+                  {item.subsubmenu.map(subitem => (
+                    <a
+                      key={subitem.key}
+                      href="#"
+                      className={activeItem === subitem.key ? 'active-submenu-item' : ''}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleItemClick(subitem.key);
+                      }}
                     >
-                    {tab.label}
-                    {openDropdown === tab.key && (
-                      <div className="dropdown-menu">
-                        {tab.submenu.map(item => (
-                          item.subsubmenu ? (
-                            <div key={item.key} className="dropdown-submenu">
-                              <a href="#" onClick={(e) => e.preventDefault()}>{item.label}</a>
-                              <div className="dropdown-menu">
-                                {item.subsubmenu.map(subitem => (
-                                  <a
-                                    key={subitem.key}
-                                    href="#"
-                                    className={activeItem === subitem.key ? 'active-submenu-item' : ''}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      handleItemClick(subitem.key);
-                                    }}
-                                  >
-                                    {subitem.label}
-                                  </a>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <a
-                              key={item.key}
-                              href="#"
-                              className={activeItem === item.key ? 'active-submenu-item' : ''}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleItemClick(item.key);
-                              }}
-                            >
-                              {item.label}
-                            </a>
-                          )
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      {subitem.label}
+                    </a>
+                  ))}
+                </div>
               </div>
-            );
-          }
-          
+            ) : (
+              <a
+                key={item.key}
+                href="#"
+                className={activeItem === item.key ? 'active-submenu-item' : ''}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleItemClick(item.key);
+                }}
+              >
+                {item.label}
+              </a>
+            )
+          ))}
+        </div>
+      )}
+    </div>
+  );
+})}
+           );
+            })}
+          </div>
+        );
+      }
+
           ReactDOM.createRoot(document.getElementById('react-tabs-menu')).render(<DrilldownTabs />);
           </script>
 
