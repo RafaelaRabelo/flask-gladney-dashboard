@@ -400,9 +400,9 @@
                 {tabs.map(tab => (
                   <div
                     key={tab.key}
-                    className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${activeItem.startsWith(tab.key) ? 'active' : ''}`}
-                    onClick={() => handleTabClick(tab.key)}
-                  >
+                      className={`tab-item ${openDropdown === tab.key ? 'open' : ''} ${isTabActive ? 'active' : ''}`}
+                      onClick={() => handleTabClick(tab.key)}
+                    >
                     {tab.label}
                     {openDropdown === tab.key && (
                       <div className="dropdown-menu">
