@@ -204,35 +204,64 @@
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
         <style>
-        .top-nav {
-          display: flex;
-          gap: 30px;
-          font-weight: bold;
-          padding: 10px 20px;
-          border-bottom: 1px solid #ddd;
-          background-color: white;
-        }
-        
-        .top-nav > div {
+        .tab-wrapper {
           position: relative;
-          cursor: pointer;
+          width: 100%;
+          margin-bottom: 20px;
+          background-color: #fff;
+          border-bottom: 1px solid #e0e0e0;
         }
         
-        .top-nav > div > span {
+        .tab-container {
+          overflow-x: auto;
+          white-space: nowrap;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        
+        .tab-container::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .tab-scroll {
           display: inline-flex;
+          list-style: none;
+          margin: 0;
+          padding: 0 40px;
+        }
+        
+        .tab-scroll li {
+          white-space: nowrap;
+          padding: 10px 20px;
+          font-size: 14px;
+          color: #555;
+          display: flex;
           align-items: center;
+          gap: 6px;
+          cursor: pointer;
+          position: relative;
+        }
+        
+        .tab-scroll li.active {
+          color: #3F51B5;
+          font-weight: 600;
+          border-bottom: 2px solid #3F51B5;
         }
         
         .dropdown {
           display: none;
           position: absolute;
-          top: 30px;
+          top: 35px;
           left: 0;
           background: white;
           box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
           border-radius: 4px;
           min-width: 200px;
           z-index: 100;
+        }
+        
+        .tab-scroll li:hover .dropdown {
+          display: block;
         }
         
         .dropdown div, .nested-dropdown div {
@@ -243,69 +272,61 @@
         .dropdown div:hover, .nested-dropdown div:hover {
           background: #f2f2f2;
         }
-        
-        .has-submenu:hover .dropdown {
-          display: block;
-        }
-        
-        .nested-dropdown {
-          display: none;
-          position: absolute;
-          top: 0;
-          left: 100%;
-          background: white;
-          box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-          border-radius: 4px;
-          min-width: 180px;
-        }
-        
-        .dropdown .has-nested:hover .nested-dropdown {
-          display: block;
-        }
         </style>
         
-        <div class="top-nav">
-          <div class="has-submenu">
-            <span>Domestic Infant ▼</span>
-            <div class="dropdown">
-              <div class="has-nested">
-                Adoptive Parents ▶
-                <div class="nested-dropdown">
-                  <div onclick="changeIframe('domestic-adoptive-performance')">Performance</div>
-                  <div onclick="changeIframe('domestic-adoptive-recent')">Recent Perspective</div>
-                  <div onclick="changeIframe('domestic-adoptive-process')">Process Timeline</div>
+        <div class="tab-wrapper">
+        <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
+        <div class="tab-container">
+          <ul class="tab-scroll">
+      
+            <li>
+              <span>Domestic Infant ▼</span>
+              <div class="dropdown">
+                <div class="has-nested">
+                  Adoptive Parents ▶
+                  <div class="nested-dropdown">
+                    <div onclick="changeIframe('domestic-adoptive-performance')">Performance</div>
+                    <div onclick="changeIframe('domestic-adoptive-recent')">Recent Perspective</div>
+                    <div onclick="changeIframe('domestic-adoptive-process')">Process Timeline</div>
+                  </div>
+                </div>
+                <div class="has-nested">
+                  Birth Parents ▶
+                  <div class="nested-dropdown">
+                    <div onclick="changeIframe('domestic-birth-performance')">Performance</div>
+                    <div onclick="changeIframe('domestic-birth-recent')">Recent Perspective</div>
+                    <div onclick="changeIframe('domestic-birth-breakdown')">Breakdown by State</div>
+                  </div>
                 </div>
               </div>
-              <div class="has-nested">
-                Birth Parents ▶
-                <div class="nested-dropdown">
-                  <div onclick="changeIframe('domestic-birth-performance')">Performance</div>
-                  <div onclick="changeIframe('domestic-birth-recent')">Recent Perspective</div>
-                  <div onclick="changeIframe('domestic-birth-breakdown')">Breakdown by State</div>
-                </div>
+            </li>
+      
+            <li>
+              <span>New Beginnings ▼</span>
+              <div class="dropdown">
+                <div onclick="changeIframe('new-adoptive-performance')">Performance</div>
+                <div onclick="changeIframe('new-adoptive-recent')">Recent Perspective</div>
+                <div onclick="changeIframe('new-adoptive-process')">Process Timeline</div>
               </div>
-            </div>
-          </div>
-        
-          <div class="has-submenu">
-            <span>New Beginnings ▼</span>
-            <div class="dropdown">
-              <div onclick="changeIframe('new-adoptive-performance')">Performance</div>
-              <div onclick="changeIframe('new-adoptive-recent')">Recent Perspective</div>
-              <div onclick="changeIframe('new-adoptive-process')">Process Timeline</div>
-            </div>
-          </div>
-        
-          <div class="has-submenu">
-            <span>Drilldown Tables ▼</span>
-            <div class="dropdown">
-              <div onclick="changeIframe('drilldown-domestic')">Domestic Infant</div>
-              <div onclick="changeIframe('drilldown-new')">New Beginnings</div>
-            </div>
-          </div>
+            </li>
+      
+            <li>
+              <span>Drilldown Tables ▼</span>
+              <div class="dropdown">
+                <div onclick="changeIframe('drilldown-domestic')">Domestic Infant</div>
+                <div onclick="changeIframe('drilldown-new')">New Beginnings</div>
+              </div>
+            </li>
+      
+          </ul>
         </div>
+        <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
+      </div>
 
-          
+          <!-- Aqui vem o iframe -->
+          <div style="width: 100%; height: 80vh;">
+            <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+          </div>
           <script>
           const iframeUrls = {
             'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
