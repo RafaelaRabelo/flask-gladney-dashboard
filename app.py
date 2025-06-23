@@ -83,10 +83,10 @@ google = oauth.register(
 
 @app.route('/')
 def landing_page():
-    return render_template("index.html")
+    return render_template("welcome.html")
 
-@app.route('/dashboard')
-def dashboard():
+@app.route('/expectant_mother')
+def expectant_mother():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
@@ -95,30 +95,30 @@ def dashboard():
     iframe_url = expectant_iframes.get('overview')
     active_tab = 'overview'
 
-    log_access(user["email"], "/dashboard")
-    return render_template("dashboard.html", user=user, iframe_url=iframe_url, active_tab=active_tab)
+    log_access(user["email"], "/expectant_mother")
+    return render_template("expectant_mother.html", user=user, iframe_url=iframe_url, active_tab=active_tab)
 
 
-@app.route('/business')
-def business():
+@app.route('/gladney_business_performance')
+def gladney_business_performance():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
 
-    default_tab = list(business_iframes.keys())[0]
-    iframe_url = business_iframes[default_tab]
+    default_tab = list(gladney_business_performance_iframes.keys())[0]
+    iframe_url = gladney_business_performance_iframes[default_tab]
 
-    log_access(user["email"], "/business")
-    return render_template("business.html", user=user, iframe_url=iframe_url, active_tab=default_tab)
+    log_access(user["email"], "/gladney_business_performance")
+    return render_template("gladney_business_performance.html", user=user, iframe_url=iframe_url, active_tab=default_tab)
 
 
-@app.route('/alerts')
-def alerts():
+@app.route('/dashboard_details')
+def dashboard_details():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
-    log_access(user["email"], "/alerts")
-    return render_template("alerts.html", user=user)
+    log_access(user["email"], "/dashboard_details")
+    return render_template("dashboard_details.html", user=user)
 
 @app.route('/notification')
 def notification():
@@ -128,13 +128,13 @@ def notification():
     log_access(user["email"], "/notification")
     return render_template("notification.html", user=user)
 
-@app.route('/traffic')
-def traffic():
+@app.route('/page_traffic_monitor')
+def page_traffic_monitor():
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
-    log_access(user["email"], "/traffic")
-    return render_template("traffic.html", user=user)
+    log_access(user["email"], "/page_traffic_monitor")
+    return render_template("page_traffic_monitor.html", user=user)
 
 @app.route('/login')
 def login():
@@ -168,7 +168,7 @@ def authorize():
         }
         
         log_access(user_email, "/authorize")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("expectant_mother"))
 
     except Exception as e:
         return f"❌ Erro durante autenticação: {str(e)}", 500
@@ -195,7 +195,7 @@ def track_action():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
-# ====== Novo: Rotas para as abas internas do Dashboard Expectant Mother ======
+# ====== Novo: Rotas para as abas internas do expectant_mother Expectant Mother ======
 
 expectant_iframes = {
     'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd',
@@ -210,17 +210,17 @@ expectant_iframes = {
     'contact-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_2b3vzq1wsd'
 }
 
-@app.route('/dashboard/expectant/<tab>')
-def expectant_dashboard(tab):
+@app.route('/expectant_mother/expectant/<tab>')
+def expectant_expectant_mother(tab):
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
 
     iframe_url = expectant_iframes.get(tab, expectant_iframes['overview'])
-    log_access(user["email"], f"/dashboard/expectant/{tab}")
-    return render_template("dashboard.html", user=user, active_tab=tab, iframe_url=iframe_url)
+    log_access(user["email"], f"/expectant_mother/expectant/{tab}")
+    return render_template("expectant_mother.html", user=user, active_tab=tab, iframe_url=iframe_url)
 
-business_iframes = {
+gladney_business_performance_iframes = {
     'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
     'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
     'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
@@ -234,35 +234,35 @@ business_iframes = {
     'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
 }
 
-@app.route('/business/<tab>')
-def business_tab(tab):
+@app.route('/gladney_business_performance/<tab>')
+def gladney_business_performance_tab(tab):
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
 
-    iframe_url = business_iframes.get(tab)
+    iframe_url = gladney_business_performance_iframes.get(tab)
     if not iframe_url:
-        iframe_url = list(business_iframes.values())[0]  # Fallback para a primeira aba
+        iframe_url = list(gladney_business_performance_iframes.values())[0]  # Fallback para a primeira aba
 
-    log_access(user["email"], f"/business/{tab}")
-    return render_template("business.html", user=user, iframe_url=iframe_url, active_tab=tab)
+    log_access(user["email"], f"/gladney_business_performance/{tab}")
+    return render_template("gladney_business_performance.html", user=user, iframe_url=iframe_url, active_tab=tab)
 
-@app.route('/traffic/<tab>')
-def traffic_tab(tab):
+@app.route('/page_traffic_monitor/<tab>')
+def page_traffic_monitor_tab(tab):
     user = session.get("user")
     if not user:
         return redirect(url_for("login"))
 
-    iframe_url = traffic_iframes.get(tab)
+    iframe_url = page_traffic_monitor_iframes.get(tab)
     if not iframe_url:
-        iframe_url = list(traffic_iframes.values())[0]  # Se o tab for inválido, carrega o primeiro como fallback
+        iframe_url = list(page_traffic_monitor_iframes.values())[0]  # Se o tab for inválido, carrega o primeiro como fallback
 
-    log_access(user["email"], f"/traffic/{tab}")
-    return render_template("traffic.html", user=user, iframe_url=iframe_url, active_tab=tab)
+    log_access(user["email"], f"/page_traffic_monitor/{tab}")
+    return render_template("page_traffic_monitor.html", user=user, iframe_url=iframe_url, active_tab=tab)
     
-traffic_iframes = {
+page_traffic_monitor_iframes = {
     'cover-page': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_z2i9rcdktd',
-    'traffic-user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_bppth3a2sd',
+    'page_traffic_monitor-user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_bppth3a2sd',
     'sessions-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_amhq0bb2sd',
     'user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_zs34w5f2sd',
     'google-ads-keywords': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_b5uzxjdktd',
@@ -271,7 +271,7 @@ traffic_iframes = {
     'conversion-events-breakdown': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_od7jq6f2sd',
     'conversion-performance': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_pfbpeii2sd',
     'ai-vs-human-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_60iwvfimtd',
-    'ai-traffic-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
+    'ai-page_traffic_monitor-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
 }
 
 # ====== Run ======
