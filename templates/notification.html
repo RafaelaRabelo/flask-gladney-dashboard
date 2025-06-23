@@ -132,11 +132,16 @@
           <div class="row">
             <div class="col-lg-5 col-md-5 col-6">
               <div class="header-left d-flex align-items-center">
-                <div class="menu-toggle-btn mr-15">
-                  <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                    <i class="lni lni-chevron-left me-2"></i> Menu
-                  </button>
-                </div>
+                <div class="header-left d-flex align-items-center">
+                  <div class="header-left d-flex align-items-center">
+                   <div class="menu-toggle-btn">
+                    <button id="menu-toggle" style="background: none; border: none; padding: 0; display: flex; align-items: center; cursor: pointer; margin-left: -20px;">
+                      <img src="{{ url_for('static', filename='assets/images/icons/svg-hamburger-icon-11.jpg') }}" alt="Menu" style="width: 30px; height: 30px; margin-right: 0px;">
+                      <span style="font-size: 16px; line-height: 1; color: #333; margin-top: -2px;">Menu</span>
+                    </button>
+                  </div>
+                  </div>
+              </div>
               </div>
             </div>
             <div class="col-lg-7 col-md-7 col-6">
