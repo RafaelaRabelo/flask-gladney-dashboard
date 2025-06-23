@@ -336,7 +336,43 @@
             'ai-vs-human-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_60iwvfimtd',
             'ai-traffic-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
           };
-          
+          const tabs = [
+          { key: 'cover-page', label: 'Cover Page' },
+        
+          { key: 'traffic-user-overview', label: 'Traffic & User Overview' },
+        
+          {
+            key: 'traffic-analysis',
+            label: 'Traffic Analysis',
+            submenu: [
+              { key: 'sessions-overview', label: 'Sessions Overview & Entry Pages' },
+              { key: 'user-overview', label: 'User Overview & Entry Pages' },
+              { key: 'google-ads-keywords', label: 'Google Ads Keywords' },
+              { key: 'demographic-information', label: 'Demographic Information' },
+            ],
+          },
+        
+          {
+            key: 'engagement-pages',
+            label: 'Engagement & Pages',
+            submenu: [
+              { key: 'events-top-pages', label: 'Events & Top Pages' },
+              { key: 'conversion-events-breakdown', label: 'Conversion Events Breakdown' },
+            ],
+          },
+        
+          { key: 'conversion-performance', label: 'Conversion Performance' },
+        
+          {
+            key: 'ai-traffic-analysis',
+            label: 'AI Traffic Analysis',
+            submenu: [
+              { key: 'ai-vs-human-overview', label: 'AI vs Human Traffic – Overview' },
+              { key: 'ai-traffic-deep-dive', label: 'AI Traffic Deep Dive' },
+            ],
+          },
+        ];
+
           function DrilldownTabs() {
   const [activeItem, setActiveItem] = React.useState(initialTab || 'cover-page');
   const [openDropdown, setOpenDropdown] = React.useState('');
@@ -345,10 +381,9 @@
     const iframeElement = document.getElementById('dashboard-iframe');
     if (iframeUrls[activeItem]) {
       iframeElement.src = iframeUrls[activeItem];
-    } else if (initialIframeUrl) {
-      iframeElement.src = initialIframeUrl;
     }
-  }, []);
+  }, [activeItem]);
+
 
   const handleItemClick = (itemKey) => {
     setActiveItem(itemKey);
