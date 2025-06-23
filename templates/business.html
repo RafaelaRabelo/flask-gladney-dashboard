@@ -203,166 +203,89 @@
           </div>
           <!-- ========== title-wrapper end ========== -->
       <!-- ========== section start ========== -->
-        <style>
-        .tab-wrapper {
-          position: relative;
-          width: 100%;
-          margin-bottom: 20px;
-          background-color: #fff;
-          border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .tab-container {
-          overflow-x: auto;
-          white-space: nowrap;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-        
-        .tab-container::-webkit-scrollbar {
-          display: none;
-        }
-        
-        .tab-scroll {
-          display: inline-flex;
-          list-style: none;
-          margin: 0;
-          padding: 0 40px;
-        }
-        
-        .tab-scroll li {
-          white-space: nowrap;
-          padding: 10px 20px;
-          font-size: 14px;
-          color: #555;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          cursor: pointer;
-          position: relative;
-        }
-        
-        .tab-scroll li.active {
-          color: #3F51B5;
-          font-weight: 600;
-          border-bottom: 2px solid #3F51B5;
-        }
-        
-        .dropdown {
-          display: none;
-          position: absolute;
-          top: 35px;
-          left: 0;
-          background: white;
-          box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-          border-radius: 4px;
-          min-width: 200px;
-          z-index: 100;
-        }
-        
-        .tab-scroll li:hover .dropdown {
-          display: block;
-        }
-        
-        .dropdown div, .nested-dropdown div {
-          padding: 10px 15px;
-          cursor: pointer;
-        }
-        
-        .dropdown div:hover, .nested-dropdown div:hover {
-          background: #f2f2f2;
-        }
-        </style>
-        
-        <div class="tab-wrapper">
-        <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
-        <div class="tab-container">
-          <ul class="tab-scroll">
-      
-            <li>
-              <span>Domestic Infant ▼</span>
-              <div class="dropdown">
-                <div class="has-nested">
-                  Adoptive Parents ▶
-                  <div class="nested-dropdown">
-                    <div onclick="changeIframe('domestic-adoptive-performance')">Performance</div>
-                    <div onclick="changeIframe('domestic-adoptive-recent')">Recent Perspective</div>
-                    <div onclick="changeIframe('domestic-adoptive-process')">Process Timeline</div>
+         <!-- Horizontal Tabs with Dropdowns -->
+          <div class="tab-wrapper">
+            <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
+            <div class="tab-container">
+              <ul class="tab-scroll">
+                <li id="tab-domestic">
+                  <span>Domestic Infant ▼</span>
+                  <div class="dropdown">
+                    <div class="has-nested">
+                      Adoptive Parents ▶
+                      <div class="nested-dropdown">
+                        <div onclick="changeIframe('domestic-adoptive-performance')">Performance</div>
+                        <div onclick="changeIframe('domestic-adoptive-recent')">Recent Perspective</div>
+                        <div onclick="changeIframe('domestic-adoptive-process')">Process Timeline</div>
+                      </div>
+                    </div>
+                    <div class="has-nested">
+                      Birth Parents ▶
+                      <div class="nested-dropdown">
+                        <div onclick="changeIframe('domestic-birth-performance')">Performance</div>
+                        <div onclick="changeIframe('domestic-birth-recent')">Recent Perspective</div>
+                        <div onclick="changeIframe('domestic-birth-breakdown')">Breakdown by State</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="has-nested">
-                  Birth Parents ▶
-                  <div class="nested-dropdown">
-                    <div onclick="changeIframe('domestic-birth-performance')">Performance</div>
-                    <div onclick="changeIframe('domestic-birth-recent')">Recent Perspective</div>
-                    <div onclick="changeIframe('domestic-birth-breakdown')">Breakdown by State</div>
+                </li>
+                <li id="tab-new">
+                  <span>New Beginnings ▼</span>
+                  <div class="dropdown">
+                    <div onclick="changeIframe('new-adoptive-performance')">Performance</div>
+                    <div onclick="changeIframe('new-adoptive-recent')">Recent Perspective</div>
+                    <div onclick="changeIframe('new-adoptive-process')">Process Timeline</div>
                   </div>
-                </div>
-              </div>
-            </li>
-      
-            <li>
-              <span>New Beginnings ▼</span>
-              <div class="dropdown">
-                <div onclick="changeIframe('new-adoptive-performance')">Performance</div>
-                <div onclick="changeIframe('new-adoptive-recent')">Recent Perspective</div>
-                <div onclick="changeIframe('new-adoptive-process')">Process Timeline</div>
-              </div>
-            </li>
-      
-            <li>
-              <span>Drilldown Tables ▼</span>
-              <div class="dropdown">
-                <div onclick="changeIframe('drilldown-domestic')">Domestic Infant</div>
-                <div onclick="changeIframe('drilldown-new')">New Beginnings</div>
-              </div>
-            </li>
-      
-          </ul>
-        </div>
-        <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
-      </div>
-
-          <!-- Aqui vem o iframe -->
-          <div style="width: 100%; height: 80vh;">
-            <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </li>
+                <li id="tab-drilldown">
+                  <span>Drilldown Tables ▼</span>
+                  <div class="dropdown">
+                    <div onclick="changeIframe('drilldown-domestic')">Domestic Infant</div>
+                    <div onclick="changeIframe('drilldown-new')">New Beginnings</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
           </div>
-          <script>
-          const iframeUrls = {
-            'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
-            'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
-            'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
-            'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
-            'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
-            'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
-            'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
-            'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
-            'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
-            'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
-            'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
-          };
-          
-          function changeIframe(tabName) {
-            const iframe = document.getElementById('dashboard-iframe');
-            iframe.src = iframeUrls[tabName];
-          
-            // Troca o destaque da aba ativa
-            document.querySelectorAll('.tab-scroll li').forEach(li => li.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('active');
-          
-            // Faz um POST para o Flask registrar o clique (se quiser rastrear)
-            fetch('/track_action', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ action: 'Click Tab: ' + tabName })
-            });
-          }
-          
-          function scrollTabs(distance) {
-            const scrollContainer = document.querySelector('.tab-container');
-            scrollContainer.scrollBy({ left: distance, behavior: 'smooth' });
-          }
-          </script>
+
+          <iframe id="dashboard-iframe" src="https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd" frameborder="0" style="width: 100%; height: 80vh; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const iframeUrls = {
+        'domestic-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_0cruxnlesd',
+        'domestic-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_fs1i0mafsd',
+        'domestic-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_jaslgym7rd',
+        'domestic-birth-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_n5o80slctd',
+        'domestic-birth-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_ox7c5fxitd',
+        'domestic-birth-breakdown': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_eoarhx0jtd',
+        'new-adoptive-performance': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_pnl8efo3sd',
+        'new-adoptive-recent': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_dbfsn7afsd',
+        'new-adoptive-process': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_84ojqj4asd',
+        'drilldown-domestic': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_g64kpxaatd',
+        'drilldown-new': 'https://lookerstudio.google.com/embed/reporting/704ba1ac-c624-464f-a9f5-4f0f7ecadbfc/page/p_q32x6kaatd'
+      };
+
+      function changeIframe(tabName) {
+        document.getElementById('dashboard-iframe').src = iframeUrls[tabName];
+        document.querySelectorAll('.tab-scroll li').forEach(li => li.classList.remove('active'));
+        document.getElementById('tab-' + tabName)?.classList.add('active');
+        fetch('/track_action', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'Click Tab: ' + tabName })
+        });
+      }
+
+      function scrollTabs(distance) {
+        document.querySelector('.tab-container').scrollBy({ left: distance, behavior: 'smooth' });
+      }
+    </script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script> 
 
 
           <!-- End Row -->
