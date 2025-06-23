@@ -246,19 +246,6 @@ def gladney_business_performance_tab(tab):
     log_access(user["email"], f"/gladney_business_performance/{tab}")
     return render_template("gladney_business_performance.html", user=user, iframe_url=iframe_url, active_tab=tab)
 
-@app.route('/page_traffic_monitor/<tab>')
-def page_traffic_monitor_tab(tab):
-    user = session.get("user")
-    if not user:
-        return redirect(url_for("login"))
-
-    iframe_url = page_traffic_monitor_iframes.get(tab)
-    if not iframe_url:
-        iframe_url = list(page_traffic_monitor_iframes.values())[0]  # Se o tab for inválido, carrega o primeiro como fallback
-
-    log_access(user["email"], f"/page_traffic_monitor/{tab}")
-    return render_template("page_traffic_monitor.html", user=user, iframe_url=iframe_url, active_tab=tab)
-    
 page_traffic_monitor_iframes = {
     'cover-page': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_z2i9rcdktd',
     'page_traffic_monitor-user-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_bppth3a2sd',
@@ -272,6 +259,21 @@ page_traffic_monitor_iframes = {
     'ai-vs-human-overview': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_60iwvfimtd',
     'ai-page_traffic_monitor-deep-dive': 'https://lookerstudio.google.com/embed/reporting/186ac7bf-c1de-463f-9fe7-c4eeef98acdb/page/p_m7azaxhmtd'
 }
+
+@app.route('/page_traffic_monitor/<tab>')
+def page_traffic_monitor_tab(tab):
+    user = session.get("user")
+    if not user:
+        return redirect(url_for("login"))
+
+    iframe_url = page_traffic_monitor_iframes.get(tab)
+    if not iframe_url:
+        iframe_url = list(page_traffic_monitor_iframes.values())[0]  # Se o tab for inválido, carrega o primeiro como fallback
+
+    log_access(user["email"], f"/page_traffic_monitor/{tab}")
+    return render_template("page_traffic_monitor.html", user=user, iframe_url=iframe_url, active_tab=tab)
+    
+
 
 # ====== Run ======
 if __name__ == "__main__":
