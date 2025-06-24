@@ -289,21 +289,22 @@
             </div>
             <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
           </div>
-          
+          <button onclick="openFullScreen()">🔎 Fullscreen</button>
+
           <div style="width: 100%; height: 80vh;">
             <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
           </div>
           
           <script>
           const iframeUrls = {
-            'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd',
-            'recent-perspective': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_obrfzkburd',
-            'google-ads-performance': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_oi42nj80rd',
-            'campaign-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7hlear4wsd',
-            'funnel-comparison': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_sg6j2t9wsd',
-            'campaign-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7pjh7o80rd',
-            'contact-vs-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_drggvx80rd',
-            'day-of-week': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_kybyw8icrd'
+            'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd&rm=FULLSCREEN',
+            'recent-perspective': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_obrfzkburd&rm=FULLSCREEN',
+            'google-ads-performance': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_oi42nj80rd&rm=FULLSCREEN',
+            'campaign-breakdown': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7hlear4wsd&rm=FULLSCREEN',
+            'funnel-comparison': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_sg6j2t9wsd&rm=FULLSCREEN',
+            'campaign-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_7pjh7o80rd&rm=FULLSCREEN',
+            'contact-vs-cost': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_drggvx80rd&rm=FULLSCREEN',
+            'day-of-week': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_kybyw8icrd&rm=FULLSCREEN'
           };
           
           function changeIframe(tabName) {
@@ -889,5 +890,18 @@
       });
         // =========== chart four end
     </script>
+      <script>
+    function openFullScreen() {
+      const elem = document.documentElement;  // fullscreen da página toda
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+    }
+    </script>
+
   </body>
 </html>
