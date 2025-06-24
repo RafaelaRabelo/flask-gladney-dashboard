@@ -198,6 +198,7 @@
               <div class="col-md-6">
                 <div class="title">
                   <h4>Expectant Mother</h4>
+                  <button class="fullscreen-icon-btn" onclick="openIframeSectionFullscreen()">🔎</button>
                 </div>
               </div>
               <!-- end col -->
@@ -208,6 +209,27 @@
       <!-- ========== section start ========== -->
           {% if iframe_url %}
           <style>
+            .title {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 10px; /* espaço entre o título e o botão */
+            }
+            
+            .fullscreen-icon-btn {
+              background: none;
+              border: none;
+              font-size: 20px;
+              color: #3F51B5;
+              cursor: pointer;
+              transition: transform 0.2s ease;
+              padding: 0;
+            }
+            
+            .fullscreen-icon-btn:hover {
+              transform: scale(1.2);
+            }
+
           .tab-wrapper {
             position: relative;
             width: 100%;
@@ -271,6 +293,24 @@
           
           .scroll-button.left { left: -16px; }
           .scroll-button.right { right: -16px; }
+          .fullscreen-iframe-btn {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            z-index: 30;
+            padding: 6px 10px;
+            background-color: #3F51B5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: background-color 0.3s ease;
+          }
+          .fullscreen-iframe-btn:hover {
+            background-color: #2C3E91;
+          }
           </style>
           
           <div class="tab-wrapper">
@@ -289,9 +329,7 @@
             </div>
             <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
           </div>
-          <button onclick="openFullScreen()">🔎 Fullscreen</button>
-
-          <div style="width: 100%; height: 80vh;">
+          <div id="iframe-container" style="position: relative; width: 100%; height: 80vh; background: #fff;">
             <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
           </div>
           
@@ -891,17 +929,17 @@
         // =========== chart four end
     </script>
       <script>
-    function openFullScreen() {
-      const elem = document.documentElement;  // fullscreen da página toda
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-      }
-    }
-    </script>
+        function openIframeSectionFullscreen() {
+          const container = document.getElementById('iframe-container');
+          if (container.requestFullscreen) {
+            container.requestFullscreen();
+          } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
+          } else if (container.msRequestFullscreen) {
+            container.msRequestFullscreen();
+          }
+        }
+        </script>
 
   </body>
 </html>
