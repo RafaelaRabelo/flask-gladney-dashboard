@@ -209,6 +209,15 @@
       <!-- ========== section start ========== -->
           {% if iframe_url %}
           <style>
+             :fullscreen #iframe-container,
+              :-webkit-full-screen #iframe-container {
+                height: calc(100vh - 50px); /* Ajuste o 50px conforme a altura real do tab-wrapper */
+              }
+              
+              :fullscreen #iframe-section,
+              :-webkit-full-screen #iframe-section {
+                background: #fff;
+              }
             .title {
               display: flex;
               justify-content: space-between;
