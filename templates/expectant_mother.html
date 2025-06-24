@@ -209,9 +209,13 @@
       <!-- ========== section start ========== -->
           {% if iframe_url %}
           <style>
-             :fullscreen #iframe-container,
+             /* Aplica altura total apenas em fullscreen */
+              :fullscreen #iframe-container,
               :-webkit-full-screen #iframe-container {
-                height: calc(100vh - 50px); /* Ajuste o 50px conforme a altura real do tab-wrapper */
+                height: calc(100vh - 52px); /* ajuste conforme altura da aba horizontal */
+              }
+              #iframe-container {
+                height: 80vh; /* fallback para fora do fullscreen */
               }
               
               :fullscreen #iframe-section,
@@ -338,7 +342,7 @@
             </div>
             <div class="scroll-button right" onclick="scrollTabs(150)">›</div>
           </div>
-          <div id="iframe-container" style="position: relative; width: 100%; height: 80vh; background: #fff;">
+          <div id="iframe-container" style="position: relative; width: 100%; background: #fff;">
             <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" ></iframe>
           </div>
           </div>
