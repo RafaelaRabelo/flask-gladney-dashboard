@@ -312,7 +312,7 @@
             background-color: #2C3E91;
           }
           </style>
-          
+          <div id="iframe-section">
           <div class="tab-wrapper">
             <div class="scroll-button left" onclick="scrollTabs(-150)">‹</div>
             <div class="tab-container">
@@ -332,7 +332,7 @@
           <div id="iframe-container" style="position: relative; width: 100%; height: 80vh; background: #fff;">
             <iframe id="dashboard-iframe" src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 100%; border: none;" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
           </div>
-          
+          </div>
           <script>
           const iframeUrls = {
             'overview': 'https://lookerstudio.google.com/embed/reporting/018fe7d3-8e30-4a70-86e9-ac5b71bdb662/page/p_8mak6z20rd&rm=FULLSCREEN',
@@ -930,7 +930,7 @@
     </script>
       <script>
         function openIframeSectionFullscreen() {
-          const container = document.getElementById('iframe-container');
+          const container = document.getElementById('iframe-section');
           if (container.requestFullscreen) {
             container.requestFullscreen();
           } else if (container.webkitRequestFullscreen) {
